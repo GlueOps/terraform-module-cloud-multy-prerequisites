@@ -51,12 +51,20 @@ resource "aws_iam_policy" "route53" {
       "Effect": "Allow",
       "Action": [
         "route53:ChangeResourceRecordSets",
-        "route53:ListResourceRecordSets",
-        "route53:ListHostedZones",
         "route53:GetChange"
       ],
       "Resource": [
         "arn:aws:route53:::hostedzone/${aws_route53_zone.clusters[each.key].zone_id}"
+      ]
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "route53:ListHostedZones",
+        "route53:ListResourceRecordSets"
+      ],
+      "Resource": [
+        "arn:aws:route53:::hostedzone/*"
       ]
     }
   ]
