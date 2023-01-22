@@ -20,6 +20,7 @@ resource "aws_route53_zone" "clusters" {
   depends_on = [
     aws_route53_zone.main
   ]
+  force_destroy = true
 }
 
 resource "aws_route53_record" "cluster_subdomain_ns_records" {
