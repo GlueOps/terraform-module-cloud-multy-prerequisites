@@ -26,10 +26,13 @@ No modules.
 
 | Name | Type |
 |------|------|
-| [aws_iam_access_key.route53](https://registry.terraform.io/providers/hashicorp/aws/4.39.0/docs/resources/iam_access_key) | resource |
+| [aws_iam_access_key.certmanager](https://registry.terraform.io/providers/hashicorp/aws/4.39.0/docs/resources/iam_access_key) | resource |
+| [aws_iam_access_key.externaldns](https://registry.terraform.io/providers/hashicorp/aws/4.39.0/docs/resources/iam_access_key) | resource |
 | [aws_iam_policy.route53](https://registry.terraform.io/providers/hashicorp/aws/4.39.0/docs/resources/iam_policy) | resource |
-| [aws_iam_user.route53](https://registry.terraform.io/providers/hashicorp/aws/4.39.0/docs/resources/iam_user) | resource |
-| [aws_iam_user_policy_attachment.route53](https://registry.terraform.io/providers/hashicorp/aws/4.39.0/docs/resources/iam_user_policy_attachment) | resource |
+| [aws_iam_user.certmanager](https://registry.terraform.io/providers/hashicorp/aws/4.39.0/docs/resources/iam_user) | resource |
+| [aws_iam_user.externaldns](https://registry.terraform.io/providers/hashicorp/aws/4.39.0/docs/resources/iam_user) | resource |
+| [aws_iam_user_policy_attachment.certmanager](https://registry.terraform.io/providers/hashicorp/aws/4.39.0/docs/resources/iam_user_policy_attachment) | resource |
+| [aws_iam_user_policy_attachment.externaldns](https://registry.terraform.io/providers/hashicorp/aws/4.39.0/docs/resources/iam_user_policy_attachment) | resource |
 | [aws_route53_record.cluster_subdomain_ns_records](https://registry.terraform.io/providers/hashicorp/aws/4.39.0/docs/resources/route53_record) | resource |
 | [aws_route53_zone.clusters](https://registry.terraform.io/providers/hashicorp/aws/4.39.0/docs/resources/route53_zone) | resource |
 | [aws_route53_zone.main](https://registry.terraform.io/providers/hashicorp/aws/4.39.0/docs/resources/route53_zone) | resource |
@@ -52,5 +55,6 @@ No modules.
 
 | Name | Description |
 |------|-------------|
-| <a name="output_route53_iam_credentials"></a> [route53\_iam\_credentials](#output\_route53\_iam\_credentials) | n/a |
+| <a name="output_certmanager_iam_credentials"></a> [certmanager\_iam\_credentials](#output\_certmanager\_iam\_credentials) | n/a |
+| <a name="output_externaldns_iam_credentials"></a> [externaldns\_iam\_credentials](#output\_externaldns\_iam\_credentials) | n/a |
 <!-- END_TF_DOCS -->
