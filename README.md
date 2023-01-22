@@ -46,6 +46,7 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| <a name="input_allow_force_destroy_of_cluster_zones"></a> [allow\_force\_destroy\_of\_cluster\_zones](#input\_allow\_force\_destroy\_of\_cluster\_zones) | Allow cluster related zones that have records in them to be destroyed | `string` | `false` | no |
 | <a name="input_cluster_environments"></a> [cluster\_environments](#input\_cluster\_environments) | The cluster environments | `list(string)` | n/a | yes |
 | <a name="input_company_account_id"></a> [company\_account\_id](#input\_company\_account\_id) | The company AWS account id | `string` | n/a | yes |
 | <a name="input_company_key"></a> [company\_key](#input\_company\_key) | The company key | `string` | n/a | yes |
