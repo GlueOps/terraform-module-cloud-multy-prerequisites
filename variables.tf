@@ -5,8 +5,9 @@ variable "domain_to_delegate_from" {
   nullable    = false
 }
 
-variable "allow_force_destroy_of_cluster_zones" {
-  description = "Allow cluster related zones that have records in them to be destroyed"
+
+variable "this_is_development" {
+  description = "The develoopment cluster environment and data/resources can be destroyed!"
   type        = string
   nullable    = false
   default     = false
@@ -30,10 +31,22 @@ variable "cluster_environments" {
   nullable    = false
 }
 
+variable "primary_region" {
+  description = "The primary S3 region to create S3 bucket in used for backups. This should be the same region as the one where the cluster is being deployed."
+  type        = string
+  nullable    = false
+}
+
+variable "backup_region" {
+  description = "The secondary S3 region to create S3 bucket in used for backups. This should be different than the primary region and will have the data from the primary region replicated to it."
+  type        = string
+  nullable    = false
+}
+
 locals {
   domain_to_delegate_from = var.domain_to_delegate_from
   company_key             = var.company_key
   ns_record_ttl           = "60"
   ns_record_type          = "NS"
-  aws_region              = "us-west-2"
+  bucket_name             = "glueops-tenant-${local.company_key}"
 }

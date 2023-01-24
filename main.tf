@@ -1,13 +1,3 @@
-
-provider "aws" {
-  version = "4.39.0"
-  alias   = "clientaccount"
-  region  = local.aws_region
-  assume_role {
-    role_arn = "arn:aws:iam::${var.company_account_id}:role/OrganizationAccountAccessRole"
-  }
-}
-
 resource "aws_route53_zone" "main" {
   provider = aws.clientaccount
   name     = "${local.company_key}.${local.domain_to_delegate_from}"
@@ -20,7 +10,7 @@ resource "aws_route53_zone" "clusters" {
   depends_on = [
     aws_route53_zone.main
   ]
-  force_destroy = var.allow_force_destroy_of_cluster_zones
+  force_destroy = var.this_is_development ? true : false
 }
 
 resource "aws_route53_record" "cluster_subdomain_ns_records" {
