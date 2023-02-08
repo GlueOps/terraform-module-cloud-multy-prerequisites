@@ -44,6 +44,7 @@ No modules.
 | [aws_iam_user_policy_attachment.externaldns](https://registry.terraform.io/providers/hashicorp/aws/4.39.0/docs/resources/iam_user_policy_attachment) | resource |
 | [aws_iam_user_policy_attachment.vault_s3](https://registry.terraform.io/providers/hashicorp/aws/4.39.0/docs/resources/iam_user_policy_attachment) | resource |
 | [aws_route53_record.cluster_subdomain_ns_records](https://registry.terraform.io/providers/hashicorp/aws/4.39.0/docs/resources/route53_record) | resource |
+| [aws_route53_record.wildcard_for_apps](https://registry.terraform.io/providers/hashicorp/aws/4.39.0/docs/resources/route53_record) | resource |
 | [aws_route53_zone.clusters](https://registry.terraform.io/providers/hashicorp/aws/4.39.0/docs/resources/route53_zone) | resource |
 | [aws_route53_zone.main](https://registry.terraform.io/providers/hashicorp/aws/4.39.0/docs/resources/route53_zone) | resource |
 | [aws_s3_bucket.primary](https://registry.terraform.io/providers/hashicorp/aws/4.39.0/docs/resources/s3_bucket) | resource |
@@ -75,7 +76,7 @@ No modules.
 | <a name="input_company_key"></a> [company\_key](#input\_company\_key) | The company key | `string` | n/a | yes |
 | <a name="input_domain_to_delegate_from"></a> [domain\_to\_delegate\_from](#input\_domain\_to\_delegate\_from) | The domain name of the domain that all delegation is coming from | `string` | n/a | yes |
 | <a name="input_primary_region"></a> [primary\_region](#input\_primary\_region) | The primary S3 region to create S3 bucket in used for backups. This should be the same region as the one where the cluster is being deployed. | `string` | n/a | yes |
-| <a name="input_this_is_development"></a> [this\_is\_development](#input\_this\_is\_development) | The develoopment cluster environment and data/resources can be destroyed! | `string` | `false` | no |
+| <a name="input_this_is_development"></a> [this\_is\_development](#input\_this\_is\_development) | The development cluster environment and data/resources can be destroyed! | `string` | `false` | no |
 
 ## Outputs
 
