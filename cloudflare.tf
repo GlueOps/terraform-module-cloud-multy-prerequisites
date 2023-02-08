@@ -19,7 +19,7 @@ resource "cloudflare_record" "delegation_ns_record_second" {
   name     = aws_route53_zone.main.name
   value    = aws_route53_zone.main.name_servers[1]
   type     = local.ns_record_type
-  ttl      = local.ns_record_ttl
+  ttl      = local.record_ttl
   proxied  = false
   priority = null
 }
@@ -29,7 +29,7 @@ resource "cloudflare_record" "delegation_ns_record_third" {
   name     = aws_route53_zone.main.name
   value    = aws_route53_zone.main.name_servers[2]
   type     = local.ns_record_type
-  ttl      = local.ns_record_ttl
+  ttl      = local.record_ttl
   proxied  = false
   priority = null
 }
@@ -39,7 +39,7 @@ resource "cloudflare_record" "delegation_ns_record_fourth" {
   name     = aws_route53_zone.main.name
   value    = aws_route53_zone.main.name_servers[3]
   type     = local.ns_record_type
-  ttl      = local.ns_record_ttl
+  ttl      = local.record_ttl
   proxied  = false
   priority = null
 }

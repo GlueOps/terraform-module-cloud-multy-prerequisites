@@ -10,7 +10,7 @@ resource "aws_route53_record" "wildcard_for_apps" {
   name     = "*.apps.${each.value.name}"
   type     = "CNAME"
   ttl      = local.record_ttl
-  record   = "ingress.${each.value.name}"
+  records  = ["ingress.${each.value.name}"]
 }
 
 resource "aws_route53_zone" "clusters" {
