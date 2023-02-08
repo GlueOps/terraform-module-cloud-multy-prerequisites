@@ -46,7 +46,7 @@ variable "backup_region" {
 locals {
   domain_to_delegate_from = var.domain_to_delegate_from
   company_key             = var.company_key
-  ns_record_ttl           = "60"
+  record_ttl              = "60"
   ns_record_type          = "NS"
   bucket_name             = "glueops-tenant-${local.company_key}"
 }
