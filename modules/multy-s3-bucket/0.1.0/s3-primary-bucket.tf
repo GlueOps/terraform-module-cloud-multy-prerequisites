@@ -3,6 +3,9 @@ resource "aws_s3_bucket" "primary" {
   bucket        = "${var.bucket_name}-primary"
   force_destroy = var.this_is_development ? true : false
 }
+output "primary_s3_bucket_arn" {
+  value = aws_s3_bucket.primary.arn
+}
 
 resource "aws_s3_bucket_acl" "primary" {
   provider = aws.primaryregion
