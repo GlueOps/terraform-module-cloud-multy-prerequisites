@@ -23,7 +23,7 @@ This terraform module creates a "parent" zone and multiple subdomain zones under
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_vault_s3"></a> [vault\_s3](#module\_vault\_s3) | ./modules/multy-s3-bucket/0.1.0 | n/a |
+| <a name="module_common_s3"></a> [common\_s3](#module\_common\_s3) | ./modules/multy-s3-bucket/0.1.0 | n/a |
 
 ## Resources
 
