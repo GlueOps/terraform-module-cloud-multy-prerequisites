@@ -1,6 +1,6 @@
 resource "aws_s3_bucket" "primary" {
   provider      = aws.primaryregion
-  bucket        = "${local.bucket_name}-primary"
+  bucket        = "${var.bucket_name}-primary"
   force_destroy = var.this_is_development ? true : false
 }
 
