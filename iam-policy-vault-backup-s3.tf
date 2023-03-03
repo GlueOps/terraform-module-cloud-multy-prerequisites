@@ -12,8 +12,8 @@ resource "aws_iam_policy" "vault_s3_backup" {
         "s3:PutObject"
       ],
       "Resource": [
-        "${module.vault_s3.primary_s3_bucket_arn}/${aws_route53_zone.clusters[each.key].name}/hashicorp-vault-backups/*",
-        "${module.vault_s3.replica_s3_bucket_arn}/${aws_route53_zone.clusters[each.key].name}/hashicorp-vault-backups/*"
+        "${module.common_s3.primary_s3_bucket_arn}/${aws_route53_zone.clusters[each.key].name}/hashicorp-vault-backups/*",
+        "${module.common_s3.replica_s3_bucket_arn}/${aws_route53_zone.clusters[each.key].name}/hashicorp-vault-backups/*"
       ]
     }
   ]
