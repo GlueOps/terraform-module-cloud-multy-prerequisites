@@ -24,6 +24,7 @@ This terraform module creates a "parent" zone and multiple subdomain zones under
 | Name | Source | Version |
 |------|--------|---------|
 | <a name="module_common_s3"></a> [common\_s3](#module\_common\_s3) | ./modules/multy-s3-bucket/0.1.0 | n/a |
+| <a name="module_loki_s3"></a> [loki\_s3](#module\_loki\_s3) | ./modules/multy-s3-bucket/0.1.0 | n/a |
 
 ## Resources
 
@@ -31,14 +32,18 @@ This terraform module creates a "parent" zone and multiple subdomain zones under
 |------|------|
 | [aws_iam_access_key.certmanager](https://registry.terraform.io/providers/hashicorp/aws/4.55.0/docs/resources/iam_access_key) | resource |
 | [aws_iam_access_key.externaldns](https://registry.terraform.io/providers/hashicorp/aws/4.55.0/docs/resources/iam_access_key) | resource |
+| [aws_iam_access_key.loki_s3](https://registry.terraform.io/providers/hashicorp/aws/4.55.0/docs/resources/iam_access_key) | resource |
 | [aws_iam_access_key.vault_s3](https://registry.terraform.io/providers/hashicorp/aws/4.55.0/docs/resources/iam_access_key) | resource |
+| [aws_iam_policy.loki_s3](https://registry.terraform.io/providers/hashicorp/aws/4.55.0/docs/resources/iam_policy) | resource |
 | [aws_iam_policy.route53](https://registry.terraform.io/providers/hashicorp/aws/4.55.0/docs/resources/iam_policy) | resource |
 | [aws_iam_policy.vault_s3_backup](https://registry.terraform.io/providers/hashicorp/aws/4.55.0/docs/resources/iam_policy) | resource |
 | [aws_iam_user.certmanager](https://registry.terraform.io/providers/hashicorp/aws/4.55.0/docs/resources/iam_user) | resource |
 | [aws_iam_user.externaldns](https://registry.terraform.io/providers/hashicorp/aws/4.55.0/docs/resources/iam_user) | resource |
+| [aws_iam_user.loki_s3](https://registry.terraform.io/providers/hashicorp/aws/4.55.0/docs/resources/iam_user) | resource |
 | [aws_iam_user.vault_s3](https://registry.terraform.io/providers/hashicorp/aws/4.55.0/docs/resources/iam_user) | resource |
 | [aws_iam_user_policy_attachment.certmanager](https://registry.terraform.io/providers/hashicorp/aws/4.55.0/docs/resources/iam_user_policy_attachment) | resource |
 | [aws_iam_user_policy_attachment.externaldns](https://registry.terraform.io/providers/hashicorp/aws/4.55.0/docs/resources/iam_user_policy_attachment) | resource |
+| [aws_iam_user_policy_attachment.loki_s3](https://registry.terraform.io/providers/hashicorp/aws/4.55.0/docs/resources/iam_user_policy_attachment) | resource |
 | [aws_iam_user_policy_attachment.vault_s3](https://registry.terraform.io/providers/hashicorp/aws/4.55.0/docs/resources/iam_user_policy_attachment) | resource |
 | [aws_route53_record.cluster_subdomain_ns_records](https://registry.terraform.io/providers/hashicorp/aws/4.55.0/docs/resources/route53_record) | resource |
 | [aws_route53_record.wildcard_for_apps](https://registry.terraform.io/providers/hashicorp/aws/4.55.0/docs/resources/route53_record) | resource |
@@ -68,5 +73,6 @@ This terraform module creates a "parent" zone and multiple subdomain zones under
 |------|-------------|
 | <a name="output_certmanager_iam_credentials"></a> [certmanager\_iam\_credentials](#output\_certmanager\_iam\_credentials) | n/a |
 | <a name="output_externaldns_iam_credentials"></a> [externaldns\_iam\_credentials](#output\_externaldns\_iam\_credentials) | n/a |
+| <a name="output_loki_s3_iam_credentials"></a> [loki\_s3\_iam\_credentials](#output\_loki\_s3\_iam\_credentials) | n/a |
 | <a name="output_vault_s3_iam_credentials"></a> [vault\_s3\_iam\_credentials](#output\_vault\_s3\_iam\_credentials) | n/a |
 <!-- END_TF_DOCS -->
