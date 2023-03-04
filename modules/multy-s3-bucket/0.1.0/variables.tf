@@ -29,6 +29,3 @@ variable "backup_region" {
   type        = string
   nullable    = false
 }
-
-
-
