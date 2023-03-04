@@ -1,9 +1,8 @@
 resource "aws_iam_policy" "loki_s3" {
   provider = aws.clientaccount
-  for_each = aws_route53_zone.clusters
+  for_each = module.loki_s3
   name     = "loki-s3-${aws_route53_zone.clusters[each.key].name}"
-  # TODO - update bucket name
-  policy = <<EOF
+  policy   = <<EOF
 {
     "Version": "2012-10-17",
     "Statement": [
@@ -16,8 +15,8 @@ resource "aws_iam_policy" "loki_s3" {
             ],
             "Effect": "Allow",
             "Resource": [
-              "${aws_s3_bucket.primary.arn}/${aws_route53_zone.clusters[each.key].name}",
-              "${aws_s3_bucket.replica.arn}/${aws_route53_zone.clusters[each.key].name}/*"
+              "${module.loki_s3[each.key].primary_s3_bucket_arn}",
+              "${module.loki_s3[each.key].replica_s3_bucket_arn}/*"
             ]
         }
     ]
