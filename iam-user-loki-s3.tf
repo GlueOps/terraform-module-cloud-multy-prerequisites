@@ -1,7 +1,7 @@
 resource "aws_iam_user" "loki_s3" {
   provider = aws.clientaccount
   for_each = aws_route53_zone.clusters
-  name     = "vault-s3-${aws_route53_zone.clusters[each.key].name}"
+  name     = "loki-s3-${aws_route53_zone.clusters[each.key].name}"
 }
 
 resource "aws_iam_user_policy_attachment" "loki_s3" {
