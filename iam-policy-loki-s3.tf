@@ -16,7 +16,7 @@ resource "aws_iam_policy" "loki_s3" {
             "Effect": "Allow",
             "Resource": [
               "${module.loki_s3[each.key].primary_s3_bucket_arn}",
-              "${module.loki_s3[each.key].replica_s3_bucket_arn}/*"
+              "${module.loki_s3[each.key].primary_s3_bucket_arn}/*"
             ]
         }
     ]
