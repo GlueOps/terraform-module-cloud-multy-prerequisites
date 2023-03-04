@@ -1,6 +1,6 @@
 resource "aws_iam_role" "replication" {
   provider = aws.primaryregion
-  name     = "tf-iam-role-s3-replication-${var.bucket_name}"
+  name     = "tf-role-s3-rplctn-${var.bucket_name}"
 
   assume_role_policy = <<POLICY
 {
@@ -21,7 +21,7 @@ POLICY
 
 resource "aws_iam_policy" "replication" {
   provider = aws.primaryregion
-  name     = "tf-iam-role-policy-s3-replication-${var.bucket_name}"
+  name     = "tf-policy-s3-rplctn-${var.bucket_name}"
 
   policy = <<POLICY
 {
