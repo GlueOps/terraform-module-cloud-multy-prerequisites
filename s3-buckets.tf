@@ -18,9 +18,9 @@ module "loki_s3" {
     aws.primaryregion = aws.primaryregion
     aws.replicaregion = aws.replicaregion
   }
-  for_each = aws_route53_zone.clusters
+  for_each = toset(var.cluster_environments)
 
-  bucket_name         = "${local.bucket_name}-${aws_route53_zone.clusters[each.key].name}-loki"
+  bucket_name         = "${local.bucket_name}-${each.value}-loki"
   this_is_development = var.this_is_development
   company_account_id  = var.company_account_id
   primary_region      = var.primary_region
