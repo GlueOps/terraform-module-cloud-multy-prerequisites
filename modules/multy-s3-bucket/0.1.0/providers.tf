@@ -4,7 +4,10 @@ terraform {
       source  = "hashicorp/aws"
       version = "4.55.0"
 
-      configuration_aliases = [primaryregion, replicaregion]
+      configuration_aliases = [
+        aws.primaryregion,
+        aws.replicaregion
+      ]
     }
   }
 }
