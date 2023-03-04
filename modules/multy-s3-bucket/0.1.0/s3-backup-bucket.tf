@@ -1,8 +1,12 @@
 resource "aws_s3_bucket" "replica" {
   provider      = aws.replicaregion
-  bucket        = "${local.bucket_name}-replica"
+  bucket        = "${var.bucket_name}-replica"
   force_destroy = var.this_is_development ? true : false
 }
+output "replica_s3_bucket_arn" {
+  value = aws_s3_bucket.replica.arn
+}
+
 resource "aws_s3_bucket_acl" "replica" {
   provider = aws.replicaregion
   bucket   = aws_s3_bucket.replica.id
