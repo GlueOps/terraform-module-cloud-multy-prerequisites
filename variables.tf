@@ -50,3 +50,8 @@ locals {
   ns_record_type          = "NS"
   bucket_name             = "glueops-tenant-${local.company_key}"
 }
+
+variable "opsgenie_emails" {
+  description = "List of user email addresses"
+  type        = list(string)
+}
