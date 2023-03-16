@@ -1,6 +1,7 @@
 locals {
   users_set                = toset(var.users)
   cluster_environments_set = toset(var.cluster_environments)
+  time_zone                = "Africa/Monrovia"
 }
 
 data "opsgenie_user" "users" {
@@ -25,12 +26,29 @@ resource "opsgenie_team" "teams" {
   }
 }
 
+resource "opsgenie_team_routing_rule" "routing_rules" {
+  for_each = local.cluster_environments_set
+  
+  name     = "${var.company_key}-${each.value}-routing-rule"
+  team_id  = opsgenie_team.teams[each.key].id
+  order    = 0
+  timezone = local.time_zone
+  criteria {
+    type = "match-all"
+  }
+  notify {
+    name = opsgenie_schedule.schedules[each.key].name
+    type = "schedule"
+  }
+
+}
+
 resource "opsgenie_schedule" "schedules" {
   for_each = local.cluster_environments_set
 
   name          = "${var.company_key}-${each.value}-schedule"
   description   = "This is for company ${var.company_key} in the ${each.value} environment"
-  timezone      = "Africa/Monrovia"
+  timezone      = local.time_zone
   owner_team_id = opsgenie_team.teams[each.key].id
   enabled       = true
 }
