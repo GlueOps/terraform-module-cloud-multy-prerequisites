@@ -66,8 +66,8 @@ resource "opsgenie_api_integration" "prometheus" {
   }
 
   enabled                        = true
-  allow_write_access             = false
+  allow_write_access             = true
   ignore_responders_from_payload = true
-  suppress_notifications         = true
+  suppress_notifications         = false
   owner_team_id                  = opsgenie_team.teams[each.key].id
 }
