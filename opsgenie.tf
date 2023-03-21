@@ -7,5 +7,5 @@ module "opsgenie_teams" {
 
 output "opsgenie_prometheus_api_keys" {
   value       = module.opsgenie_teams.opsgenie_prometheus_api_keys
-  description = "A map of the Opsgenie API keys for the Prometheus integrations."
+  description = "A map of OpsGenie API Keys. One per Cluster Environment"
 }
