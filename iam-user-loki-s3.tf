@@ -19,4 +19,5 @@ resource "aws_iam_access_key" "loki_s3" {
 
 output "loki_s3_iam_credentials" {
   value = { for user, keys in aws_iam_access_key.loki_s3 : user => keys }
+  description = "A map of IAM Access Keys to S3 for Loki. One per Cluster Environment"
 }
