@@ -7,7 +7,7 @@ module "opsgenie_teams" {
 
 output "opsgenie_prometheus_api_keys" {
   value = {
-    for env_key, env_value in local.cluster_environments_set : env_key => module.opsgenie_teams.opsgenie_prometheus_api_keys[env_key]
+    for env_key, env_value in var.cluster_environments : env_key => module.opsgenie_teams.opsgenie_prometheus_api_keys[env_key]
   }
   description = "A map of the Opsgenie API keys for the Prometheus integrations."
 }
