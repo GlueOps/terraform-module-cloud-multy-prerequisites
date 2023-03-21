@@ -86,6 +86,6 @@ This terraform module creates:
 | <a name="output_certmanager_iam_credentials"></a> [certmanager\_iam\_credentials](#output\_certmanager\_iam\_credentials) | n/a |
 | <a name="output_externaldns_iam_credentials"></a> [externaldns\_iam\_credentials](#output\_externaldns\_iam\_credentials) | n/a |
 | <a name="output_loki_s3_iam_credentials"></a> [loki\_s3\_iam\_credentials](#output\_loki\_s3\_iam\_credentials) | n/a |
-| <a name="output_opsgenie_prometheus_api_keys"></a> [opsgenie\_prometheus\_api\_keys](#output\_opsgenie\_prometheus\_api\_keys) | A map of the Opsgenie API keys for the Prometheus integrations. |
+| <a name="output_opsgenie_prometheus_api_keys"></a> [opsgenie\_prometheus\_api\_keys](#output\_opsgenie\_prometheus\_api\_keys) | A map of OpsGenie API Keys. One per Cluster Environment |
 | <a name="output_vault_s3_iam_credentials"></a> [vault\_s3\_iam\_credentials](#output\_vault\_s3\_iam\_credentials) | n/a |
 <!-- END_TF_DOCS -->
