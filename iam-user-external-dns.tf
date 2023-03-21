@@ -19,4 +19,5 @@ resource "aws_iam_access_key" "externaldns" {
 
 output "externaldns_iam_credentials" {
   value = { for user, keys in aws_iam_access_key.externaldns : user => keys }
+  description = "A map of IAM Access Keys to Route53 for External DNS. One per Cluster Environment"
 }
