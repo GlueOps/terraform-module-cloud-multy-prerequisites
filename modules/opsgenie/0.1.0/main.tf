@@ -89,3 +89,10 @@ resource "opsgenie_api_integration" "prometheus" {
   suppress_notifications         = false
   owner_team_id                  = opsgenie_team.teams[each.key].id
 }
+
+output "opsgenie_prometheus_api_keys" {
+  value = {
+    for env_key, env_value in local.cluster_environments_set : env_key => opsgenie_api_integration.prometheus[env_key].api_key
+  }
+  description = "A map of the Opsgenie API keys for the Prometheus integrations."
+}
