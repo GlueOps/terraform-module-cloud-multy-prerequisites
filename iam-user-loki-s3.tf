@@ -21,3 +21,8 @@ output "loki_s3_iam_credentials" {
   value = { for user, keys in aws_iam_access_key.loki_s3 : user => keys }
   description = "A map of IAM Access Keys to S3 for Loki. One per Cluster Environment"
 }
+
+output "loki_s3_iam_credentials_by_cluster_env_name" {
+  value = { for user, keys in aws_iam_access_key.loki_s3 : aws_route53_zone.clusters[user].name => keys }
+  description = "A map of IAM Access Keys to S3 for Loki. One per Cluster Environment"
+}
