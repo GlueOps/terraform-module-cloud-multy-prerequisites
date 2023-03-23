@@ -5,7 +5,9 @@ module "opsgenie_teams" {
   cluster_environments = var.cluster_environments
 }
 
-output "opsgenie_prometheus_api_keys" {
-  value       = module.opsgenie_teams.opsgenie_prometheus_api_keys
-  description = "A map of OpsGenie API Keys. One per Cluster Environment"
-}
+# output "opsgenie_credentials" {
+#   value       = module.opsgenie_teams.opsgenie_prometheus_api_keys
+#   description = "A map of OpsGenie API Keys. One per Cluster Environment"
+# }
+
+// combine all the outputs in this terraform to a single json file
