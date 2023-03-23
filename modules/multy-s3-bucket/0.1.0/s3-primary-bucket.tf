@@ -7,6 +7,10 @@ output "primary_s3_bucket_arn" {
   value = aws_s3_bucket.primary.arn
 }
 
+output "primary_s3_bucket_id" {
+  value = aws_s3_bucket.primary.id
+}
+
 resource "aws_s3_bucket_acl" "primary" {
   provider = aws.primaryregion
   bucket   = aws_s3_bucket.primary.id

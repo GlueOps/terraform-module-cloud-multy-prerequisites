@@ -9,7 +9,7 @@ locals {
 }
 
 resource "aws_s3_bucket_object" "combined_outputs" {
-  bucket       =  module.common_s3.name
+  bucket       =  module.common_s3.id
   key          = "combined_outputs.json"
   content      = jsonencode(local.combined_outputs)
   content_type = "application/json"
