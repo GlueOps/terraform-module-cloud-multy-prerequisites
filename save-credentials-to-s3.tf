@@ -16,7 +16,7 @@ locals {
       certmanager_credentials = local.combined_outputs.certmanager_credentials[name]
       externaldns_credentials = local.combined_outputs.externaldns_credentials[name]
       loki_credentials        = local.combined_outputs.loki_credentials[name]
-      //opsgenie_credentials    = local.combined_outputs.opsgenie_credentials[name]
+      opsgenie_credentials    = lookup(local.combined_outputs.opsgenie_credentials, split(".", name)[0], null)
       vault_credentials       = local.combined_outputs.vault_credentials[name]
     }
   }
