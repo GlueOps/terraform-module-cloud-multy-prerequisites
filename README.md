@@ -30,6 +30,7 @@ This Terraform module creates various resources for managing multi-cloud prerequ
 | Name | Version |
 |------|---------|
 | <a name="provider_aws.clientaccount"></a> [aws.clientaccount](#provider\_aws.clientaccount) | 4.59.0 |
+| <a name="provider_aws.primaryregion"></a> [aws.primaryregion](#provider\_aws.primaryregion) | 4.59.0 |
 | <a name="provider_cloudflare"></a> [cloudflare](#provider\_cloudflare) | 4.2.0 |
 
 ## Modules
@@ -63,6 +64,7 @@ This Terraform module creates various resources for managing multi-cloud prerequ
 | [aws_route53_record.wildcard_for_apps](https://registry.terraform.io/providers/hashicorp/aws/4.59.0/docs/resources/route53_record) | resource |
 | [aws_route53_zone.clusters](https://registry.terraform.io/providers/hashicorp/aws/4.59.0/docs/resources/route53_zone) | resource |
 | [aws_route53_zone.main](https://registry.terraform.io/providers/hashicorp/aws/4.59.0/docs/resources/route53_zone) | resource |
+| [aws_s3_bucket_object.combined_outputs](https://registry.terraform.io/providers/hashicorp/aws/4.59.0/docs/resources/s3_bucket_object) | resource |
 | [cloudflare_record.delegation_ns_record_first](https://registry.terraform.io/providers/cloudflare/cloudflare/4.2.0/docs/resources/record) | resource |
 | [cloudflare_record.delegation_ns_record_fourth](https://registry.terraform.io/providers/cloudflare/cloudflare/4.2.0/docs/resources/record) | resource |
 | [cloudflare_record.delegation_ns_record_second](https://registry.terraform.io/providers/cloudflare/cloudflare/4.2.0/docs/resources/record) | resource |
@@ -84,11 +86,5 @@ This Terraform module creates various resources for managing multi-cloud prerequ
 
 ## Outputs
 
-| Name | Description |
-|------|-------------|
-| <a name="output_certmanager_iam_credentials"></a> [certmanager\_iam\_credentials](#output\_certmanager\_iam\_credentials) | A map of IAM Access Keys to Route53 for Cert Manager. One per Cluster Environment |
-| <a name="output_externaldns_iam_credentials"></a> [externaldns\_iam\_credentials](#output\_externaldns\_iam\_credentials) | A map of IAM Access Keys to Route53 for External DNS. One per Cluster Environment |
-| <a name="output_loki_s3_iam_credentials"></a> [loki\_s3\_iam\_credentials](#output\_loki\_s3\_iam\_credentials) | A map of IAM Access Keys to S3 for Loki. One per Cluster Environment |
-| <a name="output_opsgenie_prometheus_api_keys"></a> [opsgenie\_prometheus\_api\_keys](#output\_opsgenie\_prometheus\_api\_keys) | A map of OpsGenie API Keys. One per Cluster Environment |
-| <a name="output_vault_s3_iam_credentials"></a> [vault\_s3\_iam\_credentials](#output\_vault\_s3\_iam\_credentials) | A map of IAM Access Keys to S3 for vault backups. One per Cluster Environment |
+No outputs.
 <!-- END_TF_DOCS -->
