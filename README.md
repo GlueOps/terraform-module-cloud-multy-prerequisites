@@ -21,16 +21,16 @@ This Terraform module creates various resources for managing multi-cloud prerequ
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | 4.55.0 |
-| <a name="requirement_cloudflare"></a> [cloudflare](#requirement\_cloudflare) | 3.35.0 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | 4.59.0 |
+| <a name="requirement_cloudflare"></a> [cloudflare](#requirement\_cloudflare) | 4.2.0 |
 | <a name="requirement_random"></a> [random](#requirement\_random) | 3.4.3 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws.clientaccount"></a> [aws.clientaccount](#provider\_aws.clientaccount) | 4.55.0 |
-| <a name="provider_cloudflare"></a> [cloudflare](#provider\_cloudflare) | 3.35.0 |
+| <a name="provider_aws.clientaccount"></a> [aws.clientaccount](#provider\_aws.clientaccount) | 4.59.0 |
+| <a name="provider_cloudflare"></a> [cloudflare](#provider\_cloudflare) | 4.2.0 |
 
 ## Modules
 
@@ -44,30 +44,30 @@ This Terraform module creates various resources for managing multi-cloud prerequ
 
 | Name | Type |
 |------|------|
-| [aws_iam_access_key.certmanager](https://registry.terraform.io/providers/hashicorp/aws/4.55.0/docs/resources/iam_access_key) | resource |
-| [aws_iam_access_key.externaldns](https://registry.terraform.io/providers/hashicorp/aws/4.55.0/docs/resources/iam_access_key) | resource |
-| [aws_iam_access_key.loki_s3](https://registry.terraform.io/providers/hashicorp/aws/4.55.0/docs/resources/iam_access_key) | resource |
-| [aws_iam_access_key.vault_s3](https://registry.terraform.io/providers/hashicorp/aws/4.55.0/docs/resources/iam_access_key) | resource |
-| [aws_iam_policy.loki_s3](https://registry.terraform.io/providers/hashicorp/aws/4.55.0/docs/resources/iam_policy) | resource |
-| [aws_iam_policy.route53](https://registry.terraform.io/providers/hashicorp/aws/4.55.0/docs/resources/iam_policy) | resource |
-| [aws_iam_policy.vault_s3_backup](https://registry.terraform.io/providers/hashicorp/aws/4.55.0/docs/resources/iam_policy) | resource |
-| [aws_iam_user.certmanager](https://registry.terraform.io/providers/hashicorp/aws/4.55.0/docs/resources/iam_user) | resource |
-| [aws_iam_user.externaldns](https://registry.terraform.io/providers/hashicorp/aws/4.55.0/docs/resources/iam_user) | resource |
-| [aws_iam_user.loki_s3](https://registry.terraform.io/providers/hashicorp/aws/4.55.0/docs/resources/iam_user) | resource |
-| [aws_iam_user.vault_s3](https://registry.terraform.io/providers/hashicorp/aws/4.55.0/docs/resources/iam_user) | resource |
-| [aws_iam_user_policy_attachment.certmanager](https://registry.terraform.io/providers/hashicorp/aws/4.55.0/docs/resources/iam_user_policy_attachment) | resource |
-| [aws_iam_user_policy_attachment.externaldns](https://registry.terraform.io/providers/hashicorp/aws/4.55.0/docs/resources/iam_user_policy_attachment) | resource |
-| [aws_iam_user_policy_attachment.loki_s3](https://registry.terraform.io/providers/hashicorp/aws/4.55.0/docs/resources/iam_user_policy_attachment) | resource |
-| [aws_iam_user_policy_attachment.vault_s3](https://registry.terraform.io/providers/hashicorp/aws/4.55.0/docs/resources/iam_user_policy_attachment) | resource |
-| [aws_route53_record.cluster_subdomain_ns_records](https://registry.terraform.io/providers/hashicorp/aws/4.55.0/docs/resources/route53_record) | resource |
-| [aws_route53_record.wildcard_for_apps](https://registry.terraform.io/providers/hashicorp/aws/4.55.0/docs/resources/route53_record) | resource |
-| [aws_route53_zone.clusters](https://registry.terraform.io/providers/hashicorp/aws/4.55.0/docs/resources/route53_zone) | resource |
-| [aws_route53_zone.main](https://registry.terraform.io/providers/hashicorp/aws/4.55.0/docs/resources/route53_zone) | resource |
-| [cloudflare_record.delegation_ns_record_first](https://registry.terraform.io/providers/cloudflare/cloudflare/3.35.0/docs/resources/record) | resource |
-| [cloudflare_record.delegation_ns_record_fourth](https://registry.terraform.io/providers/cloudflare/cloudflare/3.35.0/docs/resources/record) | resource |
-| [cloudflare_record.delegation_ns_record_second](https://registry.terraform.io/providers/cloudflare/cloudflare/3.35.0/docs/resources/record) | resource |
-| [cloudflare_record.delegation_ns_record_third](https://registry.terraform.io/providers/cloudflare/cloudflare/3.35.0/docs/resources/record) | resource |
-| [cloudflare_zone.delegator](https://registry.terraform.io/providers/cloudflare/cloudflare/3.35.0/docs/data-sources/zone) | data source |
+| [aws_iam_access_key.certmanager](https://registry.terraform.io/providers/hashicorp/aws/4.59.0/docs/resources/iam_access_key) | resource |
+| [aws_iam_access_key.externaldns](https://registry.terraform.io/providers/hashicorp/aws/4.59.0/docs/resources/iam_access_key) | resource |
+| [aws_iam_access_key.loki_s3](https://registry.terraform.io/providers/hashicorp/aws/4.59.0/docs/resources/iam_access_key) | resource |
+| [aws_iam_access_key.vault_s3](https://registry.terraform.io/providers/hashicorp/aws/4.59.0/docs/resources/iam_access_key) | resource |
+| [aws_iam_policy.loki_s3](https://registry.terraform.io/providers/hashicorp/aws/4.59.0/docs/resources/iam_policy) | resource |
+| [aws_iam_policy.route53](https://registry.terraform.io/providers/hashicorp/aws/4.59.0/docs/resources/iam_policy) | resource |
+| [aws_iam_policy.vault_s3_backup](https://registry.terraform.io/providers/hashicorp/aws/4.59.0/docs/resources/iam_policy) | resource |
+| [aws_iam_user.certmanager](https://registry.terraform.io/providers/hashicorp/aws/4.59.0/docs/resources/iam_user) | resource |
+| [aws_iam_user.externaldns](https://registry.terraform.io/providers/hashicorp/aws/4.59.0/docs/resources/iam_user) | resource |
+| [aws_iam_user.loki_s3](https://registry.terraform.io/providers/hashicorp/aws/4.59.0/docs/resources/iam_user) | resource |
+| [aws_iam_user.vault_s3](https://registry.terraform.io/providers/hashicorp/aws/4.59.0/docs/resources/iam_user) | resource |
+| [aws_iam_user_policy_attachment.certmanager](https://registry.terraform.io/providers/hashicorp/aws/4.59.0/docs/resources/iam_user_policy_attachment) | resource |
+| [aws_iam_user_policy_attachment.externaldns](https://registry.terraform.io/providers/hashicorp/aws/4.59.0/docs/resources/iam_user_policy_attachment) | resource |
+| [aws_iam_user_policy_attachment.loki_s3](https://registry.terraform.io/providers/hashicorp/aws/4.59.0/docs/resources/iam_user_policy_attachment) | resource |
+| [aws_iam_user_policy_attachment.vault_s3](https://registry.terraform.io/providers/hashicorp/aws/4.59.0/docs/resources/iam_user_policy_attachment) | resource |
+| [aws_route53_record.cluster_subdomain_ns_records](https://registry.terraform.io/providers/hashicorp/aws/4.59.0/docs/resources/route53_record) | resource |
+| [aws_route53_record.wildcard_for_apps](https://registry.terraform.io/providers/hashicorp/aws/4.59.0/docs/resources/route53_record) | resource |
+| [aws_route53_zone.clusters](https://registry.terraform.io/providers/hashicorp/aws/4.59.0/docs/resources/route53_zone) | resource |
+| [aws_route53_zone.main](https://registry.terraform.io/providers/hashicorp/aws/4.59.0/docs/resources/route53_zone) | resource |
+| [cloudflare_record.delegation_ns_record_first](https://registry.terraform.io/providers/cloudflare/cloudflare/4.2.0/docs/resources/record) | resource |
+| [cloudflare_record.delegation_ns_record_fourth](https://registry.terraform.io/providers/cloudflare/cloudflare/4.2.0/docs/resources/record) | resource |
+| [cloudflare_record.delegation_ns_record_second](https://registry.terraform.io/providers/cloudflare/cloudflare/4.2.0/docs/resources/record) | resource |
+| [cloudflare_record.delegation_ns_record_third](https://registry.terraform.io/providers/cloudflare/cloudflare/4.2.0/docs/resources/record) | resource |
+| [cloudflare_zone.delegator](https://registry.terraform.io/providers/cloudflare/cloudflare/4.2.0/docs/data-sources/zone) | data source |
 
 ## Inputs
 
