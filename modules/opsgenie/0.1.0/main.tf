@@ -28,7 +28,7 @@ resource "opsgenie_team" "teams" {
 
 resource "opsgenie_team_routing_rule" "routing_rules" {
   for_each = local.cluster_environments_set
-  
+
   name     = "${var.company_key}-${each.value}-routing-rule"
   team_id  = opsgenie_team.teams[each.key].id
   order    = 0
