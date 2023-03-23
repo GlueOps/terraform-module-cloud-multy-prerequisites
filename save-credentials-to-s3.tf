@@ -9,6 +9,7 @@ locals {
 }
 
 resource "aws_s3_bucket_object" "combined_outputs" {
+  provider     = aws.primaryregion
   bucket       =  module.common_s3.primary_s3_bucket_id
   key          = "combined_outputs.json"
   content      = jsonencode(local.combined_outputs)
