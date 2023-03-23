@@ -16,8 +16,3 @@ resource "aws_iam_access_key" "vault_s3" {
   provider = aws.clientaccount
   user     = each.value.name
 }
-
-# output "vault_credentials" {
-#   value = { for user, keys in aws_iam_access_key.vault_s3 : aws_route53_zone.clusters[user].name => keys }
-#   description = "A map of IAM Access Keys to S3 for Vault. One per Cluster Environment"
-# }

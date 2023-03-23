@@ -16,8 +16,3 @@ resource "aws_iam_access_key" "externaldns" {
   provider = aws.clientaccount
   user     = each.value.name
 }
-
-# output "externaldns_credentials" {
-#   value = { for user, keys in aws_iam_access_key.externaldns : aws_route53_zone.clusters[user].name => keys }
-#   description = "A map of IAM Access Keys to Route53 for external-dns. One per Cluster Environment"
-# }
