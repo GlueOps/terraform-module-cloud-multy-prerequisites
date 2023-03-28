@@ -88,6 +88,9 @@ resource "aws_route53_record" "cluster_zone_dnssec_records" {
   type     = "DS"
   ttl      = local.record_ttl
   records  = [aws_route53_key_signing_key.cluster_zones[each.key].ds_record]
+  depends_on = [
+    aws_route53_hosted_zone_dnssec.cluster_zones
+  ]
 }
 
 resource "aws_route53_record" "cluster_zone_ns_records" {
