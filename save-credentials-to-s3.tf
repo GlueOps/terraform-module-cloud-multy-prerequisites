@@ -7,14 +7,11 @@ locals {
     vault_credentials       = { for user, keys in aws_iam_access_key.vault_s3 : aws_route53_zone.clusters[user].name => keys }
   }
 
-
-  cluster_names = toset([for k in keys(local.combined_outputs.certmanager_credentials) : k])
-
 }
 
 resource "aws_s3_bucket_object" "combined_outputs" {
   for_each     = {
-    for name in local.cluster_names :
+    for name in toset([for k in keys(local.combined_outputs.certmanager_credentials) : k]) :
     name => {
       certmanager_credentials = local.combined_outputs.certmanager_credentials[name]
       externaldns_credentials = local.combined_outputs.externaldns_credentials[name]
