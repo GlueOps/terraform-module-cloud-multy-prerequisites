@@ -10,7 +10,10 @@ locals {
 
   cluster_names = toset([for k in keys(local.combined_outputs.certmanager_credentials) : k])
 
-  updated_combined_outputs = {
+}
+
+resource "aws_s3_bucket_object" "combined_outputs" {
+  for_each     = {
     for name in local.cluster_names :
     name => {
       certmanager_credentials = local.combined_outputs.certmanager_credentials[name]
@@ -20,10 +23,6 @@ locals {
       vault_credentials       = local.combined_outputs.vault_credentials[name]
     }
   }
-}
-
-resource "aws_s3_bucket_object" "combined_outputs" {
-  for_each     = local.updated_combined_outputs
   provider     = aws.primaryregion
   bucket       = module.common_s3.primary_s3_bucket_id
   key          = "${each.key}/configurations/credentials.json"
