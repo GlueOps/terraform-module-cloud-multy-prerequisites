@@ -97,7 +97,7 @@ resource "aws_route53_record" "cluster_zone_ns_records" {
   name     = each.value.name
   type     = local.ns_record_type
   ttl      = local.record_ttl
-  records  = aws_route53_zone.clusters[each.key].name_servers
+  records  = aws_route53_zone.cluster_zones[each.key].name_servers
 }
 
 
