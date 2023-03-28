@@ -32,6 +32,14 @@ resource "aws_route53_key_signing_key" "parent_tenant_zone" {
   status                     = "ACTIVE"
 }
 
+resource "aws_route53_hosted_zone_dnssec" "parent_tenant_zone" {
+  provider = aws.clientaccount
+  depends_on = [
+    aws_route53_key_signing_key.parent_tenant_zone
+  ]
+  hosted_zone_id = aws_route53_key_signing_key.parent_tenant_zone.hosted_zone_id
+}
+
 resource "aws_route53_record" "enable_dnssec_for_parent_tenant_zone" {
   provider = aws.management-tenant-dns
   zone_id  = data.aws_route53_zone.management_tenant_dns.zone_id
@@ -59,6 +67,17 @@ resource "aws_route53_key_signing_key" "cluster_zones" {
   key_management_service_arn = module.dnssec_key.kms_key_arn
   name                       = "primary"
   status                     = "ACTIVE"
+}
+
+resource "aws_route53_hosted_zone_dnssec" "cluster_zones" {
+  provider = aws.clientaccount
+
+  for_each = aws_route53_zone.clusters
+
+  depends_on = [
+    aws_route53_key_signing_key.cluster_zones
+  ]
+  hosted_zone_id = aws_route53_key_signing_key.clusters[each.key].hosted_zone_id
 }
 
 resource "aws_route53_record" "cluster_zone_dnssec_records" {
