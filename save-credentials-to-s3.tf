@@ -11,7 +11,7 @@ resource "aws_s3_object" "combined_outputs" {
   }
   provider               = aws.primaryregion
   bucket                 = module.common_s3.primary_s3_bucket_id
-  key                    = "${each.key}/configurations/credentials.json"
+  key                    = "${each.key}.${aws_route53_zone.main.name}/configurations/credentials.json"
   content                = jsonencode(each.value)
   content_type           = "application/json"
   server_side_encryption = "AES256"
