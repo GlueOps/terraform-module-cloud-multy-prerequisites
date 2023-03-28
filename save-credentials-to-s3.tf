@@ -1,5 +1,5 @@
-resource "aws_s3_bucket_object" "combined_outputs" {
-  for_each     = {
+resource "aws_s3_object" "combined_outputs" {
+  for_each = {
     for name in var.cluster_environments :
     name => {
       certmanager_credentials = { for user, keys in aws_iam_access_key.certmanager : aws_route53_zone.clusters[user].name => keys }
@@ -9,9 +9,11 @@ resource "aws_s3_bucket_object" "combined_outputs" {
       vault_credentials       = { for user, keys in aws_iam_access_key.vault_s3 : aws_route53_zone.clusters[user].name => keys }
     }
   }
-  provider     = aws.primaryregion
-  bucket       = module.common_s3.primary_s3_bucket_id
-  key          = "${each.key}/configurations/credentials.json"
-  content      = jsonencode(each.value)
-  content_type = "application/json"
+  provider               = aws.primaryregion
+  bucket                 = module.common_s3.primary_s3_bucket_id
+  key                    = "${each.key}/configurations/credentials.json"
+  content                = jsonencode(each.value)
+  content_type           = "application/json"
+  server_side_encryption = "AES256"
+  acl                    = "private"
 }
