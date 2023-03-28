@@ -68,7 +68,7 @@ resource "aws_route53_record" "cluster_zone_dnssec_records" {
   name     = each.value.name
   type     = "DS"
   ttl      = local.record_ttl
-  records  = toset(aws_route53_key_signing_key.cluster_zones[each.key].ds_record)
+  records  = [aws_route53_key_signing_key.cluster_zones[each.key].ds_record]
 }
 
 resource "aws_route53_record" "cluster_zone_ns_records" {
