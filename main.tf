@@ -1,6 +1,6 @@
 resource "aws_route53_zone" "main" {
   provider = aws.clientaccount
-  name     = "${local.company_key}.${aws_route53_zone.management_tenant_dns.name}"
+  name     = "${local.company_key}.${data.aws_route53_zone.management_tenant_dns.name}"
 }
 
 resource "aws_route53_record" "wildcard_for_apps" {
@@ -16,7 +16,7 @@ resource "aws_route53_record" "wildcard_for_apps" {
 resource "aws_route53_zone" "clusters" {
   provider = aws.clientaccount
   for_each = toset(var.cluster_environments)
-  name     = "${each.value}.${local.company_key}.${aws_route53_zone.management_tenant_dns.name}"
+  name     = "${each.value}.${local.company_key}.${data.aws_route53_zone.management_tenant_dns.name}"
   depends_on = [
     aws_route53_zone.main
   ]
