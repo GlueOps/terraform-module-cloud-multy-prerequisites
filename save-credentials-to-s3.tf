@@ -1,6 +1,6 @@
 resource "aws_s3_bucket_object" "combined_outputs" {
   for_each     = {
-    for ame in var.cluster_environments :
+    for name in var.cluster_environments :
     name => {
       certmanager_credentials = { for user, keys in aws_iam_access_key.certmanager : aws_route53_zone.clusters[user].name => keys }
       externaldns_credentials = { for user, keys in aws_iam_access_key.externaldns : aws_route53_zone.clusters[user].name => keys }
