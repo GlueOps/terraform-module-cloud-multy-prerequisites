@@ -9,5 +9,5 @@ resource "aws_route53_record" "delegation_to_parent_tenant_zone" {
   name     = aws_route53_zone.main.name
   type     = local.ns_record_type
   ttl      = local.record_ttl
-  records  = aws_route53_zone.main.name.name_servers
+  records  = aws_route53_zone.main.name_servers
 }
