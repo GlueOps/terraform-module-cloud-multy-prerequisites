@@ -34,11 +34,11 @@ resource "aws_route53_key_signing_key" "parent_tenant_zone" {
 
 resource "aws_route53_record" "enable_dnssec_parent_tenant_zone" {
   provider = aws.management-tenant-dns
-  zone_id  = data.aws_route53_zone.management_tenant_dns
+  zone_id  = data.aws_route53_zone.management_tenant_dns.zone_id
   name     = data.aws_route53_zone.management_tenant_dns.name
   type     = "DS"
   ttl      = local.record_ttl
-  records  = aws_route53_key_signing_key.parent_tenant_zone.ds_record
+  records  = [aws_route53_key_signing_key.parent_tenant_zone.ds_record]
 }
 
 
