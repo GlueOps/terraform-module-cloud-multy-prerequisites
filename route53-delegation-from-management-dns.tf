@@ -1,4 +1,5 @@
 data "aws_route53_zone" "management_tenant_dns" {
+  provider = aws.management-tenant-dns
   zone_id = local.management_tenant_dns_zoneid
 }
 
