@@ -4,7 +4,7 @@ variable "management_tenant_dns_zoneid" {
   type        = string
   nullable    = false
 }
-
+sss
 
 variable "this_is_development" {
   description = "The development cluster environment and data/resources can be destroyed!"
