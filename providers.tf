@@ -24,6 +24,14 @@ provider "aws" {
 }
 
 provider "aws" {
+  alias  = "management-tenant-dns"
+  region = var.primary_region
+  assume_role {
+    role_arn = "arn:aws:iam::${var.management_tenant_dns_aws_account_id}:role/OrganizationAccountAccessRole"
+  }
+}
+
+provider "aws" {
   alias  = "primaryregion"
   region = var.primary_region
   assume_role {
