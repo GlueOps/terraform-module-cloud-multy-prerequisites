@@ -7,12 +7,6 @@ output "replica_s3_bucket_arn" {
   value = aws_s3_bucket.replica.arn
 }
 
-resource "aws_s3_bucket_acl" "replica" {
-  provider = aws.replicaregion
-  bucket   = aws_s3_bucket.replica.id
-  acl      = "private"
-}
-
 resource "aws_s3_bucket_versioning" "replica" {
   provider = aws.replicaregion
   bucket   = aws_s3_bucket.replica.id
