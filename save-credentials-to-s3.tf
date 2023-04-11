@@ -3,7 +3,7 @@ resource "aws_s3_object" "combined_outputs" {
 
   provider               = aws.primaryregion
   bucket                 = module.common_s3.primary_s3_bucket_id
-  key                    = "clusters/${each.value}.${aws_route53_zone.main.name}/configurations/credentials.json"
+  key                    = "${each.value}.${aws_route53_zone.main.name}/configurations/credentials.json"
   content                = jsonencode({
       certmanager_credentials = { (aws_route53_zone.clusters[each.value].name) = aws_iam_access_key.certmanager[each.value] },
       externaldns_credentials = { (aws_route53_zone.clusters[each.value].name) = aws_iam_access_key.externaldns[each.value] },
