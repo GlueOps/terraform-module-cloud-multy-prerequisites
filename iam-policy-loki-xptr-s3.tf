@@ -13,6 +13,7 @@ resource "aws_iam_policy" "loki_logs_exporter_s3" {
         "s3:ListObject",
         "s3:HeadObject",
         "s3:ListBucket",
+        "s3:ListObjectVersions",
         "s3:GetObjectAttributes",
         "s3:GetObjectVersionAttributes"
       ],
