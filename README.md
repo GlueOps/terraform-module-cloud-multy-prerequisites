@@ -47,17 +47,21 @@ This Terraform module creates various resources for managing multi-cloud prerequ
 |------|------|
 | [aws_iam_access_key.certmanager](https://registry.terraform.io/providers/hashicorp/aws/4.64.0/docs/resources/iam_access_key) | resource |
 | [aws_iam_access_key.externaldns](https://registry.terraform.io/providers/hashicorp/aws/4.64.0/docs/resources/iam_access_key) | resource |
+| [aws_iam_access_key.loki_log_exporter_s3](https://registry.terraform.io/providers/hashicorp/aws/4.64.0/docs/resources/iam_access_key) | resource |
 | [aws_iam_access_key.loki_s3](https://registry.terraform.io/providers/hashicorp/aws/4.64.0/docs/resources/iam_access_key) | resource |
 | [aws_iam_access_key.vault_s3](https://registry.terraform.io/providers/hashicorp/aws/4.64.0/docs/resources/iam_access_key) | resource |
+| [aws_iam_policy.loki_logs_exporter_s3](https://registry.terraform.io/providers/hashicorp/aws/4.64.0/docs/resources/iam_policy) | resource |
 | [aws_iam_policy.loki_s3](https://registry.terraform.io/providers/hashicorp/aws/4.64.0/docs/resources/iam_policy) | resource |
 | [aws_iam_policy.route53](https://registry.terraform.io/providers/hashicorp/aws/4.64.0/docs/resources/iam_policy) | resource |
 | [aws_iam_policy.vault_s3_backup](https://registry.terraform.io/providers/hashicorp/aws/4.64.0/docs/resources/iam_policy) | resource |
 | [aws_iam_user.certmanager](https://registry.terraform.io/providers/hashicorp/aws/4.64.0/docs/resources/iam_user) | resource |
 | [aws_iam_user.externaldns](https://registry.terraform.io/providers/hashicorp/aws/4.64.0/docs/resources/iam_user) | resource |
+| [aws_iam_user.loki_log_exporter_s3](https://registry.terraform.io/providers/hashicorp/aws/4.64.0/docs/resources/iam_user) | resource |
 | [aws_iam_user.loki_s3](https://registry.terraform.io/providers/hashicorp/aws/4.64.0/docs/resources/iam_user) | resource |
 | [aws_iam_user.vault_s3](https://registry.terraform.io/providers/hashicorp/aws/4.64.0/docs/resources/iam_user) | resource |
 | [aws_iam_user_policy_attachment.certmanager](https://registry.terraform.io/providers/hashicorp/aws/4.64.0/docs/resources/iam_user_policy_attachment) | resource |
 | [aws_iam_user_policy_attachment.externaldns](https://registry.terraform.io/providers/hashicorp/aws/4.64.0/docs/resources/iam_user_policy_attachment) | resource |
+| [aws_iam_user_policy_attachment.loki_log_exporter_s3](https://registry.terraform.io/providers/hashicorp/aws/4.64.0/docs/resources/iam_user_policy_attachment) | resource |
 | [aws_iam_user_policy_attachment.loki_s3](https://registry.terraform.io/providers/hashicorp/aws/4.64.0/docs/resources/iam_user_policy_attachment) | resource |
 | [aws_iam_user_policy_attachment.vault_s3](https://registry.terraform.io/providers/hashicorp/aws/4.64.0/docs/resources/iam_user_policy_attachment) | resource |
 | [aws_route53_hosted_zone_dnssec.cluster_zones](https://registry.terraform.io/providers/hashicorp/aws/4.64.0/docs/resources/route53_hosted_zone_dnssec) | resource |
