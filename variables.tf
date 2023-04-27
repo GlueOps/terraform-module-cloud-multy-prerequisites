@@ -62,3 +62,9 @@ variable "opsgenie_emails" {
   type        = list(string)
 }
 
+variable "enable_replication_and_versioning" {
+  description = "Enable replication and versioning for the S3 bucket"
+  type        = bool
+  default     = true
+  nullable    = false
+}
