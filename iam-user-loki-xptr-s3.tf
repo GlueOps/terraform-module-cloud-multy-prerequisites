@@ -8,7 +8,7 @@ resource "aws_iam_user_policy_attachment" "loki_log_exporter_s3" {
   provider   = aws.clientaccount
   for_each   = aws_iam_user.loki_log_exporter_s3
   user       = each.value.name
-  policy_arn = aws_iam_policy.loki_log_exporter_s3_backup[each.key].arn
+  policy_arn = aws_iam_policy.loki_logs_exporter_s3[each.key].arn
 }
 
 resource "aws_iam_access_key" "loki_log_exporter_s3" {

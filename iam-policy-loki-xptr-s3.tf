@@ -1,4 +1,4 @@
-resource "aws_iam_policy" "vault_s3_backup" {
+resource "aws_iam_policy" "loki_logs_exporter_s3" {
   provider = aws.clientaccount
   for_each = aws_route53_zone.clusters
   name     = "loki-xptr-s3-${aws_route53_zone.clusters[each.key].name}"
