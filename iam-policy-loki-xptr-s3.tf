@@ -13,7 +13,7 @@ resource "aws_iam_policy" "loki_logs_exporter_s3" {
         "s3:ListObject",
         "s3:HeadObject",
         "s3:ListBucket",
-        "s3:GetObjectAttributes",
+        "s3:GetObjectAttributes"
       ],
       "Resource": [
         "${module.common_s3.primary_s3_bucket_arn}/${aws_route53_zone.clusters[each.key].name}/loki_exported_logs/*",
