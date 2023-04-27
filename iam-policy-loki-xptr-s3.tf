@@ -24,3 +24,4 @@ resource "aws_iam_policy" "loki_logs_exporter_s3" {
 }
 EOF
 }
+

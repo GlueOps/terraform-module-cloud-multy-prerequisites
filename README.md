@@ -86,6 +86,7 @@ This Terraform module creates various resources for managing multi-cloud prerequ
 | <a name="input_cluster_environments"></a> [cluster\_environments](#input\_cluster\_environments) | The cluster environments | `list(string)` | n/a | yes |
 | <a name="input_company_account_id"></a> [company\_account\_id](#input\_company\_account\_id) | The company AWS account id | `string` | n/a | yes |
 | <a name="input_company_key"></a> [company\_key](#input\_company\_key) | The company key | `string` | n/a | yes |
+| <a name="input_loki_log_export_retention_in_days"></a> [loki\_log\_export\_retention\_in\_days](#input\_loki\_log\_export\_retention\_in\_days) | The number of days to keep the log exports in the S3 bucket | `number` | `90` | no |
 | <a name="input_management_tenant_dns_aws_account_id"></a> [management\_tenant\_dns\_aws\_account\_id](#input\_management\_tenant\_dns\_aws\_account\_id) | The company AWS account id for the management-tenant-dns account | `string` | n/a | yes |
 | <a name="input_management_tenant_dns_zoneid"></a> [management\_tenant\_dns\_zoneid](#input\_management\_tenant\_dns\_zoneid) | The Route53 ZoneID that all the delegation is coming from | `string` | n/a | yes |
 | <a name="input_opsgenie_emails"></a> [opsgenie\_emails](#input\_opsgenie\_emails) | List of user email addresses | `list(string)` | n/a | yes |

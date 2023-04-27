@@ -77,6 +77,7 @@ resource "aws_s3_bucket_replication_configuration" "replication" {
 
   rule {
     id = "replication"
+    filter {}
 
     status = "Enabled"
 
@@ -84,5 +85,10 @@ resource "aws_s3_bucket_replication_configuration" "replication" {
       bucket        = aws_s3_bucket.replica.arn
       storage_class = "STANDARD"
     }
+    delete_marker_replication {
+      status = "Enabled"
+    }
   }
+
+  count = var.enable_replication_and_versioning ? 1 : 0
 }

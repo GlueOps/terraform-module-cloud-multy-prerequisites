@@ -20,9 +20,10 @@ module "loki_s3" {
   }
   for_each = toset(var.cluster_environments)
 
-  bucket_name         = "${local.bucket_name}-${each.value}-loki"
-  this_is_development = var.this_is_development
-  company_account_id  = var.company_account_id
-  primary_region      = var.primary_region
-  backup_region       = var.backup_region
+  bucket_name                       = "${local.bucket_name}-${each.value}-loki"
+  this_is_development               = var.this_is_development
+  company_account_id                = var.company_account_id
+  primary_region                    = var.primary_region
+  backup_region                     = var.backup_region
+  enable_replication_and_versioning = false
 }

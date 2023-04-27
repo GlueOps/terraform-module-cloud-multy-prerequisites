@@ -15,7 +15,7 @@ resource "aws_s3_bucket_versioning" "primary" {
   provider = aws.primaryregion
   bucket   = aws_s3_bucket.primary.id
   versioning_configuration {
-    status = "Enabled"
+    status = var.enable_replication_and_versioning ? "Enabled" : "Suspended"
   }
 }
 
@@ -36,15 +36,14 @@ resource "aws_s3_bucket_lifecycle_configuration" "primary" {
   rule {
     id = "expire_non_current_version"
 
-    filter {
-      prefix = ""
-    }
+    filter {}
 
     noncurrent_version_expiration {
       noncurrent_days = var.this_is_development ? 1 : 90
     }
     status = "Enabled"
   }
+
 }
 
 resource "aws_s3_bucket_public_access_block" "primary" {
