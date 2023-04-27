@@ -61,10 +61,3 @@ variable "opsgenie_emails" {
   description = "List of user email addresses"
   type        = list(string)
 }
-
-variable "enable_replication_and_versioning" {
-  description = "Enable replication and versioning for the S3 bucket"
-  type        = bool
-  default     = true
-  nullable    = false
-}

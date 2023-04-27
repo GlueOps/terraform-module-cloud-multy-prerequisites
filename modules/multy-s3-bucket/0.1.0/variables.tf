@@ -29,3 +29,10 @@ variable "backup_region" {
   type        = string
   nullable    = false
 }
+
+variable "enable_replication_and_versioning" {
+  description = "Enable replication of the S3 bucket from the primary region to the backup region."
+  type        = bool
+  nullable    = false
+  default     = true
+}
