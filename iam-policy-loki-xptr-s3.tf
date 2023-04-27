@@ -10,9 +10,12 @@ resource "aws_iam_policy" "loki_logs_exporter_s3" {
       "Effect": "Allow",
       "Action": [
         "s3:PutObject",
-        "s3:List*",
+        "s3:ListObject",
         "s3:HeadObject",
-        "s3:Get*"
+        "s3:ListBucket",
+        "s3:ListBucketVersions",
+        "s3:GetObjectAttributes",
+        "s3:GetObjectVersionAttributes"
       ],
       "Resource": [
         "${module.common_s3.primary_s3_bucket_arn}/${aws_route53_zone.clusters[each.key].name}/loki_exported_logs/*",
