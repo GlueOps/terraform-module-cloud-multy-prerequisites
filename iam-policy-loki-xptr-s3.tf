@@ -15,6 +15,7 @@ resource "aws_iam_policy" "loki_logs_exporter_s3" {
         "s3:ListBucket",
         "s3:ListBucketVersions",
         "s3:GetObjectAttributes",
+        "s3:GetObject",
         "s3:GetObjectVersionAttributes"
       ],
       "Resource": [
