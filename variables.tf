@@ -37,16 +37,23 @@ variable "cluster_environments" {
     environment_name         = string
     github_app_client_id     = string
     github_app_client_secret = string
+    github_api_token         = string
+    admin_github_org_name    = string
+    tenant_github_org_name   = string
     vault_github_org_team_policy_mappings = list(object({
       oidc_groups = list(string)
       policy_name = string
     }))
+
   }))
   default = [
     {
       environment_name         = "test"
       github_app_client_id     = "apidgoeshere"
       github_app_client_secret = "secretgoeshere"
+      github_api_token         = "apitokengoeshere"
+      admin_github_org_name    = "GlueOps"
+      tenant_github_org_name   = "glueops-rocks"
       vault_github_org_team_policy_mappings = [
         {
           oidc_groups = ["GlueOps:vault_super_admins"]
@@ -66,7 +73,7 @@ locals {
 }
 
 locals {
-  cluster_environments =  toset(keys(local.environment_map))
+  cluster_environments = toset(keys(local.environment_map))
 }
 
 variable "primary_region" {
