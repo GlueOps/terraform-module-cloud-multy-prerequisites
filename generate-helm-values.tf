@@ -1,32 +1,32 @@
 
 
 resource "random_password" "dex_argocd_client_secret" {
-  for_each = toset(var.cluster_environments)
+  for_each = local.cluster_environments
   length   = 45
   special  = false
 }
 
 resource "random_password" "dex_grafana_client_secret" {
-  for_each = toset(var.cluster_environments)
+  for_each = local.cluster_environments
   length   = 45
   special  = false
 }
 
 resource "random_password" "dex_vault_client_secret" {
-  for_each = toset(var.cluster_environments)
+  for_each = local.cluster_environments
   length   = 45
   special  = false
 }
 
 resource "random_password" "dex_pomerium_client_secret" {
-  for_each = toset(var.cluster_environments)
+  for_each = local.cluster_environments
   length   = 45
   special  = false
 }
 
 
 module "glueops_platform_helm_values" {
-  for_each                     = toset(var.cluster_environments)
+  for_each                     = local.cluster_environments
   source                       = "git::https://github.com/GlueOps/platform-helm-chart-platform.git?ref=feat/adding-terraform-values-generation"
   dex_github_client_id         = "435asdsadsad0"
   dex_github_client_secret     = "9f583cssssss8214bb0asdca7c"
@@ -53,7 +53,7 @@ module "glueops_platform_helm_values" {
 
 
 resource "aws_s3_object" "platform_helm_values" {
-  for_each = toset(var.cluster_environments)
+  for_each = local.cluster_environments
 
   provider = aws.primaryregion
   bucket   = module.common_s3.primary_s3_bucket_id
@@ -66,7 +66,7 @@ resource "aws_s3_object" "platform_helm_values" {
 }
 
 module "argocd_helm_values" {
-  for_each            = toset(var.cluster_environments)
+  for_each            = local.cluster_environments
   source              = "git::https://github.com/GlueOps/docs-argocd.git?ref=feat/adding-terraform-values-generation"
   tenant_key          = var.company_key
   cluster_environment = each.value
@@ -76,7 +76,7 @@ module "argocd_helm_values" {
 
 
 resource "aws_s3_object" "argocd_helm_values" {
-  for_each = toset(var.cluster_environments)
+  for_each = local.cluster_environments
 
   provider = aws.primaryregion
   bucket   = module.common_s3.primary_s3_bucket_id

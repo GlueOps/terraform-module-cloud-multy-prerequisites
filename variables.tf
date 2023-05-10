@@ -32,10 +32,19 @@ variable "management_tenant_dns_aws_account_id" {
 }
 
 variable "cluster_environments" {
-  description = "The cluster environments"
-  type        = list(string)
-  nullable    = false
+  description = "The cluster environments and their respective github app ids"
+  type = list(object({
+    environment_name         = string
+    github_app_client_id     = string
+    github_app_client_secret = string
+  }))
+  nullable = false
 }
+
+locals {
+  cluster_environments = toset([for cluster_environment in var.cluster_environments : cluster_environment.environment_name])
+}
+
 
 variable "primary_region" {
   description = "The primary S3 region to create S3 bucket in used for backups. This should be the same region as the one where the cluster is being deployed."

@@ -52,7 +52,7 @@ resource "aws_route53_record" "enable_dnssec_for_parent_tenant_zone" {
 
 resource "aws_route53_zone" "clusters" {
   provider = aws.clientaccount
-  for_each = toset(var.cluster_environments)
+  for_each = local.cluster_environments
   name     = "${each.value}.${local.company_key}.${data.aws_route53_zone.management_tenant_dns.name}"
   depends_on = [
     aws_route53_zone.main
