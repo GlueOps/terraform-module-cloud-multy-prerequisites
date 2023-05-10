@@ -1,27 +1,30 @@
 
-
+locals {
+  random_password_length             = 45
+  random_password_special_characters = false
+}
 resource "random_password" "dex_argocd_client_secret" {
   for_each = local.cluster_environments
-  length   = 45
-  special  = false
+  length   = local.random_password_length
+  special  = local.random_password_special_characters
 }
 
 resource "random_password" "dex_grafana_client_secret" {
   for_each = local.cluster_environments
-  length   = 45
-  special  = false
+  length   = local.random_password_length
+  special  = local.random_password_special_characters
 }
 
 resource "random_password" "dex_vault_client_secret" {
   for_each = local.cluster_environments
-  length   = 45
-  special  = false
+  length   = local.random_password_length
+  special  = local.random_password_special_characters
 }
 
 resource "random_password" "dex_pomerium_client_secret" {
   for_each = local.cluster_environments
-  length   = 45
-  special  = false
+  length   = local.random_password_length
+  special  = local.random_password_special_characters
 }
 
 
