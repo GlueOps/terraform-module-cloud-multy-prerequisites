@@ -41,7 +41,7 @@ variable "cluster_environments" {
       oidc_groups = list(string)
       policy_name = string
     }))
-    default = {
+    default = [{
       environment_name         = "test"
       github_app_client_id     = "apidgoeshere"
       github_app_client_secret = "secretgoeshere"
@@ -54,7 +54,7 @@ variable "cluster_environments" {
           oidc_groups = ["GlueOps:vault_super_admins", "testing-okta:developers"]
           policy_name = "reader"
         }
-    ] }
+    ] }]
   }))
   nullable = false
 }
