@@ -6,7 +6,11 @@ module "captain_repository" {
     "argocd.yaml"                          = module.argocd_helm_values[each.value].helm_values
     "platform.yaml"                        = module.glueops_platform_helm_values[each.value].helm_values
     "terraform/kubernetes/main.tf"         = "//tf goes here"
-    "terraform/vault/vault-init/main.tf"   = "//tf goes here"
+    "terraform/vault/vault-init/main.tf"   = <<EOT
+module "initialize_vault_cluster" {
+  source = "git::https://github.com/GlueOps/terraform-module-kubernetes-hashicorp-vault-initialization.git"
+}
+EOT
     "terraform/vault/vault-config/main.tf" = "//tf goes here"
   }
 }
