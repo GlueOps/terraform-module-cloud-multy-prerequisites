@@ -5,7 +5,7 @@ variable "repostory_name" {
 }
 
 variable "files_to_create" {
-  type     = list(map)
+  type     = list(map(string))
   nullable = false
   default  = []
 }
