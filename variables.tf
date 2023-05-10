@@ -37,6 +37,24 @@ variable "cluster_environments" {
     environment_name         = string
     github_app_client_id     = string
     github_app_client_secret = string
+    vault_github_org_team_policy_mappings = list(object({
+      oidc_groups = list(string)
+      policy_name = string
+    }))
+    default = {
+      environment_name         = "test"
+      github_app_client_id     = "apidgoeshere"
+      github_app_client_secret = "secretgoeshere"
+      vault_github_org_team_policy_mappings = [
+        {
+          oidc_groups = ["GlueOps:vault_super_admins"]
+          policy_name = "editor"
+        },
+        {
+          oidc_groups = ["GlueOps:vault_super_admins", "testing-okta:developers"]
+          policy_name = "reader"
+        }
+    ] }
   }))
   nullable = false
 }
@@ -88,4 +106,17 @@ variable "vault_github_org_team_policy_mappings" {
     }
   ]
   nullable = false
+}
+
+variable "argocd_tenant_rbac_policies" {
+  type        = string
+  description = "policy csv for tenants: https://argo-cd.readthedocs.io/en/stable/operator-manual/rbac/"
+  default     = <<EOT
+      g, glueops-rocks:developers, role:developers
+      p, role:developers, clusters, get, *, allow
+      p, role:developers, *, get, development, allow
+      p, role:developers, repositories, *, development/*, allow
+      p, role:developers, applications, *, development/*, allow
+      p, role:developers, exec, *, development/*, allow
+EOT
 }

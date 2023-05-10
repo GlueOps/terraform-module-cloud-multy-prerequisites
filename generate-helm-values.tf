@@ -69,12 +69,13 @@ resource "aws_s3_object" "platform_helm_values" {
 }
 
 module "argocd_helm_values" {
-  for_each            = local.cluster_environments
-  source              = "git::https://github.com/GlueOps/docs-argocd.git?ref=feat/adding-terraform-values-generation"
-  tenant_key          = var.company_key
-  cluster_environment = each.value
-  client_secret       = random_password.dex_argocd_client_secret[each.key].result
-  glueops_root_domain = data.aws_route53_zone.management_tenant_dns.name
+  for_each                    = local.cluster_environments
+  source                      = "git::https://github.com/GlueOps/docs-argocd.git?ref=feat/adding-terraform-values-generation"
+  tenant_key                  = var.company_key
+  cluster_environment         = each.value
+  client_secret               = random_password.dex_argocd_client_secret[each.key].result
+  glueops_root_domain         = data.aws_routvar.argocd_tenant_rbac_policies
+  argocd_tenant_rbac_policies = var.argocd_tenant_rbac_policies
 }
 
 
