@@ -2,26 +2,26 @@
 
 resource "random_password" "dex_argocd_client_secret" {
   for_each = toset(var.cluster_environments)
-  length  = 32
-  special = false
+  length   = 32
+  special  = false
 }
 
 resource "random_password" "dex_grafana_client_secret" {
   for_each = toset(var.cluster_environments)
-  length  = 32
-  special = false
+  length   = 32
+  special  = false
 }
 
 resource "random_password" "dex_vault_client_secret" {
   for_each = toset(var.cluster_environments)
-  length  = 32
-  special = false
+  length   = 32
+  special  = false
 }
 
 resource "random_password" "dex_pomerium_client_secret" {
   for_each = toset(var.cluster_environments)
-  length  = 32
-  special = false
+  length   = 32
+  special  = false
 }
 
 
@@ -65,14 +65,25 @@ resource "aws_s3_object" "platform_helm_values" {
   acl                    = "private"
 }
 
-# module "argocd_yaml" {
-#   source              = "git::https://github.com/GlueOps/docs-argocd.git"
-#   tenant_key          = var.company_key
-#   cluster_environment = "nonprod"
-#   client_secret       = "Zsbui/29YEqoGOzuI8snlqGcdaRYPSLocwLXDB5GhZY="
-#   glueops_root_domain = "onglueops.com"
-# }
+module "argocd_helm_values" {
+  for_each            = toset(var.cluster_environments)
+  source              = "git::https://github.com/GlueOps/docs-argocd.git?ref=feat/adding-terraform-values-generation"
+  tenant_key          = var.company_key
+  cluster_environment = each.value
+  client_secret       = random_password.dex_argocd_client_secret[each.key].result
+  glueops_root_domain = data.aws_route53_zone.management_tenant_dns.name
+}
 
-# output "argocd_yaml" {
-#   value = module.argocd_yaml.argocd
-# }
+
+resource "aws_s3_object" "argocd_helm_values" {
+  for_each = toset(var.cluster_environments)
+
+  provider = aws.primaryregion
+  bucket   = module.common_s3.primary_s3_bucket_id
+  key      = "${each.value}.${aws_route53_zone.main.name}/configurations/argocd.yaml"
+  content  = module.argocd_helm_values[each.value].helm_values
+
+  content_type           = "application/json"
+  server_side_encryption = "AES256"
+  acl                    = "private"
+}
