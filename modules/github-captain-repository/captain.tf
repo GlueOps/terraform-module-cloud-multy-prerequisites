@@ -3,6 +3,7 @@
 resource "github_repository" "captain_repo" {
   name       = var.repostory_name
   visibility = "private"
+  auto_init = true
 }
 
 
