@@ -74,7 +74,7 @@ module "argocd_helm_values" {
   tenant_key                  = var.company_key
   cluster_environment         = each.value
   client_secret               = random_password.dex_argocd_client_secret[each.key].result
-  glueops_root_domain         = data.aws_routvar.argocd_tenant_rbac_policies
+  glueops_root_domain         = data.aws_route53_zone.management_tenant_dns.name
   argocd_tenant_rbac_policies = var.argocd_tenant_rbac_policies
 }
 
