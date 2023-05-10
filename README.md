@@ -31,13 +31,17 @@ This Terraform module creates various resources for managing multi-cloud prerequ
 | <a name="provider_aws.clientaccount"></a> [aws.clientaccount](#provider\_aws.clientaccount) | 4.64.0 |
 | <a name="provider_aws.management-tenant-dns"></a> [aws.management-tenant-dns](#provider\_aws.management-tenant-dns) | 4.64.0 |
 | <a name="provider_aws.primaryregion"></a> [aws.primaryregion](#provider\_aws.primaryregion) | 4.64.0 |
+| <a name="provider_random"></a> [random](#provider\_random) | 3.5.1 |
 
 ## Modules
 
 | Name | Source | Version |
 |------|--------|---------|
+| <a name="module_argocd_helm_values"></a> [argocd\_helm\_values](#module\_argocd\_helm\_values) | git::https://github.com/GlueOps/docs-argocd.git | feat/adding-terraform-values-generation |
+| <a name="module_captain_repository"></a> [captain\_repository](#module\_captain\_repository) | ./modules/github-captain-repository | n/a |
 | <a name="module_common_s3"></a> [common\_s3](#module\_common\_s3) | ./modules/multy-s3-bucket/0.1.0 | n/a |
 | <a name="module_dnssec_key"></a> [dnssec\_key](#module\_dnssec\_key) | git::https://github.com/GlueOps/terraform-module-cloud-aws-dnssec-kms-key.git | v0.1.0 |
+| <a name="module_glueops_platform_helm_values"></a> [glueops\_platform\_helm\_values](#module\_glueops\_platform\_helm\_values) | git::https://github.com/GlueOps/platform-helm-chart-platform.git | feat/adding-terraform-values-generation |
 | <a name="module_loki_s3"></a> [loki\_s3](#module\_loki\_s3) | ./modules/multy-s3-bucket/0.1.0 | n/a |
 | <a name="module_opsgenie_teams"></a> [opsgenie\_teams](#module\_opsgenie\_teams) | ./modules/opsgenie/0.1.0 | n/a |
 
@@ -75,7 +79,13 @@ This Terraform module creates various resources for managing multi-cloud prerequ
 | [aws_route53_record.wildcard_for_apps](https://registry.terraform.io/providers/hashicorp/aws/4.64.0/docs/resources/route53_record) | resource |
 | [aws_route53_zone.clusters](https://registry.terraform.io/providers/hashicorp/aws/4.64.0/docs/resources/route53_zone) | resource |
 | [aws_route53_zone.main](https://registry.terraform.io/providers/hashicorp/aws/4.64.0/docs/resources/route53_zone) | resource |
+| [aws_s3_object.argocd_helm_values](https://registry.terraform.io/providers/hashicorp/aws/4.64.0/docs/resources/s3_object) | resource |
 | [aws_s3_object.combined_outputs](https://registry.terraform.io/providers/hashicorp/aws/4.64.0/docs/resources/s3_object) | resource |
+| [aws_s3_object.platform_helm_values](https://registry.terraform.io/providers/hashicorp/aws/4.64.0/docs/resources/s3_object) | resource |
+| [random_password.dex_argocd_client_secret](https://registry.terraform.io/providers/hashicorp/random/3.5.1/docs/resources/password) | resource |
+| [random_password.dex_grafana_client_secret](https://registry.terraform.io/providers/hashicorp/random/3.5.1/docs/resources/password) | resource |
+| [random_password.dex_pomerium_client_secret](https://registry.terraform.io/providers/hashicorp/random/3.5.1/docs/resources/password) | resource |
+| [random_password.dex_vault_client_secret](https://registry.terraform.io/providers/hashicorp/random/3.5.1/docs/resources/password) | resource |
 | [aws_route53_zone.management_tenant_dns](https://registry.terraform.io/providers/hashicorp/aws/4.64.0/docs/data-sources/route53_zone) | data source |
 
 ## Inputs
@@ -83,7 +93,7 @@ This Terraform module creates various resources for managing multi-cloud prerequ
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_backup_region"></a> [backup\_region](#input\_backup\_region) | The secondary S3 region to create S3 bucket in used for backups. This should be different than the primary region and will have the data from the primary region replicated to it. | `string` | n/a | yes |
-| <a name="input_cluster_environments"></a> [cluster\_environments](#input\_cluster\_environments) | The cluster environments | `list(string)` | n/a | yes |
+| <a name="input_cluster_environments"></a> [cluster\_environments](#input\_cluster\_environments) | The cluster environments and their respective github app ids | <pre>list(object({<br>    environment_name         = string<br>    github_app_client_id     = string<br>    github_app_client_secret = string<br>  }))</pre> | n/a | yes |
 | <a name="input_company_account_id"></a> [company\_account\_id](#input\_company\_account\_id) | The company AWS account id | `string` | n/a | yes |
 | <a name="input_company_key"></a> [company\_key](#input\_company\_key) | The company key | `string` | n/a | yes |
 | <a name="input_management_tenant_dns_aws_account_id"></a> [management\_tenant\_dns\_aws\_account\_id](#input\_management\_tenant\_dns\_aws\_account\_id) | The company AWS account id for the management-tenant-dns account | `string` | n/a | yes |
