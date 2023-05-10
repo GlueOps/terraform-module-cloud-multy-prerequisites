@@ -1,12 +1,39 @@
+
+
+resource "random_password" "dex_argocd_client_secret" {
+  for_each = toset(var.cluster_environments)
+  length  = 32
+  special = false
+}
+
+resource "random_password" "dex_grafana_client_secret" {
+  for_each = toset(var.cluster_environments)
+  length  = 32
+  special = false
+}
+
+resource "random_password" "dex_vault_client_secret" {
+  for_each = toset(var.cluster_environments)
+  length  = 32
+  special = false
+}
+
+resource "random_password" "dex_pomerium_client_secret" {
+  for_each = toset(var.cluster_environments)
+  length  = 32
+  special = false
+}
+
+
 module "glueops_platform_helm_values" {
   for_each                     = toset(var.cluster_environments)
   source                       = "git::https://github.com/GlueOps/platform-helm-chart-platform.git?ref=feat/adding-terraform-values-generation"
   dex_github_client_id         = "435asdsadsad0"
   dex_github_client_secret     = "9f583cssssss8214bb0asdca7c"
-  dex_argocd_client_secret     = "Zsbui/29YEqoGOzuI8snlqGcdaRYPSLocwLXDB5GhZY="
-  dex_grafana_client_secret    = "AyYzghXw/qn/zfO6j9tN4H/7yLSYFPqnKOeoXOSi5U0="
-  dex_vault_client_secret      = "aLCZg513OvIA0vY5c24KLU2PrRXmBdhLGLUBrpkhBmE="
-  dex_pomerium_client_secret   = "5yon23Cwa83fscaq/CPTZ8UdhYIJ7gfHnl+gQO+FfPk="
+  dex_argocd_client_secret     = random_password.dex_argocd_client_secret[each.key].result
+  dex_grafana_client_secret    = random_password.dex_grafana_client_secret[each.key].result
+  dex_vault_client_secret      = random_password.dex_vault_client_secret[each.key].result
+  dex_pomerium_client_secret   = random_password.dex_pomerium_client_secret[each.key].result
   vault_aws_access_key         = aws_iam_access_key.vault_s3[each.value].id
   vault_aws_secret_key         = aws_iam_access_key.vault_s3[each.value].secret
   loki_aws_access_key          = aws_iam_access_key.loki_s3[each.value].id
