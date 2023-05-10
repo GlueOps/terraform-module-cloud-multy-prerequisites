@@ -91,7 +91,7 @@ module "argocd_helm_values" {
   cluster_environment  = each.value.environment_name
   client_secret        = random_password.dex_argocd_client_secret[each.value.environment_name].result
   glueops_root_domain  = data.aws_route53_zone.management_tenant_dns.name
-  argocd_rbac_policies = var.argocd_rbac_policies
+  argocd_rbac_policies = each.value.argocd_rbac_policies
 }
 
 

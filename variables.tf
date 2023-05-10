@@ -44,6 +44,7 @@ variable "cluster_environments" {
       oidc_groups = list(string)
       policy_name = string
     }))
+    argocd_rbac_policies = string
 
   }))
   default = [
@@ -65,7 +66,17 @@ variable "cluster_environments" {
         }
       ]
     }
+
   ]
+  argocd_rbac_policies = <<EOT
+      g, GlueOps:argocd_super_admins, role:admin
+      g, glueops-rocks:developers, role:developers
+      p, role:developers, clusters, get, *, allow
+      p, role:developers, *, get, development, allow
+      p, role:developers, repositories, *, development/*, allow
+      p, role:developers, applications, *, development/*, allow
+      p, role:developers, exec, *, development/*, allow
+EOT
 }
 
 locals {
@@ -101,35 +112,3 @@ variable "opsgenie_emails" {
   type        = list(string)
 }
 
-variable "vault_github_org_team_policy_mappings" {
-  description = "The org team policy mappings"
-  type = list(object({
-    oidc_groups = list(string)
-    policy_name = string
-  }))
-  default = [
-    {
-      oidc_groups = ["GlueOps:vault_super_admins"]
-      policy_name = "editor"
-    },
-    {
-      oidc_groups = ["GlueOps:vault_super_admins", "testing-okta:developers"]
-      policy_name = "reader"
-    }
-  ]
-  nullable = false
-}
-
-variable "argocd_rbac_policies" {
-  type        = string
-  description = "policy csv for tenants: https://argo-cd.readthedocs.io/en/stable/operator-manual/rbac/"
-  default     = <<EOT
-      g, GlueOps:argocd_super_admins, role:admin
-      g, glueops-rocks:developers, role:developers
-      p, role:developers, clusters, get, *, allow
-      p, role:developers, *, get, development, allow
-      p, role:developers, repositories, *, development/*, allow
-      p, role:developers, applications, *, development/*, allow
-      p, role:developers, exec, *, development/*, allow
-EOT
-}
