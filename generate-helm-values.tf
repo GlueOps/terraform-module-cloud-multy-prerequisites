@@ -2,25 +2,25 @@
 
 resource "random_password" "dex_argocd_client_secret" {
   for_each = toset(var.cluster_environments)
-  length   = 32
+  length   = 45
   special  = false
 }
 
 resource "random_password" "dex_grafana_client_secret" {
   for_each = toset(var.cluster_environments)
-  length   = 32
+  length   = 45
   special  = false
 }
 
 resource "random_password" "dex_vault_client_secret" {
   for_each = toset(var.cluster_environments)
-  length   = 32
+  length   = 45
   special  = false
 }
 
 resource "random_password" "dex_pomerium_client_secret" {
   for_each = toset(var.cluster_environments)
-  length   = 32
+  length   = 45
   special  = false
 }
 
