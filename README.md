@@ -101,6 +101,7 @@ This Terraform module creates various resources for managing multi-cloud prerequ
 | <a name="input_opsgenie_emails"></a> [opsgenie\_emails](#input\_opsgenie\_emails) | List of user email addresses | `list(string)` | n/a | yes |
 | <a name="input_primary_region"></a> [primary\_region](#input\_primary\_region) | The primary S3 region to create S3 bucket in used for backups. This should be the same region as the one where the cluster is being deployed. | `string` | n/a | yes |
 | <a name="input_this_is_development"></a> [this\_is\_development](#input\_this\_is\_development) | The development cluster environment and data/resources can be destroyed! | `string` | `false` | no |
+| <a name="input_vault_github_org_team_policy_mappings"></a> [vault\_github\_org\_team\_policy\_mappings](#input\_vault\_github\_org\_team\_policy\_mappings) | The org team policy mappings | <pre>list(object({<br>    oidc_groups = list(string)<br>    policy_name = string<br>  }))</pre> | <pre>[<br>  {<br>    "oidc_groups": [<br>      "GlueOps:vault_super_admins"<br>    ],<br>    "policy_name": "editor"<br>  },<br>  {<br>    "oidc_groups": [<br>      "GlueOps:vault_super_admins",<br>      "testing-okta:developers"<br>    ],<br>    "policy_name": "reader"<br>  }<br>]</pre> | no |
 
 ## Outputs
 
