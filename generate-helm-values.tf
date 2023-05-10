@@ -24,6 +24,20 @@ module "glueops_platform_helm_values" {
   opsgenie_api_key             = lookup(module.opsgenie_teams.opsgenie_prometheus_api_keys, split(".", each.value)[0], null)
 }
 
+
+resource "aws_s3_object" "platform_helm_values" {
+  for_each = toset(var.cluster_environments)
+
+  provider = aws.primaryregion
+  bucket   = module.common_s3.primary_s3_bucket_id
+  key      = "${each.value}.${aws_route53_zone.main.name}/configurations/platform.yaml"
+  content  = module.glueops_platform_helm_values[each.value].helm_values
+
+  content_type           = "application/json"
+  server_side_encryption = "AES256"
+  acl                    = "private"
+}
+
 # module "argocd_yaml" {
 #   source              = "git::https://github.com/GlueOps/docs-argocd.git"
 #   tenant_key          = var.company_key
