@@ -8,7 +8,7 @@ resource "github_repository" "captain_repo" {
 
 
 resource "github_repository_file" "files" {
-  for_each            = var.files_to_create
+  for_each            = toset(var.files_to_create)
   repository          = github_repository.captain_repo.name
   branch              = "main"
   file                = each.key
