@@ -44,7 +44,7 @@ module "glueops_platform_helm_values" {
   certmanager_aws_secret_key   = aws_iam_access_key.certmanager[each.value].secret
   externaldns_aws_access_key   = aws_iam_access_key.externaldns[each.value].id
   externaldns_aws_secret_key   = aws_iam_access_key.externaldns[each.value].secret
-  glueops_root_domain          = "onglueops.rocks"
+  glueops_root_domain          = data.aws_route53_zone.management_tenant_dns.name
   cluster_environment          = each.value
   aws_region                   = var.primary_region
   tenant_key                   = var.company_key
