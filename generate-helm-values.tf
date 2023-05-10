@@ -90,3 +90,5 @@ resource "aws_s3_object" "argocd_helm_values" {
   server_side_encryption = "AES256"
   acl                    = "private"
 }
+
+

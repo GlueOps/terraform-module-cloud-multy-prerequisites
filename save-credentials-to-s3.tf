@@ -1,5 +1,5 @@
 resource "aws_s3_object" "combined_outputs" {
-  for_each = toset(var.cluster_environments)
+  for_each = local.cluster_environments
 
   provider = aws.primaryregion
   bucket   = module.common_s3.primary_s3_bucket_id
