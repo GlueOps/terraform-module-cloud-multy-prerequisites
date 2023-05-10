@@ -28,30 +28,31 @@ resource "random_password" "dex_pomerium_client_secret" {
 }
 
 
+
 module "glueops_platform_helm_values" {
-  for_each                     = local.cluster_environments
+  for_each                     = local.environment_map
   source                       = "git::https://github.com/GlueOps/platform-helm-chart-platform.git?ref=feat/adding-terraform-values-generation"
-  dex_github_client_id         = var.cluster_environments[each.key].github_app_client_id
-  dex_github_client_secret     = var.cluster_environments[each.key].github_app_client_secret
-  dex_argocd_client_secret     = random_password.dex_argocd_client_secret[each.key].result
-  dex_grafana_client_secret    = random_password.dex_grafana_client_secret[each.key].result
-  dex_vault_client_secret      = random_password.dex_vault_client_secret[each.key].result
-  dex_pomerium_client_secret   = random_password.dex_pomerium_client_secret[each.key].result
-  vault_aws_access_key         = aws_iam_access_key.vault_s3[each.value].id
-  vault_aws_secret_key         = aws_iam_access_key.vault_s3[each.value].secret
-  loki_aws_access_key          = aws_iam_access_key.loki_s3[each.value].id
-  loki_aws_secret_key          = aws_iam_access_key.loki_s3[each.value].secret
-  loki_exporter_aws_access_key = aws_iam_access_key.loki_log_exporter_s3[each.value].id
-  loki_exporter_aws_secret_key = aws_iam_access_key.loki_log_exporter_s3[each.value].secret
-  certmanager_aws_access_key   = aws_iam_access_key.certmanager[each.value].id
-  certmanager_aws_secret_key   = aws_iam_access_key.certmanager[each.value].secret
-  externaldns_aws_access_key   = aws_iam_access_key.externaldns[each.value].id
-  externaldns_aws_secret_key   = aws_iam_access_key.externaldns[each.value].secret
+  dex_github_client_id         = each.value.github_app_client_id
+  dex_github_client_secret     = each.value.github_app_client_secret
+  dex_argocd_client_secret     = random_password.dex_argocd_client_secret[each.value.environment_name].result
+  dex_grafana_client_secret    = random_password.dex_grafana_client_secret[each.value.environment_name].result
+  dex_vault_client_secret      = random_password.dex_vault_client_secret[each.value.environment_name].result
+  dex_pomerium_client_secret   = random_password.dex_pomerium_client_secret[each.value.environment_name].result
+  vault_aws_access_key         = aws_iam_access_key.vault_s3[each.value.environment_name].id
+  vault_aws_secret_key         = aws_iam_access_key.vault_s3[each.value.environment_name].secret
+  loki_aws_access_key          = aws_iam_access_key.loki_s3[each.value.environment_name].id
+  loki_aws_secret_key          = aws_iam_access_key.loki_s3[each.value.environment_name].secret
+  loki_exporter_aws_access_key = aws_iam_access_key.loki_log_exporter_s3[each.value.environment_name].id
+  loki_exporter_aws_secret_key = aws_iam_access_key.loki_log_exporter_s3[each.value.environment_name].secret
+  certmanager_aws_access_key   = aws_iam_access_key.certmanager[each.value.environment_name].id
+  certmanager_aws_secret_key   = aws_iam_access_key.certmanager[each.value.environment_name].secret
+  externaldns_aws_access_key   = aws_iam_access_key.externaldns[each.value.environment_name].id
+  externaldns_aws_secret_key   = aws_iam_access_key.externaldns[each.value.environment_name].secret
   glueops_root_domain          = data.aws_route53_zone.management_tenant_dns.name
-  cluster_environment          = each.value
+  cluster_environment          = each.value.environment_name
   aws_region                   = var.primary_region
   tenant_key                   = var.company_key
-  opsgenie_api_key             = lookup(module.opsgenie_teams.opsgenie_prometheus_api_keys, split(".", each.value)[0], null)
+  opsgenie_api_key             = lookup(module.opsgenie_teams.opsgenie_prometheus_api_keys, split(".", each.value.environment_name)[0], null)
 }
 
 

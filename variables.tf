@@ -61,11 +61,9 @@ variable "cluster_environments" {
   ]
 }
 
-
 locals {
-  cluster_environments = toset([for cluster_environment in var.cluster_environments : cluster_environment.environment_name])
+  environment_map = { for env in var.cluster_environments : env.environment_name => env }
 }
-
 
 variable "primary_region" {
   description = "The primary S3 region to create S3 bucket in used for backups. This should be the same region as the one where the cluster is being deployed."
