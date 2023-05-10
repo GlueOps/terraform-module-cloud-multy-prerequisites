@@ -16,7 +16,8 @@ module "configure_vault_cluster" {
     source = "git::https://github.com/GlueOps/terraform-module-kubernetes-hashicorp-vault-configuration.git"
     oidc_client_secret = "${random_password.dex_vault_client_secret[each.key].result}"
     captain_domain = "${each.value}.${aws_route53_zone.main.name}"
-    org_team_policy_mappings = "${var.vault_github_org_team_policy_mappings}"
+    org_team_policy_mappings = ${jsonencode(var.vault_github_org_team_policy_mappings)}
+
 }
 EOT
   }
