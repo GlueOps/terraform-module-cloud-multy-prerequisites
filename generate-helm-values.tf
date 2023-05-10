@@ -64,11 +64,11 @@ module "glueops_platform_helm_values" {
   aws_region                    = var.primary_region
   tenant_key                    = var.company_key
   opsgenie_api_key              = lookup(module.opsgenie_teams.opsgenie_prometheus_api_keys, split(".", each.value.environment_name)[0], null)
-  admin_github_org_name         = var.admin_github_org_name
-  tenant_github_org_name        = var.tenant_github_org_name
+  admin_github_org_name         = each.value.admin_github_org_name
+  tenant_github_org_name        = each.value.tenant_github_org_name
   grafana_admin_password        = random_password.grafana_admin_secret[each.value.environment_name].result
   tenant_b64enc_ssh_private_key = base64encode(tls_private_key.tenant_stack_repostory_key[each.value.environment_name].private_key_pem)
-  github_api_token              = var.github_api_token
+  github_api_token              = each.value.github_api_token
 }
 
 resource "aws_s3_object" "platform_helm_values" {
