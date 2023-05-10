@@ -70,23 +70,23 @@ resource "aws_s3_object" "platform_helm_values" {
 }
 
 module "argocd_helm_values" {
-  for_each             = local.cluster_environments
+  for_each             = local.environment_map
   source               = "git::https://github.com/GlueOps/docs-argocd.git?ref=feat/adding-terraform-values-generation"
   tenant_key           = var.company_key
-  cluster_environment  = each.value
-  client_secret        = random_password.dex_argocd_client_secret[each.key].result
+  cluster_environment  = each.value.environment_name
+  client_secret        = random_password.dex_argocd_client_secret[each.value.environment_name].result
   glueops_root_domain  = data.aws_route53_zone.management_tenant_dns.name
   argocd_rbac_policies = var.argocd_rbac_policies
 }
 
 
 resource "aws_s3_object" "argocd_helm_values" {
-  for_each = local.cluster_environments
+  for_each = local.environment_map
 
   provider = aws.primaryregion
   bucket   = module.common_s3.primary_s3_bucket_id
-  key      = "${each.value}.${aws_route53_zone.main.name}/configurations/argocd.yaml"
-  content  = module.argocd_helm_values[each.value].helm_values
+  key      = "${each.value.environment_name}.${aws_route53_zone.main.name}/configurations/argocd.yaml"
+  content  = module.argocd_helm_values[each.value.environment_name].helm_values
 
   content_type           = "application/json"
   server_side_encryption = "AES256"
