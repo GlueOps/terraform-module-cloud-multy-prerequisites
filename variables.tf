@@ -70,3 +70,22 @@ variable "opsgenie_emails" {
   description = "List of user email addresses"
   type        = list(string)
 }
+
+variable "vault_github_org_team_policy_mappings" {
+  description = "The org team policy mappings"
+  type = list(object({
+    oidc_groups = list(string)
+    policy_name = string
+  }))
+  default = [
+    {
+      oidc_groups = ["GlueOps:vault_super_admins"]
+      policy_name = "editor"
+    },
+    {
+      oidc_groups = ["GlueOps:vault_super_admins", "testing-okta:developers"]
+      policy_name = "reader"
+    }
+  ]
+  nullable = false
+}
