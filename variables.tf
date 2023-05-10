@@ -65,10 +65,7 @@ variable "cluster_environments" {
           policy_name = "reader"
         }
       ]
-    }
-
-  ]
-  argocd_rbac_policies = <<EOT
+      argocd_rbac_policies = <<EOT
       g, GlueOps:argocd_super_admins, role:admin
       g, glueops-rocks:developers, role:developers
       p, role:developers, clusters, get, *, allow
@@ -77,6 +74,10 @@ variable "cluster_environments" {
       p, role:developers, applications, *, development/*, allow
       p, role:developers, exec, *, development/*, allow
 EOT
+    }
+
+  ]
+
 }
 
 locals {
