@@ -32,6 +32,7 @@ This Terraform module creates various resources for managing multi-cloud prerequ
 | <a name="provider_aws.management-tenant-dns"></a> [aws.management-tenant-dns](#provider\_aws.management-tenant-dns) | 4.64.0 |
 | <a name="provider_aws.primaryregion"></a> [aws.primaryregion](#provider\_aws.primaryregion) | 4.64.0 |
 | <a name="provider_random"></a> [random](#provider\_random) | 3.5.1 |
+| <a name="provider_tls"></a> [tls](#provider\_tls) | n/a |
 
 ## Modules
 
@@ -86,6 +87,8 @@ This Terraform module creates various resources for managing multi-cloud prerequ
 | [random_password.dex_grafana_client_secret](https://registry.terraform.io/providers/hashicorp/random/3.5.1/docs/resources/password) | resource |
 | [random_password.dex_pomerium_client_secret](https://registry.terraform.io/providers/hashicorp/random/3.5.1/docs/resources/password) | resource |
 | [random_password.dex_vault_client_secret](https://registry.terraform.io/providers/hashicorp/random/3.5.1/docs/resources/password) | resource |
+| [random_password.grafana_admin_secret](https://registry.terraform.io/providers/hashicorp/random/3.5.1/docs/resources/password) | resource |
+| [tls_private_key.tenant_stack_repostory_key](https://registry.terraform.io/providers/hashicorp/tls/latest/docs/resources/private_key) | resource |
 | [aws_route53_zone.management_tenant_dns](https://registry.terraform.io/providers/hashicorp/aws/4.64.0/docs/data-sources/route53_zone) | data source |
 
 ## Inputs
@@ -93,7 +96,7 @@ This Terraform module creates various resources for managing multi-cloud prerequ
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_backup_region"></a> [backup\_region](#input\_backup\_region) | The secondary S3 region to create S3 bucket in used for backups. This should be different than the primary region and will have the data from the primary region replicated to it. | `string` | n/a | yes |
-| <a name="input_cluster_environments"></a> [cluster\_environments](#input\_cluster\_environments) | The cluster environments and their respective github app ids | <pre>list(object({<br>    environment_name         = string<br>    github_app_client_id     = string<br>    github_app_client_secret = string<br>  }))</pre> | n/a | yes |
+| <a name="input_cluster_environments"></a> [cluster\_environments](#input\_cluster\_environments) | The cluster environments and their respective github app ids | <pre>list(object({<br>    environment_name         = string<br>    github_app_client_id     = string<br>    github_app_client_secret = string<br>    github_api_token         = string<br>    admin_github_org_name    = string<br>    tenant_github_org_name   = string<br>    vault_github_org_team_policy_mappings = list(object({<br>      oidc_groups = list(string)<br>      policy_name = string<br>    }))<br>    argocd_rbac_policies = string<br><br>  }))</pre> | <pre>[<br>  {<br>    "admin_github_org_name": "GlueOps",<br>    "argocd_rbac_policies": "      g, GlueOps:argocd_super_admins, role:admin\n      g, glueops-rocks:developers, role:developers\n      p, role:developers, clusters, get, *, allow\n      p, role:developers, *, get, development, allow\n      p, role:developers, repositories, *, development/*, allow\n      p, role:developers, applications, *, development/*, allow\n      p, role:developers, exec, *, development/*, allow\n",<br>    "environment_name": "test",<br>    "github_api_token": "apitokengoeshere",<br>    "github_app_client_id": "apidgoeshere",<br>    "github_app_client_secret": "secretgoeshere",<br>    "tenant_github_org_name": "glueops-rocks",<br>    "vault_github_org_team_policy_mappings": [<br>      {<br>        "oidc_groups": [<br>          "GlueOps:vault_super_admins"<br>        ],<br>        "policy_name": "editor"<br>      },<br>      {<br>        "oidc_groups": [<br>          "GlueOps:vault_super_admins",<br>          "testing-okta:developers"<br>        ],<br>        "policy_name": "reader"<br>      }<br>    ]<br>  }<br>]</pre> | no |
 | <a name="input_company_account_id"></a> [company\_account\_id](#input\_company\_account\_id) | The company AWS account id | `string` | n/a | yes |
 | <a name="input_company_key"></a> [company\_key](#input\_company\_key) | The company key | `string` | n/a | yes |
 | <a name="input_management_tenant_dns_aws_account_id"></a> [management\_tenant\_dns\_aws\_account\_id](#input\_management\_tenant\_dns\_aws\_account\_id) | The company AWS account id for the management-tenant-dns account | `string` | n/a | yes |
@@ -101,7 +104,6 @@ This Terraform module creates various resources for managing multi-cloud prerequ
 | <a name="input_opsgenie_emails"></a> [opsgenie\_emails](#input\_opsgenie\_emails) | List of user email addresses | `list(string)` | n/a | yes |
 | <a name="input_primary_region"></a> [primary\_region](#input\_primary\_region) | The primary S3 region to create S3 bucket in used for backups. This should be the same region as the one where the cluster is being deployed. | `string` | n/a | yes |
 | <a name="input_this_is_development"></a> [this\_is\_development](#input\_this\_is\_development) | The development cluster environment and data/resources can be destroyed! | `string` | `false` | no |
-| <a name="input_vault_github_org_team_policy_mappings"></a> [vault\_github\_org\_team\_policy\_mappings](#input\_vault\_github\_org\_team\_policy\_mappings) | The org team policy mappings | <pre>list(object({<br>    oidc_groups = list(string)<br>    policy_name = string<br>  }))</pre> | <pre>[<br>  {<br>    "oidc_groups": [<br>      "GlueOps:vault_super_admins"<br>    ],<br>    "policy_name": "editor"<br>  },<br>  {<br>    "oidc_groups": [<br>      "GlueOps:vault_super_admins",<br>      "testing-okta:developers"<br>    ],<br>    "policy_name": "reader"<br>  }<br>]</pre> | no |
 
 ## Outputs
 
