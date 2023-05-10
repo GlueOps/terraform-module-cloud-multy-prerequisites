@@ -111,10 +111,11 @@ variable "vault_github_org_team_policy_mappings" {
   nullable = false
 }
 
-variable "argocd_tenant_rbac_policies" {
+variable "argocd_rbac_policies" {
   type        = string
   description = "policy csv for tenants: https://argo-cd.readthedocs.io/en/stable/operator-manual/rbac/"
   default     = <<EOT
+      g, GlueOps:argocd_super_admins, role:admin
       g, glueops-rocks:developers, role:developers
       p, role:developers, clusters, get, *, allow
       p, role:developers, *, get, development, allow
