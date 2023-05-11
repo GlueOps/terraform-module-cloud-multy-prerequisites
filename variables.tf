@@ -25,12 +25,6 @@ variable "company_account_id" {
   nullable    = false
 }
 
-variable "github_owner" {
-  description = "The GitHub Organization"
-  type        = string
-  nullable    = false
-}
-
 variable "management_tenant_dns_aws_account_id" {
   description = "The company AWS account id for the management-tenant-dns account"
   type        = string

@@ -16,12 +16,11 @@ variable "repository_name" {
   nullable    = false
 }
 
-variable "github_owner" {
-  description = "The GitHub Organization"
-  type        = string
-  nullable    = false
+variable "placeholder_github_repo_path" {
+  description = "The github owner and repo"
+  type = string
+  nullable = false
 }
-
 
 
 data "local_file" "readme" {
@@ -32,7 +31,7 @@ data "local_file" "readme" {
 output "tenant_readme" {
   value = replace(replace(replace(replace(
     data.local_file.readme.content,
-    "placeholder_github_owner", "${var.github_owner}"),
+    "placeholder_github_repo_path", "${var.placeholder_github_repo_path}"),
     "placeholder_repo_name", "${var.repository_name}"),
     "placeholder_tenant_key", "${var.company_key}"),
   "placeholder_cluster_environment", "${var.cluster_environment}")
