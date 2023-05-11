@@ -5,6 +5,7 @@ module "captain_repository" {
   files_to_create = {
     "argocd.yaml"                          = module.argocd_helm_values[each.value.environment_name].helm_values
     "platform.yaml"                        = module.glueops_platform_helm_values[each.value.environment_name].helm_values
+    "README.md"                            = local.gcp_project_setup
     "terraform/kubernetes/.gitkeep"        = ""
     "terraform/vault/vault-init/main.tf"   = <<EOT
 module "initialize_vault_cluster" {
@@ -25,4 +26,3 @@ module "configure_vault_cluster" {
 EOT
   }
 }
-
