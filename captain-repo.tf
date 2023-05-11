@@ -1,11 +1,11 @@
 module "captain_repository" {
-  for_each       = local.environment_map
-  source         = "./modules/github-captain-repository"
+  for_each        = local.environment_map
+  source          = "./modules/github-captain-repository"
   repository_name = "${each.value.environment_name}.${aws_route53_zone.main.name}"
   files_to_create = {
     "argocd.yaml"                          = module.argocd_helm_values[each.value.environment_name].helm_values
     "platform.yaml"                        = module.glueops_platform_helm_values[each.value.environment_name].helm_values
-    "README.md"                            = local.tenant_readme
+    "README.md"                            = module.tenant_readmes[each.value.environment_name].tenant_readme
     "terraform/kubernetes/.gitkeep"        = ""
     "terraform/vault/vault-init/main.tf"   = <<EOT
 module "initialize_vault_cluster" {
