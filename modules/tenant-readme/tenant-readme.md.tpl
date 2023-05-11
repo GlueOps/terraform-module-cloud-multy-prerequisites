@@ -16,7 +16,7 @@ This README will outline the steps required to:
 3. This repository, `placeholder_repo_name`, cloned into the codespace required above. Once the Codespace is created, the repo can be cloned using 
 
 ```sh
-gh repo clone development-captains/placeholder_repo_name
+gh repo clone placeholder_github_owner/placeholder_repo_name
 ```
 
 
