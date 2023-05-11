@@ -13,8 +13,11 @@ This README will outline the steps required to:
 ## Prerequisites
 1. User account in the desired cloud with necessary permissions to create Service Users capable of deploying a Kubernetes cluster.
 2. A [GlueOps codespace](https://github.com/GlueOps/glueops) at the latest version, which contains necessary tooling. <br /> **Note:** To ensure the latest version is used, [create a new Codespace with options](https://github.com/codespaces/new?hide_repo_select=true&ref=%F0%9F%9A%80%F0%9F%92%8E%F0%9F%99%8C%F0%9F%9A%80&repo=527049979) and select the newest version of `Dev container configuration`.
-3. This repository, `placeholder_repo_name`, cloned into the codespace required above.
+3. This repository, `placeholder_repo_name`, cloned into the codespace required above. Once the Codespace is created, the repo can be cloned using 
 
+```sh
+gh repo clone development-captains/placeholder_repo_name
+```
 
 
 ## Select Cloud
@@ -28,7 +31,7 @@ This README will outline the steps required to:
     - [Launch a CloudShell](https://console.cloud.google.com/home/dashboard?cloudshell=true) in your desired GCP project.
     - Execute the following command in the cloudshell.  Click 'Authorize' if prompted and confirm the creation of the project
 
-    ```sh
+```sh
 source <(curl -s https://raw.githubusercontent.com/GlueOps/development-only-utilities/feature/gcp-project-tools/tools/gcp/gcp-project-setup) && \
     gcp-project-setup -p placeholder_tenant_key-placeholder_cluster_environment
 ```
@@ -37,7 +40,7 @@ source <(curl -s https://raw.githubusercontent.com/GlueOps/development-only-util
 2. Deploy Kubernetes with Terraform
     - Set credentials for Terraform using the `creds.json` created in step 1a.:
 
-    ```sh
+```sh
 export GOOGLE_CREDENTIALS=$(pwd)/creds.json
 ```
 
@@ -45,7 +48,7 @@ export GOOGLE_CREDENTIALS=$(pwd)/creds.json
 
 3. Access the new Kubernetes Cluster
 
-    ```sh
+```sh
 source <(curl -s https://raw.githubusercontent.com/GlueOps/development-only-utilities/feature/gcp-project-tools/tools/gcp/gke-auth) && \
     gke-auth
 ```
