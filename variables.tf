@@ -25,6 +25,12 @@ variable "company_account_id" {
   nullable    = false
 }
 
+variable "GITHUB_OWNER" {
+  description = "The GitHub Owner"
+  type        = string
+  nullable    = false
+}
+
 variable "management_tenant_dns_aws_account_id" {
   description = "The company AWS account id for the management-tenant-dns account"
   type        = string
@@ -112,4 +118,3 @@ variable "opsgenie_emails" {
   description = "List of user email addresses"
   type        = list(string)
 }
-
