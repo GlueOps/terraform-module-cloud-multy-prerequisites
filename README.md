@@ -31,6 +31,7 @@ This Terraform module creates various resources for managing multi-cloud prerequ
 | <a name="provider_aws.clientaccount"></a> [aws.clientaccount](#provider\_aws.clientaccount) | 4.64.0 |
 | <a name="provider_aws.management-tenant-dns"></a> [aws.management-tenant-dns](#provider\_aws.management-tenant-dns) | 4.64.0 |
 | <a name="provider_aws.primaryregion"></a> [aws.primaryregion](#provider\_aws.primaryregion) | 4.64.0 |
+| <a name="provider_local"></a> [local](#provider\_local) | n/a |
 | <a name="provider_random"></a> [random](#provider\_random) | 3.5.1 |
 | <a name="provider_tls"></a> [tls](#provider\_tls) | n/a |
 
@@ -90,6 +91,7 @@ This Terraform module creates various resources for managing multi-cloud prerequ
 | [random_password.grafana_admin_secret](https://registry.terraform.io/providers/hashicorp/random/3.5.1/docs/resources/password) | resource |
 | [tls_private_key.tenant_stack_repostory_key](https://registry.terraform.io/providers/hashicorp/tls/latest/docs/resources/private_key) | resource |
 | [aws_route53_zone.management_tenant_dns](https://registry.terraform.io/providers/hashicorp/aws/4.64.0/docs/data-sources/route53_zone) | data source |
+| [local_file.readme](https://registry.terraform.io/providers/hashicorp/local/latest/docs/data-sources/file) | data source |
 
 ## Inputs
 
