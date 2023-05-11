@@ -18,8 +18,8 @@ variable "repository_name" {
 
 variable "placeholder_github_repo_path" {
   description = "The github owner and repo"
-  type = string
-  nullable = false
+  type        = string
+  nullable    = false
 }
 
 

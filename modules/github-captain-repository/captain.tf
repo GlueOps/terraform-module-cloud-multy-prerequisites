@@ -18,3 +18,7 @@ resource "github_repository_file" "files" {
   commit_email        = "terraform@example.com"
   overwrite_on_create = true
 }
+
+output "repo_full_name" {
+  value = github_repository.captain_repo.full_name
+}
