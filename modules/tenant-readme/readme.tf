@@ -25,7 +25,7 @@ data "local_file" "readme" {
 
 
 output "tenant_readme" {
-  tenant_readme = replace(replace(replace(
+  value = replace(replace(replace(
     data.local_file.readme.content,
     "placeholder_repo_name", "${var.repository_name}"),
     "placeholder_tenant_key", "${var.company_key}"),
