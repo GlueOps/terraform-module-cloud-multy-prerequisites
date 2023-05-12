@@ -53,7 +53,7 @@ gh repo clone placeholder_github_owner/placeholder_repo_name
     source <(curl -s https://raw.githubusercontent.com/GlueOps/development-only-utilities/feature/gcp-project-tools/tools/gcp/gke-auth) && \
         gke-auth
     ```
-    
+4. Now that Kubernetes is deployed and can be accessed, being [deploying the GlueOps Platform](#Deploying GlueOps the Platform)
 ### Teardown Kubernetes
 Use the following command to destroy the cluster when it is no longer needed.
 
@@ -65,3 +65,9 @@ source <(curl -s https://raw.githubusercontent.com/GlueOps/development-only-util
 
 ## AWS
 
+1. some steps
+2. some more steps
+
+
+
+## Deploying GlueOps the Platform
