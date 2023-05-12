@@ -12,7 +12,7 @@ This README will outline the steps required to:
 
 ## Prerequisites
 1. User account in the desired cloud with necessary permissions to create Service Users capable of deploying a Kubernetes cluster.
-2. A [GlueOps codespace](https://github.com/GlueOps/glueops) at the latest version, which contains necessary tooling. <br /> **Note:** To ensure the latest version is used, [create a new Codespace with options](https://github.com/codespaces/new?hide_repo_select=true&ref=%F0%9F%9A%80%F0%9F%92%8E%F0%9F%99%8C%F0%9F%9A%80&repo=527049979) and select the newest version of `Dev container configuration`.
+2. A [GlueOps codespace](https://github.com/GlueOps/glueops) at the latest version, which contains necessary tooling. <br /> **Note:** To ensure the latest version is used, [create a new Codespace with options](https://github.com/codespaces/new?hide_repo_select=true&ref=%F0%9F%9A%80%F0%9F%92%8E%F0%9F%99%8C%F0%9F%9A%80&repo=527049979&skip_quickstart=true&machine=basicLinux32gb&devcontainer_path=.devcontainer%2Fplaceholder_codespace_version%2Fdevcontainer.json) and confirm the latest version of `Dev container configuration` is being used.
 3. This repository, `placeholder_repo_name`, cloned into the codespace required above. Once the Codespace is created, the repo can be cloned using 
 
 ```sh
