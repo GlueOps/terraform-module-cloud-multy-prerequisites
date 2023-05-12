@@ -25,7 +25,7 @@ variable "company_account_id" {
   nullable    = false
 }
 
-variable "GITHUB_OWNER" {
+variable "github_owner" {
   description = "The GitHub Owner"
   type        = string
   nullable    = false
