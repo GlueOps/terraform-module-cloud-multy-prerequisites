@@ -109,7 +109,7 @@ gh repo clone placeholder_github_owner/placeholder_repo_name
 2. Deploy the GlueOps Platform
     * Install the GlueOps platform using
     ```sh
-    helm install glueops-platform glueops-platform/glueops-platform --version 0.11.0 -f platform.yaml --namespace=glueops-core
+    helm install glueops-platform glueops-platform/glueops-platform --version 0.11.1 -f platform.yaml --namespace=glueops-core
     ```
     * Monitor application progress until all services are `Synced` and `Healthy` **except** `vault`, which will show `Synced` and `Progressing`
     ```sh
