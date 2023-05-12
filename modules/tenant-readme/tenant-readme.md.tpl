@@ -53,14 +53,7 @@ gh repo clone placeholder_github_owner/placeholder_repo_name
     source <(curl -s https://raw.githubusercontent.com/GlueOps/development-only-utilities/feature/gcp-project-tools/tools/gcp/gke-auth) && \
         gke-auth
     ```
-4. Now that Kubernetes is deployed and can be accessed, being [deploying the GlueOps Platform](#Deploying GlueOps the Platform)
-### Teardown Kubernetes
-Use the following command to destroy the cluster when it is no longer needed.
-
-```sh
-source <(curl -s https://raw.githubusercontent.com/GlueOps/development-only-utilities/feature/gcp-project-tools/tools/gcp/gcp-project-teardown) && \
-    gcp-project-teardown -p placeholder_tenant_key-placeholder_cluster_environment
-```
+4. Now that Kubernetes is deployed and can be accessed, being [deploying the GlueOps Platform](#Deploying-GlueOps-the-Platform)
 
 
 ## AWS
@@ -71,3 +64,20 @@ source <(curl -s https://raw.githubusercontent.com/GlueOps/development-only-util
 
 
 ## Deploying GlueOps the Platform
+
+
+### Teardown Kubernetes
+
+[AWS](#AWS-Teardown)
+[GCP](#GCP-Teardown)
+
+### AWS Teardown
+
+
+### GCP Teardown
+Use the following command to destroy the cluster when it is no longer needed.
+
+```sh
+source <(curl -s https://raw.githubusercontent.com/GlueOps/development-only-utilities/feature/gcp-project-tools/tools/gcp/gcp-project-teardown) && \
+    gcp-project-teardown -p placeholder_tenant_key-placeholder_cluster_environment
+```
