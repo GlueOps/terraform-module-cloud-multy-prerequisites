@@ -59,10 +59,33 @@ gh repo clone placeholder_github_owner/placeholder_repo_name
 
 ## AWS
 
-1. some steps
-2. some more steps
+### Deploy Kubernetes
+1. Create Credentials
+    * [Launch a CloudShell](https://us-east-1.console.aws.amazon.com/cloudshell/home?region=us-west-2) within the Primary/Root AWS Account.
+    * Execute the following command in the cloudshell.  When prompted, enter the name of your captain account (e.g. glueops-captain-laciudaddelgato).
 
+    ```sh
+    bash <(curl -s https://raw.githubusercontent.com/GlueOps/development-only-utilities/aws/tools/aws/account-setup.sh)
+    ```
 
+    * Create the`.env` as instructed into this repository, within the codespace.
+
+2. Deploy Kubernetes with Terraform
+    * Set credentials for Terraform using the `.env` created in step 1a.:
+
+    ```sh
+    export $(pwd)/.env
+    ```
+
+    * Reference documents for [terraform-module-cloud-aws-kubernetes-cluster](https://github.com/GlueOps/terraform-module-cloud-aws-kubernetes-cluster) and use the pre-created directory `terraform/kubernetes` within this repo for the `main.tf` file to deploy the cluster.
+
+3. Access the new Kubernetes Cluster by running the below command to set up kubeconfig
+
+    ```sh
+    aws eks update-kubeconfig --region us-west-2 --name captain-cluster
+    ```
+
+4. Now that Kubernetes is deployed and can be accessed, being [deploying the GlueOps Platform](#Deploying-GlueOps-the-Platform)
 
 ## Deploying GlueOps the Platform
 
@@ -106,9 +129,19 @@ gh repo clone placeholder_github_owner/placeholder_repo_name
 
 ### AWS Teardown
 
+Use the following command to destroy the cluster when it is no longer needed.
+* [Launch a CloudShell](https://us-east-1.console.aws.amazon.com/cloudshell/home?region=us-west-2) within the Primary/Root AWS Account.
+    * Execute the following command in the cloudshell.  When prompted, enter the name of your captain account (e.g. glueops-captain-laciudaddelgato).
+
+```sh
+bash <(curl -s https://raw.githubusercontent.com/GlueOps/development-only-utilities/aws/tools/aws/account-nuke.sh)
+```
 
 ### GCP Teardown
+
 Use the following command to destroy the cluster when it is no longer needed.
+* [Launch a CloudShell](https://console.cloud.google.com/home/dashboard?cloudshell=true) in your desired GCP project.
+    * Execute the following command in the cloudshell.  Click 'Authorize' if prompted and confirm the deletion of the project
 
 ```sh
 source <(curl -s https://raw.githubusercontent.com/GlueOps/development-only-utilities/feature/gcp-project-tools/tools/gcp/gcp-project-teardown) && \
