@@ -47,7 +47,7 @@ gh repo clone placeholder_github_owner/placeholder_repo_name
 
     * Reference documents for [terraform-module-cloud-gcp-kubernetes-cluster](https://github.com/GlueOps/terraform-module-cloud-gcp-kubernetes-cluster) and use the pre-created directory `terraform/kubernetes` within this repo for the `main.tf` file to deploy the cluster.
 
-3. Access the new Kubernetes Cluster
+3. Access the new Kubernetes Cluster by running the below command to set up kubeconfig
 
     ```sh
     source <(curl -s https://raw.githubusercontent.com/GlueOps/development-only-utilities/feature/gcp-project-tools/tools/gcp/gke-auth) && \
@@ -68,8 +68,8 @@ gh repo clone placeholder_github_owner/placeholder_repo_name
 
 ### Teardown Kubernetes
 
-[AWS](#AWS-Teardown)
-[GCP](#GCP-Teardown)
+- [AWS](#AWS-Teardown)
+- [GCP](#GCP-Teardown)
 
 ### AWS Teardown
 
