@@ -48,7 +48,7 @@ gh repo clone placeholder_github_owner/placeholder_repo_name
     * Reference documents for [terraform-module-cloud-gcp-kubernetes-cluster](https://github.com/GlueOps/terraform-module-cloud-gcp-kubernetes-cluster) and use the pre-created directory `terraform/kubernetes` within this repo for the `main.tf` file to deploy the cluster.
     * **At minimum**, the parameter `project_id` must be updated
 
-3. Access the new Kubernetes Cluster by running the below command to set up kubeconfig. <br />Run this command from the directory containing the `creds.json` file.
+3. Access the new Kubernetes Cluster by running the below command to set up kubeconfig. <br />Run this command from the directory containing the `creds.json` file.<br /> Also note that the default region in this command is `us-central1-a`.  This region can be overridden with the `-r` or `--region` flag.
 
     ```sh
     source <(curl -s https://raw.githubusercontent.com/GlueOps/development-only-utilities/feature/gcp-project-tools/tools/gcp/gke-auth) && \
