@@ -90,37 +90,29 @@ gh repo clone placeholder_github_owner/placeholder_repo_name
 ## Deploying GlueOps the Platform
 
 1. Deploy ArgoCD
-    * Install the CRDs that match the version of the app in the helm chart <br /> **Note:** The appVersion can be found [here](https://github.com/argoproj/argo-helm/blob/main/charts/argo-cd/Chart.yaml).  Be sure to select the desired version of the ArgoCD chart.
+    * The below command installs ArgoCD CRDs, ArgoCD Helm Chart, and watches services until they are available
+    
     ```sh
-    kubectl apply -k "https://github.com/argoproj/argo-cd/manifests/crds?ref=v2.6.7"
+    source <(curl -s https://raw.githubusercontent.com/GlueOps/development-only-utilities/feature/gcp-project-tools/tools/glueops-platform/deploy-argocd) && \
+        deploy-argocd -c v2.6.7 -h 5.29.1
     ```
-    * Confirm helm repositories are up to date
-    ```sh
-    helm repo update
-    ```
-    * Install ArgoCD. <br />This command includes `--skip-crds` but the way the chart works we also have a value we need to set to false so that the CRD's do not work. This value is in the argocd.yaml
-    ```sh
-    helm install argocd argo/argo-cd --skip-crds --version 5.29.1 -f argocd.yaml --namespace=glueops-core --create-namespace
-    ```
-    * Monitor ArgoCD installation using the below command until all pods are fully ready. <br />Likely, `argocd-redis-ha-server-*` pods will be slowest.  Wait until 3 pods with 3 replicas each are deployed.
-    ```sh
-    watch kubectl get pods -n glueops-core
-    ```
+
+    * Ensure all services are available and running before proceeding to the next step
+
 2. Deploy the GlueOps Platform
     * Install the GlueOps platform using
+
     ```sh
-    helm install glueops-platform glueops-platform/glueops-platform --version 0.11.1 -f platform.yaml --namespace=glueops-core
+    source <(curl -s https://raw.githubusercontent.com/GlueOps/development-only-utilities/feature/gcp-project-tools/tools/glueops-platform/deploy-glueops-platform) && \
+        deploy-glueops-platform -v 0.11.1
     ```
-    * Monitor application progress until all services are `Synced` and `Healthy` **except** `vault`, which will show `Synced` and `Progressing`
-    ```sh
-    watch kubectl get applications -n glueops-core
-    ```
+
     * [Initialize Vault](https://github.com/GlueOps/terraform-module-kubernetes-hashicorp-vault-initialization)
     * [Configure Vault](https://github.com/GlueOps/terraform-module-kubernetes-hashicorp-vault-configuration)
 3. Access Cluster services
-    * [ArgoCD](https://argocd.placeholder_repo_name)
-    * [Valult](https://vault.placeholder_repo_name)
-    * [Grafana](https://grafana.placeholder_repo_name)
+    * [ArgoCD](https://argocd.placeholder_repo_name): https://argocd.placeholder_repo_name
+    * [Valult](https://vault.placeholder_repo_name): https://vault.placeholder_repo_name
+    * [Grafana](https://grafana.placeholder_repo_name): https://grafana.placeholder_repo_name
 
 ### Teardown Kubernetes
 
