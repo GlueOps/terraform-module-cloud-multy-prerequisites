@@ -13,8 +13,8 @@ variable "this_is_development" {
   default     = false
 }
 
-variable "company_key" {
-  description = "The company key"
+variable "tenant_key" {
+  description = "The tenant key"
   type        = string
   nullable    = false
 }
@@ -108,10 +108,9 @@ variable "backup_region" {
 
 locals {
   management_tenant_dns_zoneid = var.management_tenant_dns_zoneid
-  company_key                  = var.company_key
   record_ttl                   = "60"
   ns_record_type               = "NS"
-  bucket_name                  = "glueops-tenant-${local.company_key}"
+  bucket_name                  = "glueops-tenant-${var.tenant_key}"
 }
 
 variable "opsgenie_emails" {

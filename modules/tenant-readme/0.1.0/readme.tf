@@ -1,5 +1,5 @@
-variable "company_key" {
-  description = "The company key"
+variable "tenant_key" {
+  description = "The tenant key"
   type        = string
   nullable    = false
 }
@@ -41,7 +41,7 @@ output "tenant_readme" {
     data.local_file.readme.content,
     "placeholder_github_owner", "${var.placeholder_github_owner}"),
     "placeholder_repo_name", "${var.repository_name}"),
-    "placeholder_tenant_key", "${var.company_key}"),
+    "placeholder_tenant_key", "${var.tenant_key}"),
     "placeholder_cluster_environment", "${var.cluster_environment}"),
     "placeholder_argocd_crd_version", "${local.argocd_crd_version}"),
     "placeholder_argocd_helm_chart_version", "${local.argocd_helm_chart_version}"),

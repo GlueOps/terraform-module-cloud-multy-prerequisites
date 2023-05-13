@@ -3,8 +3,8 @@ variable "users" {
   type        = list(string)
 }
 
-variable "company_key" {
-  description = "Unique identifier for the company"
+variable "tenant_key" {
+  description = "Unique identifier for the tenant"
   type        = string
 }
 

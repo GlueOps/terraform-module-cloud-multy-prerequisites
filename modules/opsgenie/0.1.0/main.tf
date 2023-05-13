@@ -12,8 +12,8 @@ data "opsgenie_user" "users" {
 resource "opsgenie_team" "teams" {
   for_each = local.cluster_environments_set
 
-  name                     = "${var.company_key}-${each.value}-team"
-  description              = "This is for company ${var.company_key} in the ${each.value} environment"
+  name                     = "${var.tenant_key}-${each.value}-team"
+  description              = "This is for company ${var.tenant_key} in the ${each.value} environment"
   delete_default_resources = true
 
   dynamic "member" {
@@ -29,7 +29,7 @@ resource "opsgenie_team" "teams" {
 resource "opsgenie_team_routing_rule" "routing_rules" {
   for_each = local.cluster_environments_set
 
-  name     = "${var.company_key}-${each.value}-routing-rule"
+  name     = "${var.tenant_key}-${each.value}-routing-rule"
   team_id  = opsgenie_team.teams[each.key].id
   order    = 0
   timezone = local.time_zone
@@ -46,8 +46,8 @@ resource "opsgenie_team_routing_rule" "routing_rules" {
 resource "opsgenie_schedule" "schedules" {
   for_each = local.cluster_environments_set
 
-  name          = "${var.company_key}-${each.value}-schedule"
-  description   = "This is for company ${var.company_key} in the ${each.value} environment"
+  name          = "${var.tenant_key}-${each.value}-schedule"
+  description   = "This is for company ${var.tenant_key} in the ${each.value} environment"
   timezone      = local.time_zone
   owner_team_id = opsgenie_team.teams[each.key].id
   enabled       = true
@@ -57,7 +57,7 @@ resource "opsgenie_schedule_rotation" "rotations" {
   for_each = local.cluster_environments_set
 
   schedule_id = opsgenie_schedule.schedules[each.key].id
-  name        = "${var.company_key}-${each.value}-rotation"
+  name        = "${var.tenant_key}-${each.value}-rotation"
 
   dynamic "participant" {
     for_each = data.opsgenie_user.users
@@ -75,7 +75,7 @@ resource "opsgenie_schedule_rotation" "rotations" {
 
 resource "opsgenie_api_integration" "prometheus" {
   for_each = local.cluster_environments_set
-  name     = "${var.company_key}-${each.value}-prometheus-api-int"
+  name     = "${var.tenant_key}-${each.value}-prometheus-api-int"
   type     = "API"
 
   responders {

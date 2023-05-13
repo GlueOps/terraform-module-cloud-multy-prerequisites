@@ -62,7 +62,7 @@ module "glueops_platform_helm_values" {
   glueops_root_domain           = data.aws_route53_zone.management_tenant_dns.name
   cluster_environment           = each.value.environment_name
   aws_region                    = var.primary_region
-  tenant_key                    = var.company_key
+  tenant_key                    = var.tenant_key
   opsgenie_api_key              = lookup(module.opsgenie_teams.opsgenie_prometheus_api_keys, split(".", each.value.environment_name)[0], null)
   admin_github_org_name         = each.value.admin_github_org_name
   tenant_github_org_name        = each.value.tenant_github_org_name
@@ -87,7 +87,7 @@ resource "aws_s3_object" "platform_helm_values" {
 module "argocd_helm_values" {
   for_each             = local.environment_map
   source               = "git::https://github.com/GlueOps/docs-argocd.git?ref=v0.1.0"
-  tenant_key           = var.company_key
+  tenant_key           = var.tenant_key
   cluster_environment  = each.value.environment_name
   client_secret        = random_password.dex_argocd_client_secret[each.value.environment_name].result
   glueops_root_domain  = data.aws_route53_zone.management_tenant_dns.name
