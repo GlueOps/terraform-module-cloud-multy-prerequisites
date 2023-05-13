@@ -1,6 +1,6 @@
 
 variable "management_tenant_dns_zoneid" {
-  description = "The Route53 ZoneID that all the delegation is coming from"
+  description = "The Route53 ZoneID that all the delegation is coming from."
   type        = string
   nullable    = false
 }
@@ -19,8 +19,8 @@ variable "company_key" {
   nullable    = false
 }
 
-variable "company_account_id" {
-  description = "The company AWS account id"
+variable "tenant_account_id" {
+  description = "The tenant AWS account id"
   type        = string
   nullable    = false
 }

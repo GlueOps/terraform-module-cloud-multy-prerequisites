@@ -12,8 +12,8 @@ variable "this_is_development" {
   default     = false
 }
 
-variable "company_account_id" {
-  description = "The company AWS account id"
+variable "tenant_account_id" {
+  description = "The tenant AWS account id"
   type        = string
   nullable    = false
 }
