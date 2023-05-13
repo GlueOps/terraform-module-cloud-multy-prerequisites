@@ -1,6 +1,6 @@
 module "captain_repository" {
   for_each        = local.environment_map
-  source          = "./modules/0.1.0/github-captain-repository"
+  source          = "./modules/github-captain-repository/0.1.0"
   repository_name = "${each.value.environment_name}.${aws_route53_zone.main.name}"
   files_to_create = {
     "argocd.yaml"                          = module.argocd_helm_values[each.value.environment_name].helm_values
