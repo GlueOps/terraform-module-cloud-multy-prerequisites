@@ -32,7 +32,7 @@ gh repo clone placeholder_github_owner/placeholder_repo_name
     * Execute the following command in the cloudshell.  Click 'Authorize' if prompted and confirm the creation of the project
 
     ```sh
-    source <(curl -s https://raw.githubusercontent.com/GlueOps/development-only-utilities/main/tools/gcp/gcp-project-setup) && \
+    source <(curl -s https://raw.githubusercontent.com/GlueOps/development-only-utilities/placeholder_tools_version/tools/gcp/gcp-project-setup) && \
         gcp-project-setup -p placeholder_tenant_key-placeholder_cluster_environment
     ```
 
@@ -51,7 +51,7 @@ gh repo clone placeholder_github_owner/placeholder_repo_name
 3. Access the new Kubernetes Cluster by running the below command to set up kubeconfig. <br />Run this command from the directory containing the `creds.json` file.<br /> Also note that the default region in this command is `us-central1-a`.  This region can be overridden with the `-r` or `--region` flag.
 
     ```sh
-    source <(curl -s https://raw.githubusercontent.com/GlueOps/development-only-utilities/main/tools/gcp/gke-auth) && \
+    source <(curl -s https://raw.githubusercontent.com/GlueOps/development-only-utilities/placeholder_tools_version/tools/gcp/gke-auth) && \
         gke-auth
     ```
 4. Now that Kubernetes is deployed and can be accessed, being [deploying the GlueOps Platform](#Deploying-GlueOps-the-Platform)
@@ -65,7 +65,7 @@ gh repo clone placeholder_github_owner/placeholder_repo_name
     * Execute the following command in the cloudshell.  When prompted, enter the name of your captain account (e.g. glueops-captain-laciudaddelgato).
 
     ```sh
-    bash <(curl -s https://raw.githubusercontent.com/GlueOps/development-only-utilities/main/tools/aws/account-setup.sh)
+    bash <(curl -s https://raw.githubusercontent.com/GlueOps/development-only-utilities/placeholder_tools_version/tools/aws/account-setup.sh)
     ```
 
     * Create the`.env` as instructed into this repository, within the codespace.
@@ -93,7 +93,7 @@ gh repo clone placeholder_github_owner/placeholder_repo_name
     * The below command installs ArgoCD CRDs, ArgoCD Helm Chart, and watches services until they are available
     
     ```sh
-    source <(curl -s https://raw.githubusercontent.com/GlueOps/development-only-utilities/main/tools/glueops-platform/deploy-argocd) && \
+    source <(curl -s https://raw.githubusercontent.com/GlueOps/development-only-utilities/placeholder_tools_version/tools/glueops-platform/deploy-argocd) && \
         deploy-argocd -c placeholder_argocd_crd_version -h placeholder_argocd_helm_chart_version
     ```
 
@@ -103,7 +103,7 @@ gh repo clone placeholder_github_owner/placeholder_repo_name
     * Install the GlueOps platform using
 
     ```sh
-    source <(curl -s https://raw.githubusercontent.com/GlueOps/development-only-utilities/main/tools/glueops-platform/deploy-glueops-platform) && \
+    source <(curl -s https://raw.githubusercontent.com/GlueOps/development-only-utilities/placeholder_tools_version/tools/glueops-platform/deploy-glueops-platform) && \
         deploy-glueops-platform -v placeholder_glueops_platform_version
     ```
 
@@ -126,7 +126,7 @@ Use the following command to destroy the cluster when it is no longer needed.
     * Execute the following command in the cloudshell.  When prompted, enter the name of your captain account (e.g. glueops-captain-laciudaddelgato).
 
 ```sh
-bash <(curl -s https://raw.githubusercontent.com/GlueOps/development-only-utilities/main/tools/aws/account-nuke.sh)
+bash <(curl -s https://raw.githubusercontent.com/GlueOps/development-only-utilities/placeholder_tools_version/tools/aws/account-nuke.sh)
 ```
 
 ### GCP Teardown
@@ -136,6 +136,6 @@ Use the following command to destroy the cluster when it is no longer needed.
     * Execute the following command in the cloudshell.  Click 'Authorize' if prompted and confirm the deletion of the project
 
 ```sh
-source <(curl -s https://raw.githubusercontent.com/GlueOps/development-only-utilities/main/tools/gcp/gcp-project-teardown) && \
+source <(curl -s https://raw.githubusercontent.com/GlueOps/development-only-utilities/placeholder_tools_version/tools/gcp/gcp-project-teardown) && \
     gcp-project-teardown -p placeholder_tenant_key-placeholder_cluster_environment
 ```
