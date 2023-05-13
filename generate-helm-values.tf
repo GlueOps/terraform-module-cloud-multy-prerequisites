@@ -39,14 +39,10 @@ resource "tls_private_key" "tenant_stack_repostory_key" {
   algorithm = "ED25519"
 }
 
-locals {
-  gphv_v = "v0.12.0"
-}
-
 
 module "glueops_platform_helm_values" {
   for_each                      = local.environment_map
-  source                        = "git::https://github.com/GlueOps/platform-helm-chart-platform.git?ref=${local.gphv_v}"
+  source                        = "git::https://github.com/GlueOps/platform-helm-chart-platform.git?ref=v0.12.0"
   dex_github_client_id          = each.value.github_app_client_id
   dex_github_client_secret      = each.value.github_app_client_secret
   dex_argocd_client_secret      = random_password.dex_argocd_client_secret[each.value.environment_name].result
