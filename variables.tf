@@ -31,14 +31,6 @@ variable "github_owner" {
   nullable    = false
 }
 
-variable "codespace_version" {
-  description = "The version of the codespace to be used in the readme"
-  type        = string
-  nullable    = false
-  default     = "v0.23.0"
-
-}
-
 variable "management_tenant_dns_aws_account_id" {
   description = "The company AWS account id for the management-tenant-dns account"
   type        = string

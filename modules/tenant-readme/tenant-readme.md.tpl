@@ -94,7 +94,7 @@ gh repo clone placeholder_github_owner/placeholder_repo_name
     
     ```sh
     source <(curl -s https://raw.githubusercontent.com/GlueOps/development-only-utilities/feature/gcp-project-tools/tools/glueops-platform/deploy-argocd) && \
-        deploy-argocd -c v2.6.7 -h 5.29.1
+        deploy-argocd -c placeholder_argocd_crd_version -h placeholder_argocd_helm_chart_version
     ```
 
     * Ensure all services are available and running before proceeding to the next step
@@ -104,7 +104,7 @@ gh repo clone placeholder_github_owner/placeholder_repo_name
 
     ```sh
     source <(curl -s https://raw.githubusercontent.com/GlueOps/development-only-utilities/feature/gcp-project-tools/tools/glueops-platform/deploy-glueops-platform) && \
-        deploy-glueops-platform -v 0.11.1
+        deploy-glueops-platform -v placeholder_glueops_platform_version
     ```
 
     * [Initialize Vault](https://github.com/GlueOps/terraform-module-kubernetes-hashicorp-vault-initialization)
