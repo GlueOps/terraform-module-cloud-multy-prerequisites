@@ -15,7 +15,7 @@ module "initialize_vault_cluster" {
 EOT
     "terraform/vault/vault-config/main.tf" = <<EOT
 module "configure_vault_cluster" {
-    source = "git::https://github.com/GlueOps/terraform-module-kubernetes-hashicorp-vault-configuration.git?ref=0.4.2"
+    source = "git::https://github.com/GlueOps/terraform-module-kubernetes-hashicorp-vault-configuration.git?ref=0.4.3"
     oidc_client_secret = "${random_password.dex_vault_client_secret[each.key].result}"
     captain_domain = "${each.value.environment_name}.${aws_route53_zone.main.name}"
     org_team_policy_mappings = [
