@@ -1,5 +1,5 @@
 module "tenant_readmes" {
-  source   = "./modules/tenant-readme"
+  source   = "./modules/0.1.0/tenant-readme"
   for_each = local.environment_map
 
   placeholder_github_owner = var.github_owner

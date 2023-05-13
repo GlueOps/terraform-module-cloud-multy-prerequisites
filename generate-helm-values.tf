@@ -39,10 +39,14 @@ resource "tls_private_key" "tenant_stack_repostory_key" {
   algorithm = "ED25519"
 }
 
+locals {
+  gphv_v = "v0.12.0"
+}
+
 
 module "glueops_platform_helm_values" {
   for_each                      = local.environment_map
-  source                        = "git::https://github.com/GlueOps/platform-helm-chart-platform.git?ref=feat/adding-terraform-values-generation"
+  source                        = "git::https://github.com/GlueOps/platform-helm-chart-platform.git?ref=${local.gphv_v}"
   dex_github_client_id          = each.value.github_app_client_id
   dex_github_client_secret      = each.value.github_app_client_secret
   dex_argocd_client_secret      = random_password.dex_argocd_client_secret[each.value.environment_name].result
@@ -86,7 +90,7 @@ resource "aws_s3_object" "platform_helm_values" {
 
 module "argocd_helm_values" {
   for_each             = local.environment_map
-  source               = "git::https://github.com/GlueOps/docs-argocd.git?ref=feat/adding-terraform-values-generation"
+  source               = "git::https://github.com/GlueOps/docs-argocd.git?ref=v0.1.0"
   tenant_key           = var.company_key
   cluster_environment  = each.value.environment_name
   client_secret        = random_password.dex_argocd_client_secret[each.value.environment_name].result
@@ -107,5 +111,3 @@ resource "aws_s3_object" "argocd_helm_values" {
   server_side_encryption = "AES256"
   acl                    = "private"
 }
-
-
