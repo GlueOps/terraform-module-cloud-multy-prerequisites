@@ -78,13 +78,9 @@ gh repo clone placeholder_github_owner/placeholder_repo_name
     ```
 
     * Reference documents for [terraform-module-cloud-aws-kubernetes-cluster](https://github.com/GlueOps/terraform-module-cloud-aws-kubernetes-cluster) and use the pre-created directory `terraform/kubernetes` within this repo for the `main.tf` file to deploy the cluster.
-    * See calico installation under Deployment in [wiki](https://github.com/GlueOps/terraform-module-cloud-aws-kubernetes-cluster/wiki)
+    * See calico installation under Deployment in [wiki](https://github.com/GlueOps/terraform-module-cloud-aws-kubernetes-cluster/wiki#deployment)
 
-3. Access the new Kubernetes Cluster by running the below command to set up kubeconfig
-
-    ```sh
-    aws eks update-kubeconfig --region us-west-2 --name captain-cluster
-    ```
+3. Access the new Kubernetes Cluster by creating a [kubeconfig](https://github.com/GlueOps/terraform-module-cloud-aws-kubernetes-cluster/wiki#create-a-kubeconfig)
 
 4. Now that Kubernetes is deployed and can be accessed, being [deploying the GlueOps Platform](#Deploying-GlueOps-the-Platform)
 
