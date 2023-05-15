@@ -32,7 +32,7 @@ locals {
   argocd_crd_version        = "v2.7.2"
   argocd_helm_chart_version = "5.33.3"
   glueops_platform_version  = "0.13.2"
-  tools_version             = "v0.1.1"
+  tools_version             = "v0.1.2"
 }
 
 
