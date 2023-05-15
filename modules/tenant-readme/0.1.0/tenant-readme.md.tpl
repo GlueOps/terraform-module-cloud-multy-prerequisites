@@ -74,7 +74,7 @@ gh repo clone placeholder_github_owner/placeholder_repo_name
     * Set credentials for Terraform using the `.env` created in step 1a.:
 
     ```sh
-    export $(pwd)/.env
+    source $(pwd)/.env
     ```
 
     * Reference documents for [terraform-module-cloud-aws-kubernetes-cluster](https://github.com/GlueOps/terraform-module-cloud-aws-kubernetes-cluster) and use the pre-created directory `terraform/kubernetes` within this repo for the `main.tf` file to deploy the cluster.
