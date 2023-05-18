@@ -22,6 +22,12 @@ variable "placeholder_github_owner" {
   nullable    = false
 }
 
+variable "tenant_github_org_name" {
+  description = "The GitHub organization of the Tenant"
+  type        = string
+  nullable    = false
+}
+
 
 data "local_file" "readme" {
   filename = "${path.module}/tenant-readme.md.tpl"
@@ -37,7 +43,7 @@ locals {
 
 
 output "tenant_readme" {
-  value = replace(replace(replace(replace(replace(replace(replace(replace(replace(
+  value = replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(
     data.local_file.readme.content,
     "placeholder_github_owner", "${var.placeholder_github_owner}"),
     "placeholder_repo_name", "${var.repository_name}"),
@@ -47,6 +53,7 @@ output "tenant_readme" {
     "placeholder_argocd_helm_chart_version", "${local.argocd_helm_chart_version}"),
     "placeholder_glueops_platform_version", "${local.glueops_platform_version}"),
     "placeholder_codespace_version", "${local.codespace_version}"),
+    "placeholder_tenant_github_org_name", "${var.tenant_github_org_name}"),
   "placeholder_tools_version", "${local.tools_version}")
 }
 

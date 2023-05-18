@@ -111,7 +111,15 @@ gh repo clone placeholder_github_owner/placeholder_repo_name
     * [Valult](https://vault.placeholder_repo_name): https://vault.placeholder_repo_name
     * [Grafana](https://grafana.placeholder_repo_name): https://grafana.placeholder_repo_name
 
-### Teardown Kubernetes
+## Using the GlueOps Platform with an Example Tenant
+
+This cluster has been deployed for the environment: `placeholder_cluster_environment` belinging to the tenant: `placeholder_tenant_key`.
+To deploy tenant applications, ArgoCD will look for the repository: `git@github.com:placeholder_tenant_github_org_name/glueops-placeholder_tenant_key-placeholder_cluster_environment-stack.git`, a repository which contains configurations for tenant applications to deploy.
+As of this version, the tenant-stack repository is not created automatically and must be deployed manually to test tenant functionality.  An example tenant-stack repository can be found in the Antonio's Tacos [demo organization](https://github.com/antoniostacos/nonprod-stack).
+In addition, add the public key in this repository to the tenant-stack repository created above as a [deploy key](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/managing-deploy-keys).
+
+
+## Teardown Kubernetes
 
 - [AWS](#AWS-Teardown)
 - [GCP](#GCP-Teardown)

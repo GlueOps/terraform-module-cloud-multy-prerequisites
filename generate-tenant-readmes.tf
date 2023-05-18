@@ -6,4 +6,5 @@ module "tenant_readmes" {
   repository_name          = "${each.value.environment_name}.${aws_route53_zone.main.name}"
   tenant_key               = var.tenant_key
   cluster_environment      = each.value.environment_name
+  tenant_github_org_name   = each.value.tenant_github_org_name
 }
