@@ -7,21 +7,21 @@ module "captain_repository" {
     "platform.yaml" = module.glueops_platform_helm_values[each.value.environment_name].helm_values
     "README.md"     = module.tenant_readmes[each.value.environment_name].tenant_readme
 
-    "${each.value.tenant_github_org_name}-glueops-${var.tenant_key}-${each.value.environment_name}-stack" = tls_private_key.tenant_stack_repostory_key[each.value.environment_name].public_key_pem
-    "terraform/kubernetes/.gitkeep"                                                                       = ""
-    ".gitignore"                                                                                          = <<EOT
+    "${each.value.tenant_github_org_name}-glueops-${var.tenant_key}-${each.value.environment_name}-stack.pub" = tls_private_key.tenant_stack_repostory_key[each.value.environment_name].public_key_pem
+    "terraform/kubernetes/.gitkeep"                                                                           = ""
+    ".gitignore"                                                                                              = <<EOT
 
 .terraform
 .terraform.lock.hcl
 
 EOT
-    "terraform/vault/initialization/main.tf"                                                              = <<EOT
+    "terraform/vault/initialization/main.tf"                                                                  = <<EOT
 module "initialize_vault_cluster" {
   source = "git::https://github.com/GlueOps/terraform-module-kubernetes-hashicorp-vault-initialization.git?ref=v0.3.0"
 }
 
 EOT
-    "terraform/vault/configuration/main.tf"                                                               = <<EOT
+    "terraform/vault/configuration/main.tf"                                                                   = <<EOT
 module "configure_vault_cluster" {
     source = "git::https://github.com/GlueOps/terraform-module-kubernetes-hashicorp-vault-configuration.git?ref=v0.4.3"
     oidc_client_secret = "${random_password.dex_vault_client_secret[each.key].result}"
