@@ -6,10 +6,8 @@ module "captain_repository" {
     "argocd.yaml"   = module.argocd_helm_values[each.value.environment_name].helm_values
     "platform.yaml" = module.glueops_platform_helm_values[each.value.environment_name].helm_values
     "README.md"     = module.tenant_readmes[each.value.environment_name].tenant_readme
-    # SAFE
-    # "tenant-stack.pub"                     = tls_private_key.tenant_stack_repostory_key[each.value.environment_name].public_key_pem
-    # TEST
-    "${each.value.tenant_github_org_name}/glueops-${var.tenant_key}-${each.value.environment_name}-stack" = tls_private_key.tenant_stack_repostory_key[each.value.environment_name].public_key_pem
+
+    "${each.value.tenant_github_org_name}-glueops-${var.tenant_key}-${each.value.environment_name}-stack" = tls_private_key.tenant_stack_repostory_key[each.value.environment_name].public_key_pem
     "terraform/kubernetes/.gitkeep"                                                                       = ""
     ".gitignore"                                                                                          = <<EOT
 
