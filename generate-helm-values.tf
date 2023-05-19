@@ -67,7 +67,7 @@ module "glueops_platform_helm_values" {
   admin_github_org_name         = each.value.admin_github_org_name
   tenant_github_org_name        = each.value.tenant_github_org_name
   grafana_admin_password        = random_password.grafana_admin_secret[each.value.environment_name].result
-  tenant_b64enc_ssh_private_key = base64encode(tls_private_key.tenant_stack_repostory_key[each.value.environment_name].private_key_pem)
+  tenant_b64enc_ssh_private_key = base64encode(tls_private_key.tenant_stack_repostory_key[each.value.environment_name].private_key_openssh)
   github_api_token              = each.value.github_api_token
 }
 
