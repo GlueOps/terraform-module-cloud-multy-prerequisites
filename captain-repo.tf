@@ -7,7 +7,7 @@ module "captain_repository" {
     "platform.yaml" = module.glueops_platform_helm_values[each.value.environment_name].helm_values
     "README.md"     = module.tenant_readmes[each.value.environment_name].tenant_readme
 
-    "${each.value.tenant_github_org_name}-glueops-${var.tenant_key}-${each.value.environment_name}-stack.pub" = tls_private_key.tenant_stack_repostory_key[each.value.environment_name].public_key_pem
+    "${each.value.tenant_github_org_name}-glueops-${var.tenant_key}-${each.value.environment_name}-stack.pub" = tls_private_key.tenant_stack_repostory_key[each.value.environment_name].public_key_openssh
     "terraform/kubernetes/.gitkeep"                                                                           = ""
     ".gitignore"                                                                                              = <<EOT
 
