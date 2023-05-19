@@ -10,7 +10,9 @@ This README will outline the steps required to:
 3. Deploy the GlueOps Platform (including ArgoCD) on the Kubernetes Cluster.
 4. Tear down the cluster when it is no longer needed.
 
+<br /><br />
 ## Prerequisites
+
 1. User account in the desired cloud with necessary permissions to create Service Users capable of deploying a Kubernetes cluster.
 2. A [GlueOps codespace](https://github.com/GlueOps/glueops) at the latest version, which contains necessary tooling. <br /> **Note:** To ensure the latest version is used, [create a new Codespace with options](https://github.com/codespaces/new?hide_repo_select=true&ref=%F0%9F%9A%80%F0%9F%92%8E%F0%9F%99%8C%F0%9F%9A%80&repo=527049979&skip_quickstart=true&machine=basicLinux32gb&devcontainer_path=.devcontainer%2Fplaceholder_codespace_version%2Fdevcontainer.json) and confirm the latest version of `Dev container configuration` is being used.
 3. This repository, `placeholder_repo_name`, cloned into the codespace required above. Once the Codespace is created, the repo can be cloned using 
@@ -19,6 +21,7 @@ This README will outline the steps required to:
 gh repo clone placeholder_github_owner/placeholder_repo_name
 ```
 
+<br /><br />
 
 ## Select Cloud
 - [GCP](#GCP)
@@ -84,6 +87,8 @@ gh repo clone placeholder_github_owner/placeholder_repo_name
 
 4. Now that Kubernetes is deployed and can be accessed, being [deploying the GlueOps Platform](#Deploying-GlueOps-the-Platform)
 
+<br /><br />
+
 ## Deploying GlueOps the Platform
 
 1. Deploy ArgoCD
@@ -111,12 +116,15 @@ gh repo clone placeholder_github_owner/placeholder_repo_name
     * [Valult](https://vault.placeholder_repo_name): https://vault.placeholder_repo_name
     * [Grafana](https://grafana.placeholder_repo_name): https://grafana.placeholder_repo_name
 
+<br /><br />
+
 ## Using the GlueOps Platform with an Example Tenant
 
 This cluster has been deployed for the environment: `placeholder_cluster_environment` belonging to the tenant: `placeholder_tenant_key`.<br />To deploy tenant applications, ArgoCD will look for a `tenant-stack` repository at `git@github.com:placeholder_tenant_github_org_name/glueops-placeholder_tenant_key-placeholder_cluster_environment-stack.git`, a repository which contains configurations for tenant applications to deploy.
 <br /><br />As of this version, the `tenant-stack` repository is not created automatically and must be deployed manually to test tenant functionality.<br /><br />An example tenant-stack repository can be found in the Antonio's Tacos [demo organization](https://github.com/antoniostacos/nonprod-stack).<br />
 In addition to creating the `tenant-stack` repository, add the **public key** in this repository (`placeholder_tenant_github_org_name-glueops-placeholder_tenant_key-placeholder_cluster_environment-stack.pub`) to the `tenant-stack` repository created above as a [deploy key](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/managing-deploy-keys).
 
+<br /><br />
 
 ## Teardown Kubernetes
 
