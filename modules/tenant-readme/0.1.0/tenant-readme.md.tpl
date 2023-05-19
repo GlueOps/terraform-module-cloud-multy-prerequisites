@@ -114,8 +114,8 @@ gh repo clone placeholder_github_owner/placeholder_repo_name
 ## Using the GlueOps Platform with an Example Tenant
 
 This cluster has been deployed for the environment: `placeholder_cluster_environment` belonging to the tenant: `placeholder_tenant_key`.<br />To deploy tenant applications, ArgoCD will look for a `tenant-stack` repository at `git@github.com:placeholder_tenant_github_org_name/glueops-placeholder_tenant_key-placeholder_cluster_environment-stack.git`, a repository which contains configurations for tenant applications to deploy.
-<br /><br />As of this version, the `tenant-stack` repository is not created automatically and must be created manually to test tenant functionality.<br /><br />An example tenant-stack repository can be found in the Antonio's Tacos [demo organization](https://github.com/antoniostacos/nonprod-stack).
-In addition to creating the `tenant-stack` repository, add the public key in this repository to the `tenant-stack` repository created above as a [deploy key](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/managing-deploy-keys).
+<br /><br />As of this version, the `tenant-stack` repository is not created automatically and must be deployed manually to test tenant functionality.<br /><br />An example tenant-stack repository can be found in the Antonio's Tacos [demo organization](https://github.com/antoniostacos/nonprod-stack).<br />
+In addition to creating the `tenant-stack` repository, add the **public key** in this repository (`placeholder_tenant_github_org_name-glueops-placeholder_tenant_key-placeholder_cluster_environment-stack.pub`) to the `tenant-stack` repository created above as a [deploy key](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/managing-deploy-keys).
 
 
 ## Teardown Kubernetes
