@@ -26,7 +26,7 @@ variable "tenant_account_id" {
 }
 
 variable "github_owner" {
-  description = "The GitHub Owner"
+  description = "The GitHub Owner where the tenant repo will be deployed."
   type        = string
   nullable    = false
 }
@@ -40,12 +40,14 @@ variable "management_tenant_dns_aws_account_id" {
 variable "cluster_environments" {
   description = "The cluster environments and their respective github app ids"
   type = list(object({
-    environment_name         = string
-    github_app_client_id     = string
-    github_app_client_secret = string
-    github_api_token         = string
-    admin_github_org_name    = string
-    tenant_github_org_name   = string
+    environment_name                     = string
+    github_oauth_app_client_id           = string
+    github_oauth_app_client_secret       = string
+    github_tenant_app_id                 = string
+    github_tenant_app_installation_id    = string
+    github_tenant_app_b64enc_private_key = string
+    admin_github_org_name                = string
+    tenant_github_org_name               = string
     vault_github_org_team_policy_mappings = list(object({
       oidc_groups = list(string)
       policy_name = string
@@ -55,12 +57,14 @@ variable "cluster_environments" {
   }))
   default = [
     {
-      environment_name         = "test"
-      github_app_client_id     = "apidgoeshere"
-      github_app_client_secret = "secretgoeshere"
-      github_api_token         = "apitokengoeshere"
-      admin_github_org_name    = "GlueOps"
-      tenant_github_org_name   = "glueops-rocks"
+      environment_name                     = "test"
+      github_oauth_app_client_id           = "oauth-app-id"
+      github_oauth_app_client_secret       = "oauth-app-secret"
+      github_tenant_app_id                 = "tenant-github-app-id"
+      github_tenant_app_installation_id    = "tenant-github-app-installation-id"
+      github_tenant_app_b64enc_private_key = "tenant-github-app-b64enc-private-key"
+      admin_github_org_name                = "GlueOps"
+      tenant_github_org_name               = "glueops-rocks"
       vault_github_org_team_policy_mappings = [
         {
           oidc_groups = ["GlueOps:vault_super_admins"]
