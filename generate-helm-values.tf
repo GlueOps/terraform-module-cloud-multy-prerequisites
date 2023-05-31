@@ -39,6 +39,7 @@ resource "random_password" "grafana_admin_secret" {
 module "glueops_platform_helm_values" {
   for_each                             = local.environment_map
   source                               = "git::https://github.com/GlueOps/platform-helm-chart-platform.git?ref=feature/use-github-app"
+  this_is_development                  = var.this_is_development
   dex_github_client_id                 = each.value.github_oauth_app_client_id
   dex_github_client_secret             = each.value.github_oauth_app_client_secret
   dex_argocd_client_secret             = random_password.dex_argocd_client_secret[each.value.environment_name].result
