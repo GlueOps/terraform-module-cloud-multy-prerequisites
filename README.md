@@ -1,4 +1,3 @@
-# terraform-module-cloud-aws-multiple-route53-zones
 <!-- BEGIN_TF_DOCS -->
 # terraform-module-cloud-multy-prerequisites
 
@@ -48,11 +47,11 @@ Some dependencies for this module must be creates prior to its use, including:
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_argocd_helm_values"></a> [argocd\_helm\_values](#module\_argocd\_helm\_values) | git::https://github.com/GlueOps/docs-argocd.git | v0.1.0 |
+| <a name="module_argocd_helm_values"></a> [argocd\_helm\_values](#module\_argocd\_helm\_values) | git::https://github.com/GlueOps/docs-argocd.git | v0.1.1 |
 | <a name="module_captain_repository"></a> [captain\_repository](#module\_captain\_repository) | ./modules/github-captain-repository/0.1.0 | n/a |
 | <a name="module_common_s3"></a> [common\_s3](#module\_common\_s3) | ./modules/multy-s3-bucket/0.1.0 | n/a |
 | <a name="module_dnssec_key"></a> [dnssec\_key](#module\_dnssec\_key) | git::https://github.com/GlueOps/terraform-module-cloud-aws-dnssec-kms-key.git | v0.1.0 |
-| <a name="module_glueops_platform_helm_values"></a> [glueops\_platform\_helm\_values](#module\_glueops\_platform\_helm\_values) | git::https://github.com/GlueOps/platform-helm-chart-platform.git | v0.13.5 |
+| <a name="module_glueops_platform_helm_values"></a> [glueops\_platform\_helm\_values](#module\_glueops\_platform\_helm\_values) | git::https://github.com/GlueOps/platform-helm-chart-platform.git | v0.13.6 |
 | <a name="module_loki_s3"></a> [loki\_s3](#module\_loki\_s3) | ./modules/multy-s3-bucket/0.1.0 | n/a |
 | <a name="module_opsgenie_teams"></a> [opsgenie\_teams](#module\_opsgenie\_teams) | ./modules/opsgenie/0.1.0 | n/a |
 | <a name="module_tenant_readmes"></a> [tenant\_readmes](#module\_tenant\_readmes) | ./modules/tenant-readme/0.1.0 | n/a |

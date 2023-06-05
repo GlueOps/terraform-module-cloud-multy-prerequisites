@@ -38,7 +38,7 @@ resource "random_password" "grafana_admin_secret" {
 
 module "glueops_platform_helm_values" {
   for_each                             = local.environment_map
-  source                               = "git::https://github.com/GlueOps/platform-helm-chart-platform.git?ref=v0.13.5"
+  source                               = "git::https://github.com/GlueOps/platform-helm-chart-platform.git?ref=v0.13.6"
   this_is_development                  = var.this_is_development
   dex_github_client_id                 = each.value.github_oauth_app_client_id
   dex_github_client_secret             = each.value.github_oauth_app_client_secret
@@ -84,7 +84,7 @@ resource "aws_s3_object" "platform_helm_values" {
 
 module "argocd_helm_values" {
   for_each             = local.environment_map
-  source               = "git::https://github.com/GlueOps/docs-argocd.git?ref=v0.1.0"
+  source               = "git::https://github.com/GlueOps/docs-argocd.git?ref=v0.1.1"
   tenant_key           = var.tenant_key
   cluster_environment  = each.value.environment_name
   client_secret        = random_password.dex_argocd_client_secret[each.value.environment_name].result
