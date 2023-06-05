@@ -37,7 +37,7 @@ locals {
   codespace_version         = "v0.23.0"
   argocd_crd_version        = "v2.7.2"
   argocd_helm_chart_version = "5.33.3"
-  glueops_platform_version  = "0.13.5"
+  glueops_platform_version  = "0.13.6"
   tools_version             = "v0.1.3"
 }
 
