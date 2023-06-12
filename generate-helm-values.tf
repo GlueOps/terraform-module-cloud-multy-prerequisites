@@ -67,6 +67,7 @@ module "glueops_platform_helm_values" {
   github_tenant_app_id                 = each.value.github_tenant_app_id
   github_tenant_app_installation_id    = each.value.github_tenant_app_installation_id
   github_tenant_app_b64enc_private_key = each.value.github_tenant_app_b64enc_private_key
+  host_network_enabled                 = each.value.host_network_enabled
 }
 
 resource "aws_s3_object" "platform_helm_values" {

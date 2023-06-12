@@ -41,6 +41,7 @@ variable "cluster_environments" {
   description = "The cluster environments and their respective github app ids"
   type = list(object({
     environment_name                     = string
+    host_network_enabled                 = bool
     github_oauth_app_client_id           = string
     github_oauth_app_client_secret       = string
     github_tenant_app_id                 = string
@@ -58,6 +59,7 @@ variable "cluster_environments" {
   default = [
     {
       environment_name                     = "test"
+      host_network_enabled                 = true
       github_oauth_app_client_id           = "oauth-app-id"
       github_oauth_app_client_secret       = "oauth-app-secret"
       github_tenant_app_id                 = "tenant-github-app-id"
