@@ -28,16 +28,20 @@ Some dependencies for this module must be creates prior to its use, including:
 
 ## Requirements
 
-No requirements.
+| Name | Version |
+|------|---------|
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | 4.67.0 |
+| <a name="requirement_cloudflare"></a> [cloudflare](#requirement\_cloudflare) | 4.5.0 |
+| <a name="requirement_random"></a> [random](#requirement\_random) | 3.5.1 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws.clientaccount"></a> [aws.clientaccount](#provider\_aws.clientaccount) | n/a |
-| <a name="provider_aws.management-tenant-dns"></a> [aws.management-tenant-dns](#provider\_aws.management-tenant-dns) | n/a |
-| <a name="provider_aws.primaryregion"></a> [aws.primaryregion](#provider\_aws.primaryregion) | n/a |
-| <a name="provider_random"></a> [random](#provider\_random) | n/a |
+| <a name="provider_aws.clientaccount"></a> [aws.clientaccount](#provider\_aws.clientaccount) | 4.67.0 |
+| <a name="provider_aws.management-tenant-dns"></a> [aws.management-tenant-dns](#provider\_aws.management-tenant-dns) | 4.67.0 |
+| <a name="provider_aws.primaryregion"></a> [aws.primaryregion](#provider\_aws.primaryregion) | 4.67.0 |
+| <a name="provider_random"></a> [random](#provider\_random) | 3.5.1 |
 
 ## Modules
 
@@ -56,45 +60,45 @@ No requirements.
 
 | Name | Type |
 |------|------|
-| aws_iam_access_key.certmanager | resource |
-| aws_iam_access_key.externaldns | resource |
-| aws_iam_access_key.loki_log_exporter_s3 | resource |
-| aws_iam_access_key.loki_s3 | resource |
-| aws_iam_access_key.vault_s3 | resource |
-| aws_iam_policy.loki_logs_exporter_s3 | resource |
-| aws_iam_policy.loki_s3 | resource |
-| aws_iam_policy.route53 | resource |
-| aws_iam_policy.vault_s3_backup | resource |
-| aws_iam_user.certmanager | resource |
-| aws_iam_user.externaldns | resource |
-| aws_iam_user.loki_log_exporter_s3 | resource |
-| aws_iam_user.loki_s3 | resource |
-| aws_iam_user.vault_s3 | resource |
-| aws_iam_user_policy_attachment.certmanager | resource |
-| aws_iam_user_policy_attachment.externaldns | resource |
-| aws_iam_user_policy_attachment.loki_log_exporter_s3 | resource |
-| aws_iam_user_policy_attachment.loki_s3 | resource |
-| aws_iam_user_policy_attachment.vault_s3 | resource |
-| aws_route53_hosted_zone_dnssec.cluster_zones | resource |
-| aws_route53_hosted_zone_dnssec.parent_tenant_zone | resource |
-| aws_route53_key_signing_key.cluster_zones | resource |
-| aws_route53_key_signing_key.parent_tenant_zone | resource |
-| aws_route53_record.cluster_zone_dnssec_records | resource |
-| aws_route53_record.cluster_zone_ns_records | resource |
-| aws_route53_record.delegation_to_parent_tenant_zone | resource |
-| aws_route53_record.enable_dnssec_for_parent_tenant_zone | resource |
-| aws_route53_record.wildcard_for_apps | resource |
-| aws_route53_zone.clusters | resource |
-| aws_route53_zone.main | resource |
-| aws_s3_object.argocd_helm_values | resource |
-| aws_s3_object.combined_outputs | resource |
-| aws_s3_object.platform_helm_values | resource |
-| random_password.dex_argocd_client_secret | resource |
-| random_password.dex_grafana_client_secret | resource |
-| random_password.dex_pomerium_client_secret | resource |
-| random_password.dex_vault_client_secret | resource |
-| random_password.grafana_admin_secret | resource |
-| aws_route53_zone.management_tenant_dns | data source |
+| [aws_iam_access_key.certmanager](https://registry.terraform.io/providers/hashicorp/aws/4.67.0/docs/resources/iam_access_key) | resource |
+| [aws_iam_access_key.externaldns](https://registry.terraform.io/providers/hashicorp/aws/4.67.0/docs/resources/iam_access_key) | resource |
+| [aws_iam_access_key.loki_log_exporter_s3](https://registry.terraform.io/providers/hashicorp/aws/4.67.0/docs/resources/iam_access_key) | resource |
+| [aws_iam_access_key.loki_s3](https://registry.terraform.io/providers/hashicorp/aws/4.67.0/docs/resources/iam_access_key) | resource |
+| [aws_iam_access_key.vault_s3](https://registry.terraform.io/providers/hashicorp/aws/4.67.0/docs/resources/iam_access_key) | resource |
+| [aws_iam_policy.loki_logs_exporter_s3](https://registry.terraform.io/providers/hashicorp/aws/4.67.0/docs/resources/iam_policy) | resource |
+| [aws_iam_policy.loki_s3](https://registry.terraform.io/providers/hashicorp/aws/4.67.0/docs/resources/iam_policy) | resource |
+| [aws_iam_policy.route53](https://registry.terraform.io/providers/hashicorp/aws/4.67.0/docs/resources/iam_policy) | resource |
+| [aws_iam_policy.vault_s3_backup](https://registry.terraform.io/providers/hashicorp/aws/4.67.0/docs/resources/iam_policy) | resource |
+| [aws_iam_user.certmanager](https://registry.terraform.io/providers/hashicorp/aws/4.67.0/docs/resources/iam_user) | resource |
+| [aws_iam_user.externaldns](https://registry.terraform.io/providers/hashicorp/aws/4.67.0/docs/resources/iam_user) | resource |
+| [aws_iam_user.loki_log_exporter_s3](https://registry.terraform.io/providers/hashicorp/aws/4.67.0/docs/resources/iam_user) | resource |
+| [aws_iam_user.loki_s3](https://registry.terraform.io/providers/hashicorp/aws/4.67.0/docs/resources/iam_user) | resource |
+| [aws_iam_user.vault_s3](https://registry.terraform.io/providers/hashicorp/aws/4.67.0/docs/resources/iam_user) | resource |
+| [aws_iam_user_policy_attachment.certmanager](https://registry.terraform.io/providers/hashicorp/aws/4.67.0/docs/resources/iam_user_policy_attachment) | resource |
+| [aws_iam_user_policy_attachment.externaldns](https://registry.terraform.io/providers/hashicorp/aws/4.67.0/docs/resources/iam_user_policy_attachment) | resource |
+| [aws_iam_user_policy_attachment.loki_log_exporter_s3](https://registry.terraform.io/providers/hashicorp/aws/4.67.0/docs/resources/iam_user_policy_attachment) | resource |
+| [aws_iam_user_policy_attachment.loki_s3](https://registry.terraform.io/providers/hashicorp/aws/4.67.0/docs/resources/iam_user_policy_attachment) | resource |
+| [aws_iam_user_policy_attachment.vault_s3](https://registry.terraform.io/providers/hashicorp/aws/4.67.0/docs/resources/iam_user_policy_attachment) | resource |
+| [aws_route53_hosted_zone_dnssec.cluster_zones](https://registry.terraform.io/providers/hashicorp/aws/4.67.0/docs/resources/route53_hosted_zone_dnssec) | resource |
+| [aws_route53_hosted_zone_dnssec.parent_tenant_zone](https://registry.terraform.io/providers/hashicorp/aws/4.67.0/docs/resources/route53_hosted_zone_dnssec) | resource |
+| [aws_route53_key_signing_key.cluster_zones](https://registry.terraform.io/providers/hashicorp/aws/4.67.0/docs/resources/route53_key_signing_key) | resource |
+| [aws_route53_key_signing_key.parent_tenant_zone](https://registry.terraform.io/providers/hashicorp/aws/4.67.0/docs/resources/route53_key_signing_key) | resource |
+| [aws_route53_record.cluster_zone_dnssec_records](https://registry.terraform.io/providers/hashicorp/aws/4.67.0/docs/resources/route53_record) | resource |
+| [aws_route53_record.cluster_zone_ns_records](https://registry.terraform.io/providers/hashicorp/aws/4.67.0/docs/resources/route53_record) | resource |
+| [aws_route53_record.delegation_to_parent_tenant_zone](https://registry.terraform.io/providers/hashicorp/aws/4.67.0/docs/resources/route53_record) | resource |
+| [aws_route53_record.enable_dnssec_for_parent_tenant_zone](https://registry.terraform.io/providers/hashicorp/aws/4.67.0/docs/resources/route53_record) | resource |
+| [aws_route53_record.wildcard_for_apps](https://registry.terraform.io/providers/hashicorp/aws/4.67.0/docs/resources/route53_record) | resource |
+| [aws_route53_zone.clusters](https://registry.terraform.io/providers/hashicorp/aws/4.67.0/docs/resources/route53_zone) | resource |
+| [aws_route53_zone.main](https://registry.terraform.io/providers/hashicorp/aws/4.67.0/docs/resources/route53_zone) | resource |
+| [aws_s3_object.argocd_helm_values](https://registry.terraform.io/providers/hashicorp/aws/4.67.0/docs/resources/s3_object) | resource |
+| [aws_s3_object.combined_outputs](https://registry.terraform.io/providers/hashicorp/aws/4.67.0/docs/resources/s3_object) | resource |
+| [aws_s3_object.platform_helm_values](https://registry.terraform.io/providers/hashicorp/aws/4.67.0/docs/resources/s3_object) | resource |
+| [random_password.dex_argocd_client_secret](https://registry.terraform.io/providers/hashicorp/random/3.5.1/docs/resources/password) | resource |
+| [random_password.dex_grafana_client_secret](https://registry.terraform.io/providers/hashicorp/random/3.5.1/docs/resources/password) | resource |
+| [random_password.dex_pomerium_client_secret](https://registry.terraform.io/providers/hashicorp/random/3.5.1/docs/resources/password) | resource |
+| [random_password.dex_vault_client_secret](https://registry.terraform.io/providers/hashicorp/random/3.5.1/docs/resources/password) | resource |
+| [random_password.grafana_admin_secret](https://registry.terraform.io/providers/hashicorp/random/3.5.1/docs/resources/password) | resource |
+| [aws_route53_zone.management_tenant_dns](https://registry.terraform.io/providers/hashicorp/aws/4.67.0/docs/data-sources/route53_zone) | data source |
 
 ## Inputs
 
