@@ -1,7 +1,8 @@
 terraform {
   required_providers {
     opsgenie = {
-      source  = "terraform-registry-proxy.gpkg.io/opsgenie/opsgenie"
+      source  = "opsgenie/opsgenie"
+      version = "0.6.20"
     }
   }
 }

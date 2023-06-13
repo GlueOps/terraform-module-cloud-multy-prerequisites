@@ -1,13 +1,16 @@
 terraform {
   required_providers {
     cloudflare = {
-      source  = "terraform-registry-proxy.gpkg.io/cloudflare/cloudflare"
+      source  = "cloudflare/cloudflare"
+      version = "4.5.0"
     }
     aws = {
-      source  = "terraform-registry-proxy.gpkg.io/hashicorp/aws"
+      source  = "hashicorp/aws"
+      version = "4.67.0"
     }
     random = {
-      source  = "terraform-registry-proxy.gpkg.io/hashicorp/random"
+      source  = "hashicorp/random"
+      version = "3.5.1"
     }
   }
 }
