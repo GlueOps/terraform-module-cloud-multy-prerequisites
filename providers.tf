@@ -1,16 +1,13 @@
 terraform {
   required_providers {
     cloudflare = {
-      source  = "cloudflare/cloudflare"
-      version = "4.5.0"
+      source  = "terraform-registry-proxy.gpkg.io/cloudflare/cloudflare"
     }
     aws = {
-      source  = "hashicorp/aws"
-      version = "4.67.0"
+      source  = "terraform-registry-proxy.gpkg.io/hashicorp/aws"
     }
     random = {
-      source  = "hashicorp/random"
-      version = "3.5.1"
+      source  = "terraform-registry-proxy.gpkg.io/hashicorp/random"
     }
   }
 }
@@ -46,4 +43,3 @@ provider "aws" {
     role_arn = "arn:aws:iam::${var.tenant_account_id}:role/OrganizationAccountAccessRole"
   }
 }
-
