@@ -51,13 +51,13 @@ gh repo clone placeholder_github_owner/placeholder_repo_name
     * Reference documents for [terraform-module-cloud-gcp-kubernetes-cluster](https://github.com/GlueOps/terraform-module-cloud-gcp-kubernetes-cluster) and use the pre-created directory `terraform/kubernetes` within this repo for the `main.tf` file to deploy the cluster.
     * **At minimum**, the parameter `project_id` must be updated
 
-3. Access the new Kubernetes Cluster by running the below command to set up kubeconfig. <br />Run this command from the directory containing the `creds.json` file.<br /> Also note that the default region in this command is `us-central1-a`.  This region can be overridden with the `-r` or `--region` flag.
+3. Access the new Kubernetes Cluster by running the below command to set up kubeconfig. <br />Run this command from the directory containing the `creds.json` file.<br /> Also note that the default region in this command is `us-central1`.  This region can be overridden with the `-r` or `--region` flag.
 
     ```sh
     source <(curl -s https://raw.githubusercontent.com/GlueOps/development-only-utilities/placeholder_tools_version/tools/gcp/gke-auth) && \
         gke-auth
     ```
-4. Now that Kubernetes is deployed and can be accessed, being [deploying the GlueOps Platform](#Deploying-GlueOps-the-Platform)
+4. Now that Kubernetes is deployed and can be accessed, begin [deploying the GlueOps Platform](#Deploying-GlueOps-the-Platform)
 
 
 ## AWS
@@ -85,7 +85,7 @@ gh repo clone placeholder_github_owner/placeholder_repo_name
 
 3. Access the new Kubernetes Cluster by creating a [kubeconfig](https://github.com/GlueOps/terraform-module-cloud-aws-kubernetes-cluster/wiki#create-a-kubeconfig)
 
-4. Now that Kubernetes is deployed and can be accessed, being [deploying the GlueOps Platform](#Deploying-GlueOps-the-Platform)
+4. Now that Kubernetes is deployed and can be accessed, begin [deploying the GlueOps Platform](#Deploying-GlueOps-the-Platform)
 
 <br /><br />
 
