@@ -1,9 +1,10 @@
 locals {
 
-  provider_versions_tf_file = << EOT
+  provider_versions_tf_file = <<EOT
 module "provider_versions" {
   source = "git::https://github.com/GlueOps/terraform-module-provider-versions.git"
 }
+
 EOT
 
 }
@@ -13,12 +14,12 @@ module "captain_repository" {
   source          = "./modules/github-captain-repository/0.1.0"
   repository_name = "${each.value.environment_name}.${aws_route53_zone.main.name}"
   files_to_create = {
-    "argocd.yaml"                            = module.argocd_helm_values[each.value.environment_name].helm_values
-    "platform.yaml"                          = module.glueops_platform_helm_values[each.value.environment_name].helm_values
-    "README.md"                              = module.tenant_readmes[each.value.environment_name].tenant_readme
-    "terraform/kubernetes/provider_versions.tf"          = local.provider_versions_tf_file
-    "terraform/vault/initialization/provider_versions.tf"          = local.provider_versions_tf_file
-    "terraform/vault/configuration/provider_versions.tf"          = local.provider_versions_tf_file
+    "argocd.yaml"                                         = module.argocd_helm_values[each.value.environment_name].helm_values
+    "platform.yaml"                                       = module.glueops_platform_helm_values[each.value.environment_name].helm_values
+    "README.md"                                           = module.tenant_readmes[each.value.environment_name].tenant_readme
+    "terraform/kubernetes/provider_versions.tf"           = local.provider_versions_tf_file
+    "terraform/vault/initialization/provider_versions.tf" = local.provider_versions_tf_file
+    "terraform/vault/configuration/provider_versions.tf"  = local.provider_versions_tf_file
 
     ".gitignore"                             = <<EOT
 
