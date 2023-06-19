@@ -3,9 +3,3 @@ variable "repository_name" {
   nullable = false
   default  = false
 }
-
-variable "files_to_create" {
-  type     = map(string)
-  nullable = false
-  default  = {}
-}

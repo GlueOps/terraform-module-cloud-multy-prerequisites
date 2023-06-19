@@ -14,7 +14,13 @@ EOT
 module "captain_repository" {
   for_each        = local.environment_map
   source          = "./modules/github-captain-repository/0.1.0"
-  deploy_key      = trimspace(tls_private_key.captain_repo_deploy_key[each.value.environment_name].public_key_pem)
+  repository_name = "${each.value.environment_name}.${aws_route53_zone.main.name}"
+
+}
+
+module "captain_repository_files" {
+  for_each        = local.environment_map
+  source          = "./modules/github-captain-repository-files/0.1.0"
   repository_name = "${each.value.environment_name}.${aws_route53_zone.main.name}"
   files_to_create = {
     "argocd.yaml"                                         = module.argocd_helm_values[each.value.environment_name].helm_values
