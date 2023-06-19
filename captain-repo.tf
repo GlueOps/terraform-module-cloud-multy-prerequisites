@@ -23,15 +23,6 @@ module "captain_repository_files" {
   source          = "./modules/github-captain-repository-files/0.1.0"
   repository_name = module.captain_repository[each.key].repository_name
   files_to_create = {
-    "manifests/README.md"                                 = <<EOT
-# Tenant Customizations go here
-
-## Examples
--- ArgoCD App Projects
--- Tenant Application Repo Stacks
--- RBAC
-
-EOT
     "argocd.yaml"                                         = module.argocd_helm_values[each.value.environment_name].helm_values
     "platform.yaml"                                       = module.glueops_platform_helm_values[each.value.environment_name].helm_values
     "README.md"                                           = module.tenant_readmes[each.value.environment_name].tenant_readme
@@ -60,6 +51,16 @@ module "configure_vault_cluster" {
       ${join(",\n    ", [for mapping in each.value.vault_github_org_team_policy_mappings : "{ oidc_groups = ${jsonencode(mapping.oidc_groups)}, policy_name = \"${mapping.policy_name}\" }"])}
     ]
 }
+
+EOT
+
+    "manifests/README.md" = <<EOT
+# Tenant Customizations go here
+
+## Examples
+-- ArgoCD App Projects
+-- Tenant Application Repo Stacks
+-- RBAC
 
 EOT
   }
