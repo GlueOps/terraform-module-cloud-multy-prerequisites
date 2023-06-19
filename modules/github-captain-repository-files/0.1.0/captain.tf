@@ -1,6 +1,6 @@
 resource "github_repository_file" "files" {
   for_each            = var.files_to_create
-  repository          = github_repository.captain_repo.name
+  repository          = var.repository_name
   branch              = "main"
   file                = each.key
   content             = each.value

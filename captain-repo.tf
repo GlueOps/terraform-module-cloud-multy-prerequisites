@@ -21,7 +21,7 @@ module "captain_repository" {
 module "captain_repository_files" {
   for_each        = local.environment_map
   source          = "./modules/github-captain-repository-files/0.1.0"
-  repository_name = "${each.value.environment_name}.${aws_route53_zone.main.name}"
+  repository_name = module.captain_repository[each.key].repository_name
   files_to_create = {
     "argocd.yaml"                                         = module.argocd_helm_values[each.value.environment_name].helm_values
     "platform.yaml"                                       = module.glueops_platform_helm_values[each.value.environment_name].helm_values
