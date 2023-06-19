@@ -58,9 +58,9 @@ EOT
 # Tenant Customizations go here
 
 ## Examples
--- ArgoCD App Projects
--- Tenant Application Repo Stacks
--- RBAC
+- ArgoCD App Projects
+- Tenant Application Repo Stacks
+- RBAC
 
 EOT
   }
