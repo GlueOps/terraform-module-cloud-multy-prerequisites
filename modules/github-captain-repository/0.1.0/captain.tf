@@ -9,7 +9,7 @@ resource "github_repository" "captain_repo" {
 resource "github_repository_deploy_key" "captain_repo_deploy_key" {
   repository = github_repository.captain_repo.name
   title      = "ArgoCD Deploy Key"
-  key        = trimspace(tls_private_key.captain_repo_deploy_key.public_key_pem)
+  key        = trimspace(tls_private_key.captain_repo_deploy_key.public_key_openssh)
   read_only  = true
 }
 
