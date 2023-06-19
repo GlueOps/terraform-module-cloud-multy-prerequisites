@@ -6,15 +6,22 @@ resource "github_repository" "captain_repo" {
   auto_init  = true
 }
 
+resource "github_repository_deploy_key" {
+  repository = github_repository.captain_repo.name
+  title      = "ArgoCD Deploy Key"
+  key        = trimspace(tls_private_key.captain_repo_deploy_key.public_key_pem)
+  read_only  = true
+}
 
-resource "github_repository_file" "files" {
-  for_each            = var.files_to_create
-  repository          = github_repository.captain_repo.name
-  branch              = "main"
-  file                = each.key
-  content             = each.value
-  commit_message      = "Managed by Terraform"
-  commit_author       = "Terraform User"
-  commit_email        = "terraform@example.com"
-  overwrite_on_create = true
+resource "tls_private_key" "captain_repo_deploy_key" {
+  algorithm = "ED25519"
+}
+
+output "ssh_clone_url" {
+  value = github_repository.captain_repo.ssh_clone_url
+}
+
+
+output "private_deploy_key" {
+  value = tls_private_key.captain_repo_deploy_key.private_key_pem
 }
