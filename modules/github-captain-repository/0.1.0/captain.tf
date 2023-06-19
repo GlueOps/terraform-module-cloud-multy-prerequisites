@@ -23,7 +23,7 @@ output "ssh_clone_url" {
 
 
 output "private_deploy_key" {
-  value = tls_private_key.captain_repo_deploy_key.private_key_pem
+  value = tls_private_key.captain_repo_deploy_key.private_key_openssh
 }
 
 output "repository_name" {
