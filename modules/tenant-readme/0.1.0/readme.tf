@@ -37,7 +37,7 @@ locals {
   codespace_version         = "v0.24.0"
   argocd_crd_version        = "v2.7.4"
   argocd_helm_chart_version = "5.36.1"
-  glueops_platform_version  = "feat/add-captain-repo-configs"
+  glueops_platform_version  = "0.17.0"
   tools_version             = "v0.1.5"
 }
 
