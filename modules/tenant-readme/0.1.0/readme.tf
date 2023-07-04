@@ -34,10 +34,10 @@ data "local_file" "readme" {
 }
 
 locals {
-  codespace_version         = "v0.24.0"
-  argocd_crd_version        = "v2.7.4"
-  argocd_helm_chart_version = "5.36.1"
-  glueops_platform_version  = "0.17.0"
+  codespace_version         = "v0.26.0"
+  argocd_crd_version        = "v2.7.6"
+  argocd_helm_chart_version = "5.36.14"
+  glueops_platform_version  = "0.19.0"
   tools_version             = "v0.1.5"
 }
 
