@@ -86,7 +86,7 @@ resource "aws_s3_object" "platform_helm_values" {
 
 module "argocd_helm_values" {
   for_each             = local.environment_map
-  source               = "git::https://github.com/GlueOps/docs-argocd.git?ref=v0.4.0"
+  source               = "git::https://github.com/GlueOps/docs-argocd.git?ref=v0.5.0"
   tenant_key           = var.tenant_key
   cluster_environment  = each.value.environment_name
   client_secret        = random_password.dex_argocd_client_secret[each.value.environment_name].result
