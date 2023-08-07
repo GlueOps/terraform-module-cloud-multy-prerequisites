@@ -28,6 +28,11 @@ variable "tenant_github_org_name" {
   nullable    = false
 }
 
+variable "argocd_app_version" {
+  type        = string
+  description = "This is the appVersion of argocd. Example: v2.7.11"
+}
+
 
 data "local_file" "readme" {
   filename = "${path.module}/tenant-readme.md.tpl"
@@ -35,7 +40,7 @@ data "local_file" "readme" {
 
 locals {
   codespace_version         = "v0.28.0"
-  argocd_crd_version        = "v2.7.10"
+  argocd_crd_version        = var.argocd_app_version
   argocd_helm_chart_version = "5.42.2"
   glueops_platform_version  = "0.26.0" # this also needs to be updated in the module.glueops_platform_helm_values // generate-helm-values.tf
   tools_version             = "v0.3.0"
