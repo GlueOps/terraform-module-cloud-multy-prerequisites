@@ -52,7 +52,9 @@ module "configure_vault_cluster" {
     ]
 
     aws_region     = "${var.primary_region}"
-    aws_access_key = "${aws_iam_access_key.vault_init_s3[each.value.environment_name].id}
+    aws_s3_bucket_name  = "${module.common_s3.bucket_name}"
+    aws_s3_key_vault_secret_file     = "${aws_route53_zone.clusters[each.key].name}/hashicorp-vault-init/vault_access.json"
+    aws_access_key = "${aws_iam_access_key.vault_init_s3[each.value.environment_name].id}"
     aws_secret_key =   "${aws_iam_access_key.vault_init_s3[each.value.environment_name].secret}"
 }
 
