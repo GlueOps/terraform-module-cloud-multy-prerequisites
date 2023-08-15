@@ -50,6 +50,10 @@ module "configure_vault_cluster" {
     org_team_policy_mappings = [
       ${join(",\n    ", [for mapping in each.value.vault_github_org_team_policy_mappings : "{ oidc_groups = ${jsonencode(mapping.oidc_groups)}, policy_name = \"${mapping.policy_name}\" }"])}
     ]
+    
+    aws_region     = "${var.aws_region}"
+    aws_access_key = "${aws_iam_access_key.vault_init_s3[each.value.environment_name].id}
+    aws_secret_key =   "${aws_iam_access_key.vault_init_s3[each.value.environment_name].secret}"
 }
 
 EOT
