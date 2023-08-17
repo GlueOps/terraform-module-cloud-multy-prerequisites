@@ -37,7 +37,7 @@ resource "random_password" "grafana_admin_secret" {
 
 module "glueops_platform_helm_values" {
   for_each                                   = local.environment_map
-  source                                     = "git::https://github.com/GlueOps/platform-helm-chart-platform.git?ref=v0.28.1"
+  source                                     = "git::https://github.com/GlueOps/platform-helm-chart-platform.git?ref=v0.28.0-alpha1"
   captain_repo_b64encoded_private_deploy_key = base64encode(module.captain_repository[each.value.environment_name].private_deploy_key)
   captain_repo_ssh_clone_url                 = module.captain_repository[each.value.environment_name].ssh_clone_url
   this_is_development                        = var.this_is_development
@@ -69,6 +69,9 @@ module "glueops_platform_helm_values" {
   github_tenant_app_installation_id          = each.value.github_tenant_app_installation_id
   github_tenant_app_b64enc_private_key       = each.value.github_tenant_app_b64enc_private_key
   host_network_enabled                       = each.value.host_network_enabled
+  vault_init_controller_s3_key               = local.vault_init_s3_key
+  vault_init_controller_aws_access_key       = aws_iam_access_key.vault_init_s3[each.value.environment_name].id
+  vault_init_controller_aws_access_secret    = aws_iam_access_key.vault_init_s3[each.value.environment_name].secret
 }
 
 resource "aws_s3_object" "platform_helm_values" {
