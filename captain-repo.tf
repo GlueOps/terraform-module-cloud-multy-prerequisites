@@ -18,7 +18,7 @@ module "captain_repository" {
 
 }
 
-local {
+locals {
 
   vault_init_s3_key = "${aws_route53_zone.clusters[each.key].name}/hashicorp-vault-init/vault_access.json"
 }
