@@ -17,6 +17,16 @@ resource "aws_iam_policy" "vault_init_s3" {
         "${module.common_s3.primary_s3_bucket_arn}/${aws_route53_zone.clusters[each.key].name}/hashicorp-vault-init/*",
         "${module.common_s3.replica_s3_bucket_arn}/${aws_route53_zone.clusters[each.key].name}/hashicorp-vault-init/*"
       ]
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "s3:ListBucket"
+      ],
+      "Resource": [
+        "${module.common_s3.primary_s3_bucket_arn}",
+        "${module.common_s3.replica_s3_bucket_arn}"
+      ]
     }
   ]
 }
