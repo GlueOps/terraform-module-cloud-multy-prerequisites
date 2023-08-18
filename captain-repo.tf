@@ -55,7 +55,7 @@ module "configure_vault_cluster" {
 
     aws_region     = "${var.primary_region}"
     aws_s3_bucket_name  = "${module.common_s3.primary_s3_bucket_id}"
-    aws_s3_key_vault_secret_file     = "${aws_route53_zone.clusters[each.key].name}/${vault_access_tokens_s3_key}"
+    aws_s3_key_vault_secret_file     = "${aws_route53_zone.clusters[each.key].name}/${local.vault_access_tokens_s3_key}"
     aws_access_key = "${aws_iam_access_key.vault_init_s3[each.value.environment_name].id}"
     aws_secret_key =   "${aws_iam_access_key.vault_init_s3[each.value.environment_name].secret}"
 }
