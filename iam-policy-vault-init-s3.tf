@@ -10,7 +10,8 @@ resource "aws_iam_policy" "vault_init_s3" {
       "Effect": "Allow",
       "Action": [
         "s3:PutObject",
-        "s3:GetObject*"
+        "s3:GetObject*",
+        "s3:List*"
       ],
       "Resource": [
         "${module.common_s3.primary_s3_bucket_arn}/${aws_route53_zone.clusters[each.key].name}/hashicorp-vault-init/*",
