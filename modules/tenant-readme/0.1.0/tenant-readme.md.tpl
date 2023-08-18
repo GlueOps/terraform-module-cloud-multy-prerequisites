@@ -109,7 +109,6 @@ gh repo clone placeholder_github_owner/placeholder_repo_name
         deploy-glueops-platform -v placeholder_glueops_platform_version
     ```
 
-    * [Initialize Vault](https://github.com/GlueOps/terraform-module-kubernetes-hashicorp-vault-initialization)
     * [Configure Vault](https://github.com/GlueOps/terraform-module-kubernetes-hashicorp-vault-configuration)
 3. Access Cluster services
     * [ArgoCD](https://argocd.placeholder_repo_name): https://argocd.placeholder_repo_name
