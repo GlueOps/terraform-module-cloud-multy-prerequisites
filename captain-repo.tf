@@ -29,7 +29,6 @@ module "captain_repository_files" {
     "platform.yaml"                                       = module.glueops_platform_helm_values[each.value.environment_name].helm_values
     "README.md"                                           = module.tenant_readmes[each.value.environment_name].tenant_readme
     "terraform/kubernetes/provider_versions.tf"           = local.provider_versions_tf_file
-    "terraform/vault/initialization/provider_versions.tf" = local.provider_versions_tf_file
     "terraform/vault/configuration/provider_versions.tf"  = local.provider_versions_tf_file
 
     ".gitignore"                             = <<EOT
@@ -38,12 +37,7 @@ module "captain_repository_files" {
 .terraform.lock.hcl
 
 EOT
-    "terraform/vault/initialization/main.tf" = <<EOT
-module "initialize_vault_cluster" {
-  source = "git::https://github.com/GlueOps/terraform-module-kubernetes-hashicorp-vault-initialization.git?ref=v0.4.0"
-}
 
-EOT
     "terraform/vault/configuration/main.tf"  = <<EOT
 module "configure_vault_cluster" {
     source = "git::https://github.com/GlueOps/terraform-module-kubernetes-hashicorp-vault-configuration.git?ref=feat/adding-vault-init"
