@@ -25,20 +25,20 @@ module "captain_repository_files" {
   source          = "./modules/github-captain-repository-files/0.1.0"
   repository_name = module.captain_repository[each.key].repository_name
   files_to_create = {
-    "argocd.yaml"                                         = module.argocd_helm_values[each.value.environment_name].helm_values
-    "platform.yaml"                                       = module.glueops_platform_helm_values[each.value.environment_name].helm_values
-    "README.md"                                           = module.tenant_readmes[each.value.environment_name].tenant_readme
-    "terraform/kubernetes/provider_versions.tf"           = local.provider_versions_tf_file
-    "terraform/vault/configuration/provider_versions.tf"  = local.provider_versions_tf_file
+    "argocd.yaml"                                        = module.argocd_helm_values[each.value.environment_name].helm_values
+    "platform.yaml"                                      = module.glueops_platform_helm_values[each.value.environment_name].helm_values
+    "README.md"                                          = module.tenant_readmes[each.value.environment_name].tenant_readme
+    "terraform/kubernetes/provider_versions.tf"          = local.provider_versions_tf_file
+    "terraform/vault/configuration/provider_versions.tf" = local.provider_versions_tf_file
 
-    ".gitignore"                             = <<EOT
+    ".gitignore" = <<EOT
 
 .terraform
 .terraform.lock.hcl
 
 EOT
 
-    "terraform/vault/configuration/main.tf"  = <<EOT
+    "terraform/vault/configuration/main.tf" = <<EOT
 module "configure_vault_cluster" {
     source = "git::https://github.com/GlueOps/terraform-module-kubernetes-hashicorp-vault-configuration.git?ref=v0.6.0"
     oidc_client_secret = "${random_password.dex_vault_client_secret[each.key].result}"

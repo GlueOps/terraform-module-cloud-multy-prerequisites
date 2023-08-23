@@ -35,7 +35,7 @@ resource "random_password" "grafana_admin_secret" {
 }
 
 locals {
-  vault_access_tokens_s3_key= "hashicorp-vault-init/vault_access.json"
+  vault_access_tokens_s3_key = "hashicorp-vault-init/vault_access.json"
 }
 
 module "glueops_platform_helm_values" {
