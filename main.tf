@@ -9,12 +9,13 @@ resource "aws_route53_zone" "main" {
 }
 
 resource "aws_route53_record" "delegation_to_parent_tenant_zone" {
-  provider = aws.management-tenant-dns
-  zone_id  = data.aws_route53_zone.management_tenant_dns.zone_id
-  name     = aws_route53_zone.main.name
-  type     = local.ns_record_type
-  ttl      = local.record_ttl
-  records  = aws_route53_zone.main.name_servers
+  provider   = aws.management-tenant-dns
+  zone_id    = data.aws_route53_zone.management_tenant_dns.zone_id
+  name       = aws_route53_zone.main.name
+  type       = local.ns_record_type
+  ttl        = local.record_ttl
+  records    = aws_route53_zone.main.name_servers
+  depends_on = [aws_route53_zone.main]
 }
 
 
@@ -30,12 +31,15 @@ resource "aws_route53_key_signing_key" "parent_tenant_zone" {
   key_management_service_arn = module.dnssec_key.kms_key_arn
   name                       = "primary"
   status                     = "ACTIVE"
+  depends_on                 = [aws_route53_zone.main]
+
 }
 
 resource "aws_route53_hosted_zone_dnssec" "parent_tenant_zone" {
   provider = aws.clientaccount
   depends_on = [
-    aws_route53_key_signing_key.parent_tenant_zone
+    aws_route53_key_signing_key.parent_tenant_zone,
+    aws_route53_zone.main
   ]
   hosted_zone_id = aws_route53_key_signing_key.parent_tenant_zone.hosted_zone_id
 }
@@ -67,6 +71,9 @@ resource "aws_route53_key_signing_key" "cluster_zones" {
   key_management_service_arn = module.dnssec_key.kms_key_arn
   name                       = "primary"
   status                     = "ACTIVE"
+  depends_on = [
+    aws_route53_zone.clusters
+  ]
 }
 
 resource "aws_route53_hosted_zone_dnssec" "cluster_zones" {
@@ -75,7 +82,8 @@ resource "aws_route53_hosted_zone_dnssec" "cluster_zones" {
   for_each = aws_route53_zone.clusters
 
   depends_on = [
-    aws_route53_key_signing_key.cluster_zones
+    aws_route53_key_signing_key.cluster_zones,
+    aws_route53_zone.clusters
   ]
   hosted_zone_id = aws_route53_key_signing_key.cluster_zones[each.key].hosted_zone_id
 }
@@ -89,7 +97,9 @@ resource "aws_route53_record" "cluster_zone_dnssec_records" {
   ttl      = local.record_ttl
   records  = [aws_route53_key_signing_key.cluster_zones[each.key].ds_record]
   depends_on = [
-    aws_route53_hosted_zone_dnssec.cluster_zones
+    aws_route53_hosted_zone_dnssec.cluster_zones,
+    aws_route53_zone.main.zone_id,
+    aws_route53_zone.clusters
   ]
 }
 
@@ -101,6 +111,10 @@ resource "aws_route53_record" "cluster_zone_ns_records" {
   type     = local.ns_record_type
   ttl      = local.record_ttl
   records  = aws_route53_zone.clusters[each.key].name_servers
+  depends_on = [
+    aws_route53_zone.main.zone_id,
+    aws_route53_zone.clusters
+  ]
 }
 
 
@@ -112,5 +126,7 @@ resource "aws_route53_record" "wildcard_for_apps" {
   type     = "CNAME"
   ttl      = local.record_ttl
   records  = ["ingress.${each.value.name}"]
+  depends_on = [
+    aws_route53_zone.clusters
+  ]
 }
-
