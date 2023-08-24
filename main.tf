@@ -98,7 +98,7 @@ resource "aws_route53_record" "cluster_zone_dnssec_records" {
   records  = [aws_route53_key_signing_key.cluster_zones[each.key].ds_record]
   depends_on = [
     aws_route53_hosted_zone_dnssec.cluster_zones,
-    aws_route53_zone.main.zone_id,
+    aws_route53_zone.main,
     aws_route53_zone.clusters
   ]
 }
@@ -112,7 +112,7 @@ resource "aws_route53_record" "cluster_zone_ns_records" {
   ttl      = local.record_ttl
   records  = aws_route53_zone.clusters[each.key].name_servers
   depends_on = [
-    aws_route53_zone.main.zone_id,
+    aws_route53_zone.main,
     aws_route53_zone.clusters
   ]
 }

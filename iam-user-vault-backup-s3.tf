@@ -9,12 +9,12 @@ resource "aws_iam_user_policy_attachment" "vault_s3" {
   for_each   = aws_iam_user.vault_s3
   user       = each.value.name
   policy_arn = aws_iam_policy.vault_s3_backup[each.key].arn
-  depends_on = [aws_iam_user.aws_iam_user.vault_s3]
+  depends_on = [aws_iam_user.vault_s3]
 }
 
 resource "aws_iam_access_key" "vault_s3" {
   for_each   = aws_iam_user.vault_s3
   provider   = aws.clientaccount
   user       = each.value.name
-  depends_on = [aws_iam_user.aws_iam_user.vault_s3]
+  depends_on = [aws_iam_user.vault_s3]
 }
