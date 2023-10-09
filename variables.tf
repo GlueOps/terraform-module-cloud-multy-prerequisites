@@ -76,6 +76,16 @@ variable "cluster_environments" {
       github_tenant_app_b64enc_private_key = "tenant-github-app-b64enc-private-key"
       admin_github_org_name                = "GlueOps"
       tenant_github_org_name               = "glueops-rocks"
+      glueops_kubernetes_operators = {
+        waf = {
+          aws_access_key = "aws-access-key-secret-id"
+          aws_secret     = "aws-access-secret"
+        },
+        web_acl = {
+          aws_access_key = "aws-access-key-secret-id"
+          aws_secret     = "aws-access-secret"
+        }
+      }
       vault_github_org_team_policy_mappings = [
         {
           oidc_groups = ["GlueOps:vault_super_admins"]
@@ -95,17 +105,6 @@ variable "cluster_environments" {
       p, role:developers, applications, *, development/*, allow
       p, role:developers, exec, *, development/*, allow
 EOT
-
-      glueops_kubernetes_operators = {
-        waf = {
-          aws_access_key = "key1"
-          aws_secret     = "pass1"
-        },
-        web_acl = {
-          azure_user = "key2"
-          azure_pass = "pass2"
-        }
-      }
     },
 
   ]
