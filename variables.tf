@@ -60,8 +60,8 @@ variable "cluster_environments" {
         aws_secret     = string
       })
       web_acl = object({
-        azure_user = string
-        azure_pass = string
+        aws_access_key = string
+        aws_secret     = string
       })
     })
   }))
