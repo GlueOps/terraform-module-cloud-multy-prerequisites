@@ -54,7 +54,16 @@ variable "cluster_environments" {
       policy_name = string
     }))
     argocd_rbac_policies = string
-
+    glueops_kubernetes_operators = object({
+      waf = object({
+        aws_access_key = string
+        aws_secret     = string
+      })
+      web_acl = object({
+        azure_user = string
+        azure_pass = string
+      })
+    })
   }))
   default = [
     {
@@ -86,7 +95,18 @@ variable "cluster_environments" {
       p, role:developers, applications, *, development/*, allow
       p, role:developers, exec, *, development/*, allow
 EOT
-    }
+
+      glueops_kubernetes_operators = {
+        waf = {
+          aws_access_key = "key1"
+          aws_secret     = "pass1"
+        },
+        web_acl = {
+          azure_user = "key2"
+          azure_pass = "pass2"
+        }
+      }
+    },
 
   ]
 
