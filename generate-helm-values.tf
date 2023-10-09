@@ -75,6 +75,11 @@ module "glueops_platform_helm_values" {
   vault_init_controller_s3_key               = "${aws_route53_zone.clusters[each.value.environment_name].name}/${local.vault_access_tokens_s3_key}"
   vault_init_controller_aws_access_key       = aws_iam_access_key.vault_init_s3[each.value.environment_name].id
   vault_init_controller_aws_access_secret    = aws_iam_access_key.vault_init_s3[each.value.environment_name].secret
+  glueops_operators_waf_aws_access_key       = "glueops_operators_waf_aws_access_key"
+  glueops_operators_waf_aws_secret_key       = "glueops_operators_waf_aws_secret_key"
+  glueops_operators_web_acl_aws_access_key   = "glueops_operators_web_acl_aws_access_key"
+  glueops_operators_web_acl_aws_secret_key   = "glueops_operators_web_acl_aws_secret_key"
+
 }
 
 resource "aws_s3_object" "platform_helm_values" {
