@@ -39,10 +39,10 @@ data "local_file" "readme" {
 }
 
 locals {
-  codespace_version         = "v0.31.1"
+  codespace_version         = "v0.31.2"
   argocd_crd_version        = var.argocd_app_version
-  argocd_helm_chart_version = "5.45.4"
-  glueops_platform_version  = "v0.35.0-rc5" # this also needs to be updated in the module.glueops_platform_helm_values // generate-helm-values.tf
+  argocd_helm_chart_version = "5.50.0"
+  glueops_platform_version  = "v0.35.0-rc6" # this also needs to be updated in the module.glueops_platform_helm_values // generate-helm-values.tf
   tools_version             = "v0.5.1"
 }
 
