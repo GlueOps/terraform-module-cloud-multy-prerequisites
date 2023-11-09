@@ -12,3 +12,9 @@ variable "cluster_environments" {
   description = "List of cluster environment names"
   type        = list(string)
 }
+
+
+variable "domain" {
+  description = "glueops delegation domain"
+  type        = string
+}
