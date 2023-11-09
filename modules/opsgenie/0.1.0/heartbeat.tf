@@ -5,6 +5,6 @@ resource "opsgenie_heartbeat" "captain" {
   interval_unit = "minutes"
   interval      = 2
   enabled       = true
-  alert_message = "Heart Beat Expired: ${each.value}.${var.tenant_key}.${var.domain}"
+  alert_message = "Heartbeat Expired: ${each.value}.${var.tenant_key}.${var.domain}"
   owner_team_id = opsgenie_team.teams[each.key].id
 }
