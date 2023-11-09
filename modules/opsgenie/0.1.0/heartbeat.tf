@@ -1,4 +1,4 @@
-resource "opsgenie_heartbeat" "" {
+resource "opsgenie_heartbeat" "captain" {
   for_each      = local.cluster_environments_set
   name          = "${each.value}.${var.tenant_key}.${var.domain}"
   description   = "${each.value}.${var.tenant_key}.${var.domain}"
