@@ -3,7 +3,7 @@ resource "opsgenie_heartbeat" "captain" {
   name           = "${each.value}.${var.domain}"
   description    = "${each.value}.${var.domain}"
   interval_unit  = "minutes"
-  interval       = 2
+  interval       = 3
   enabled        = true
   alert_priority = "P1"
   alert_message  = "Heartbeat Expired: ${each.value}.${var.domain}"
