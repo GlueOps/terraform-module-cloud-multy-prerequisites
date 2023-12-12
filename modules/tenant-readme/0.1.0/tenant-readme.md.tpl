@@ -125,6 +125,16 @@ In addition to creating the `deployment-configurations` repository, you must ins
 
 <br /><br />
 
+## Delete Tenant Data From S3
+
+Use the following command to destroy any backups/ephemeral data when you created your cluster.
+* [Launch a CloudShell](https://us-east-1.console.aws.amazon.com/cloudshell/home?region=us-west-2) within the Primary/Root AWS Account.
+    * Execute the following command in the cloudshell.  When prompted, enter the name of your captain domain (e.g. test-001-np.earth.onglueops.rocks ).
+
+```sh
+bash <(curl -s https://raw.githubusercontent.com/GlueOps/development-only-utilities/placeholder_tools_version/tools/aws/tenant-s3-nuke.sh)
+```
+
 ## Teardown Kubernetes
 
 - [AWS](#AWS-Teardown)
