@@ -26,6 +26,7 @@ gh repo clone placeholder_github_owner/placeholder_repo_name
 ## Select Cloud
 - [GCP](#GCP)
 - [AWS](#AWS)
+- [k3d](https://github.com/GlueOps/k3d)
 
 ## GCP
 
