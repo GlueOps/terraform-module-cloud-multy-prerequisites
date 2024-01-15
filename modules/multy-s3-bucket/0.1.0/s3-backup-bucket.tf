@@ -36,7 +36,7 @@ resource "aws_s3_bucket_lifecycle_configuration" "replica" {
     filter {}
 
     noncurrent_version_expiration {
-      noncurrent_days = var.this_is_development ? 1 : 90
+      noncurrent_days = var.this_is_development ? 14 : 180
     }
     status = "Enabled"
   }
