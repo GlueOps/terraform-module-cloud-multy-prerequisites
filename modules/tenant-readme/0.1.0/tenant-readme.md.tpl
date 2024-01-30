@@ -159,7 +159,7 @@ Use the following command to destroy the cluster when it is no longer needed.
     * Execute the following command in the cloudshell.  Click 'Authorize' if prompted and confirm the deletion of the project
 
 ```sh
-    gcloud alpha billing projects unlink PROJECT_ID && gcloud projects delete PROJECT_ID
+    gcloud alpha billing projects unlink PROJECT_ID -q && gcloud projects delete PROJECT_ID -q
 ```
 
 **NOTE: PROJECT_ID needs to be replaced with your actual Project ID.**
