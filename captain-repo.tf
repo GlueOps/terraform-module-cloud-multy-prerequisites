@@ -35,6 +35,7 @@ module "captain_repository_files" {
 
 .terraform
 .terraform.lock.hcl
+*.log
 
 EOT
 
