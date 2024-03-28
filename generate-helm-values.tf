@@ -36,11 +36,13 @@ resource "random_password" "grafana_admin_secret" {
 
 locals {
   vault_access_tokens_s3_key = "hashicorp-vault-init/vault_access.json"
+  tls_cert_backup_s3_key_prefix = "tls-cert-backups"
+  tls_cert_restore_exclude_namespaces = "kube-system"
 }
 
 module "glueops_platform_helm_values" {
   for_each                                   = local.environment_map
-  source                                     = "git::https://github.com/GlueOps/platform-helm-chart-platform.git?ref=v0.40.0"
+  source                                     = "git::https://github.com/GlueOps/platform-helm-chart-platform.git?ref=v0.41.0-rc3"
   captain_repo_b64encoded_private_deploy_key = base64encode(module.captain_repository[each.value.environment_name].private_deploy_key)
   captain_repo_ssh_clone_url                 = module.captain_repository[each.value.environment_name].ssh_clone_url
   this_is_development                        = var.this_is_development
@@ -79,7 +81,12 @@ module "glueops_platform_helm_values" {
   glueops_operators_waf_aws_secret_key       = each.value.glueops_kubernetes_operators.waf.aws_secret
   glueops_operators_web_acl_aws_access_key   = each.value.glueops_kubernetes_operators.web_acl.aws_access_key
   glueops_operators_web_acl_aws_secret_key   = each.value.glueops_kubernetes_operators.web_acl.aws_secret
-
+  tls_cert_backup_aws_access_key             = aws_iam_access_key.tls_cert_backup_s3[each.value.environment_name].id
+  tls_cert_backup_aws_secret_key             = aws_iam_access_key.tls_cert_backup_s3[each.value.environment_name].secret
+  tls_cert_backup_s3_key_prefix              = local.tls_cert_backup_s3_key_prefix
+  tls_cert_restore_exclude_namespaces        = local.tls_cert_restore_exclude_namespaces
+  tls_cert_restore_aws_access_key            = aws_iam_access_key.tls_cert_restore_s3[each.value.environment_name].id
+  tls_cert_restore_aws_secret_key            = aws_iam_access_key.tls_cert_restore_s3[each.value.environment_name].secret
 }
 
 resource "aws_s3_object" "platform_helm_values" {
