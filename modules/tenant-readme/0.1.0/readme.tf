@@ -43,7 +43,7 @@ locals {
   argocd_crd_version        = var.argocd_app_version
   argocd_helm_chart_version = "5.54.0"
   glueops_platform_version  = "v0.41.0-rc3" # this also needs to be updated in the module.glueops_platform_helm_values // generate-helm-values.tf
-  tools_version             = "v0.7.1"
+  tools_version             = "v0.8.0"
 }
 
 
