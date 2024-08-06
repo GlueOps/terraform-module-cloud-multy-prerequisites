@@ -43,7 +43,7 @@ No requirements.
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_argocd_helm_values"></a> [argocd\_helm\_values](#module\_argocd\_helm\_values) | git::https://github.com/GlueOps/docs-argocd.git | v0.14.0 |
+| <a name="module_argocd_helm_values"></a> [argocd\_helm\_values](#module\_argocd\_helm\_values) | git::https://github.com/GlueOps/docs-argocd.git | v0.14.1 |
 | <a name="module_captain_repository"></a> [captain\_repository](#module\_captain\_repository) | ./modules/github-captain-repository/0.1.0 | n/a |
 | <a name="module_captain_repository_files"></a> [captain\_repository\_files](#module\_captain\_repository\_files) | ./modules/github-captain-repository-files/0.1.0 | n/a |
 | <a name="module_common_s3"></a> [common\_s3](#module\_common\_s3) | ./modules/multy-s3-bucket/0.1.0 | n/a |
