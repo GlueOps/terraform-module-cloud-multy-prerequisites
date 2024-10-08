@@ -1,5 +1,5 @@
 locals {
-  argocd_app_version = "v2.10.16"
+  argocd_app_version = "v2.10.17"
 
 }
 
