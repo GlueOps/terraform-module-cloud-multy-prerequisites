@@ -42,7 +42,7 @@ locals {
 
 module "glueops_platform_helm_values" {
   for_each                                   = local.environment_map
-  source                                     = "git::https://github.com/GlueOps/platform-helm-chart-platform.git?ref=v0.50.0"
+  source                                     = "git::https://github.com/GlueOps/platform-helm-chart-platform.git?ref=v0.51.0"
   captain_repo_b64encoded_private_deploy_key = base64encode(module.captain_repository[each.value.environment_name].private_deploy_key)
   captain_repo_ssh_clone_url                 = module.captain_repository[each.value.environment_name].ssh_clone_url
   this_is_development                        = var.this_is_development
@@ -56,8 +56,6 @@ module "glueops_platform_helm_values" {
   vault_aws_secret_key                       = aws_iam_access_key.vault_s3[each.value.environment_name].secret
   loki_aws_access_key                        = aws_iam_access_key.loki_s3[each.value.environment_name].id
   loki_aws_secret_key                        = aws_iam_access_key.loki_s3[each.value.environment_name].secret
-  loki_exporter_aws_access_key               = aws_iam_access_key.loki_log_exporter_s3[each.value.environment_name].id
-  loki_exporter_aws_secret_key               = aws_iam_access_key.loki_log_exporter_s3[each.value.environment_name].secret
   certmanager_aws_access_key                 = aws_iam_access_key.certmanager[each.value.environment_name].id
   certmanager_aws_secret_key                 = aws_iam_access_key.certmanager[each.value.environment_name].secret
   externaldns_aws_access_key                 = aws_iam_access_key.externaldns[each.value.environment_name].id
@@ -77,10 +75,6 @@ module "glueops_platform_helm_values" {
   vault_init_controller_s3_key               = "${aws_route53_zone.clusters[each.value.environment_name].name}/${local.vault_access_tokens_s3_key}"
   vault_init_controller_aws_access_key       = aws_iam_access_key.vault_init_s3[each.value.environment_name].id
   vault_init_controller_aws_access_secret    = aws_iam_access_key.vault_init_s3[each.value.environment_name].secret
-  glueops_operators_waf_aws_access_key       = each.value.glueops_kubernetes_operators.waf.aws_access_key
-  glueops_operators_waf_aws_secret_key       = each.value.glueops_kubernetes_operators.waf.aws_secret
-  glueops_operators_web_acl_aws_access_key   = each.value.glueops_kubernetes_operators.web_acl.aws_access_key
-  glueops_operators_web_acl_aws_secret_key   = each.value.glueops_kubernetes_operators.web_acl.aws_secret
   tls_cert_backup_aws_access_key             = aws_iam_access_key.tls_cert_backup_s3[each.value.environment_name].id
   tls_cert_backup_aws_secret_key             = aws_iam_access_key.tls_cert_backup_s3[each.value.environment_name].secret
   tls_cert_backup_s3_key_prefix              = local.tls_cert_backup_s3_key_prefix

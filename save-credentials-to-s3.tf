@@ -10,7 +10,6 @@ resource "aws_s3_object" "combined_outputs" {
     loki_credentials        = { (aws_route53_zone.clusters[each.value].name) = aws_iam_access_key.loki_s3[each.value] },
     opsgenie_credentials    = lookup(module.opsgenie_teams.opsgenie_prometheus_api_keys, split(".", each.value)[0], null),
     vault_credentials       = { (aws_route53_zone.clusters[each.value].name) = aws_iam_access_key.vault_s3[each.value] },
-    loki_log_exporter       = { (aws_route53_zone.clusters[each.value].name) = aws_iam_access_key.loki_log_exporter_s3[each.value] }
   })
 
   content_type           = "application/json"
