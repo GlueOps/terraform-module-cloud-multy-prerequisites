@@ -54,17 +54,6 @@ variable "cluster_environments" {
       policy_name = string
     }))
     argocd_rbac_policies = string
-    glueops_kubernetes_operators = object({
-      waf = object({
-        aws_access_key = string
-        aws_secret     = string
-      })
-      web_acl = object({
-        aws_access_key = string
-        aws_secret     = string
-      })
-    })
-  }))
   default = [
     {
       environment_name                     = "test"
@@ -76,16 +65,6 @@ variable "cluster_environments" {
       github_tenant_app_b64enc_private_key = "tenant-github-app-b64enc-private-key"
       admin_github_org_name                = "GlueOps"
       tenant_github_org_name               = "glueops-rocks"
-      glueops_kubernetes_operators = {
-        waf = {
-          aws_access_key = "aws-access-key-secret-id"
-          aws_secret     = "aws-access-secret"
-        },
-        web_acl = {
-          aws_access_key = "aws-access-key-secret-id"
-          aws_secret     = "aws-access-secret"
-        }
-      }
       vault_github_org_team_policy_mappings = [
         {
           oidc_groups = ["GlueOps:vault_super_admins"]
