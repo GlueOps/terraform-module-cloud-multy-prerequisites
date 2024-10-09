@@ -54,6 +54,7 @@ variable "cluster_environments" {
       policy_name = string
     }))
     argocd_rbac_policies = string
+  }))
   default = [
     {
       environment_name                     = "test"
