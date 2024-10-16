@@ -40,9 +40,10 @@ locals {
   tls_cert_restore_exclude_namespaces = "kube-system"
 }
 
+
 module "glueops_platform_helm_values" {
   for_each                                   = local.environment_map
-  source                                     = "git::https://github.com/GlueOps/platform-helm-chart-platform.git?ref=v0.51.1"
+  source                                     = "git::https://github.com/GlueOps/platform-helm-chart-platform.git?ref=feature/otel"
   captain_repo_b64encoded_private_deploy_key = base64encode(module.captain_repository[each.value.environment_name].private_deploy_key)
   captain_repo_ssh_clone_url                 = module.captain_repository[each.value.environment_name].ssh_clone_url
   this_is_development                        = var.this_is_development
@@ -54,8 +55,12 @@ module "glueops_platform_helm_values" {
   dex_pomerium_client_secret                 = random_password.dex_pomerium_client_secret[each.value.environment_name].result
   vault_aws_access_key                       = aws_iam_access_key.vault_s3[each.value.environment_name].id
   vault_aws_secret_key                       = aws_iam_access_key.vault_s3[each.value.environment_name].secret
-  loki_aws_access_key                        = aws_iam_access_key.loki_s3[each.value.environment_name].id
-  loki_aws_secret_key                        = aws_iam_access_key.loki_s3[each.value.environment_name].secret
+  loki_aws_access_key                        = aws_iam_access_key.loki_s3["loki.${each.value.environment_name}.${var.tenant_key}.${data.aws_route53_zone.management_tenant_dns.name}"].id
+  loki_aws_secret_key                        = aws_iam_access_key.loki_s3["loki.${each.value.environment_name}.${var.tenant_key}.${data.aws_route53_zone.management_tenant_dns.name}"].secret
+  thanos_aws_access_key                      = aws_iam_access_key.loki_s3["thanos.${each.value.environment_name}.${var.tenant_key}.${data.aws_route53_zone.management_tenant_dns.name}"].id
+  thanos_aws_secret_key                      = aws_iam_access_key.loki_s3["thanos.${each.value.environment_name}.${var.tenant_key}.${data.aws_route53_zone.management_tenant_dns.name}"].secret
+  tempo_aws_access_key                       = aws_iam_access_key.loki_s3["tempo.${each.value.environment_name}.${var.tenant_key}.${data.aws_route53_zone.management_tenant_dns.name}"].id
+  tempo_aws_secret_key                       = aws_iam_access_key.loki_s3["tempo.${each.value.environment_name}.${var.tenant_key}.${data.aws_route53_zone.management_tenant_dns.name}"].secret
   certmanager_aws_access_key                 = aws_iam_access_key.certmanager[each.value.environment_name].id
   certmanager_aws_secret_key                 = aws_iam_access_key.certmanager[each.value.environment_name].secret
   externaldns_aws_access_key                 = aws_iam_access_key.externaldns[each.value.environment_name].id

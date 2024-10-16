@@ -122,3 +122,4 @@ variable "opsgenie_emails" {
   description = "List of user email addresses"
   type        = list(string)
 }
+
