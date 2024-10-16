@@ -28,7 +28,16 @@ resource "aws_iam_policy" "loki_s3" {
     "Statement": [
         {
             "Action": [
-              "s3:ListBucket",
+              "s3:ListBucket"
+            ],
+            "Effect": "Allow",
+            "Resource": [
+              "${module.common_s3.primary_s3_bucket_arn}/${each.value.cluster}/",
+              "${module.common_s3.primary_s3_bucket_arn}/${each.value.cluster}/*"
+            ]
+        },
+        {
+            "Action": [
               "s3:PutObject",
               "s3:GetObject",
               "s3:DeleteObject"
