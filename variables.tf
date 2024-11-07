@@ -54,6 +54,9 @@ variable "cluster_environments" {
       policy_name = string
     }))
     argocd_rbac_policies = string
+    loki_storage = optional(string)
+    thanos_storage = optional(string)
+    tempo_storage = optional(string)
   }))
   default = [
     {

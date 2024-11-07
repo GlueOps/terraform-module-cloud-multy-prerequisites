@@ -55,12 +55,9 @@ module "glueops_platform_helm_values" {
   dex_pomerium_client_secret                 = random_password.dex_pomerium_client_secret[each.value.environment_name].result
   vault_aws_access_key                       = aws_iam_access_key.vault_s3[each.value.environment_name].id
   vault_aws_secret_key                       = aws_iam_access_key.vault_s3[each.value.environment_name].secret
-  loki_aws_access_key                        = aws_iam_access_key.loki_s3["loki.${each.value.environment_name}.${var.tenant_key}.${data.aws_route53_zone.management_tenant_dns.name}"].id
-  loki_aws_secret_key                        = aws_iam_access_key.loki_s3["loki.${each.value.environment_name}.${var.tenant_key}.${data.aws_route53_zone.management_tenant_dns.name}"].secret
-  thanos_aws_access_key                      = aws_iam_access_key.loki_s3["thanos.${each.value.environment_name}.${var.tenant_key}.${data.aws_route53_zone.management_tenant_dns.name}"].id
-  thanos_aws_secret_key                      = aws_iam_access_key.loki_s3["thanos.${each.value.environment_name}.${var.tenant_key}.${data.aws_route53_zone.management_tenant_dns.name}"].secret
-  tempo_aws_access_key                       = aws_iam_access_key.loki_s3["tempo.${each.value.environment_name}.${var.tenant_key}.${data.aws_route53_zone.management_tenant_dns.name}"].id
-  tempo_aws_secret_key                       = aws_iam_access_key.loki_s3["tempo.${each.value.environment_name}.${var.tenant_key}.${data.aws_route53_zone.management_tenant_dns.name}"].secret
+  loki_storage                               = each.value.loki_storage
+  tempo_storage                              = each.value.tempo_storage
+  thanos_storage                             = each.value.thanos_storage
   certmanager_aws_access_key                 = aws_iam_access_key.certmanager[each.value.environment_name].id
   certmanager_aws_secret_key                 = aws_iam_access_key.certmanager[each.value.environment_name].secret
   externaldns_aws_access_key                 = aws_iam_access_key.externaldns[each.value.environment_name].id
