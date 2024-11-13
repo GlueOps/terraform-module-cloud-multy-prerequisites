@@ -1,7 +1,7 @@
 locals {
   users_set                = toset(var.users)
   cluster_environments_set = toset(var.cluster_environments)
-  time_zone                = "Africa/Monrovia"
+  time_zone                = "America/New_York"
 }
 
 data "opsgenie_user" "users" {
