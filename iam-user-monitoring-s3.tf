@@ -2,8 +2,8 @@
 
 resource "aws_iam_user" "loki_s3" {
   provider = aws.clientaccount
-  for_each = { for entry in local.bucketkeys_cluster : "${entry.bucketKey}.${entry.cluster}" => entry }
-  name     = "${each.value.bucketKey}-s3-${each.value.cluster}"
+  for_each = aws_route53_zone.clusters
+  name     = "loki-s3-${aws_route53_zone.clusters[each.key].name}"
 }
 
 resource "aws_iam_user_policy_attachment" "loki_s3" {
