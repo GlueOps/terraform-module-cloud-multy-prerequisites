@@ -88,7 +88,7 @@ variable "cluster_environments" {
       p, role:developers, applications, *, development/*, allow
       p, role:developers, exec, *, development/*, allow
 EOT
-    },
+
    loki_storage   = <<EOT
 bucketNames:
         chunks: XXXXXX-6dd3-loki
@@ -121,7 +121,7 @@ backend: s3
         endpoint: fsn1.your-objectstorage.com
         insecure: false
 EOT
-
+  },
   ]
 
 }
