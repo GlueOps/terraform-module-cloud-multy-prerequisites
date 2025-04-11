@@ -89,6 +89,38 @@ variable "cluster_environments" {
       p, role:developers, exec, *, development/*, allow
 EOT
     },
+   loki_storage   = <<EOT
+bucketNames:
+        chunks: XXXXXX-6dd3-loki
+        ruler: XXXXXX-6dd3-loki
+        admin: XXXXXX-6dd3-loki
+   type: s3
+   s3:
+      s3: XXXXXX-6dd3-loki
+      endpoint: https://fsn1.your-objectstorage.com
+      region: us-east-1
+      accessKeyId: XXXXXX
+      secretAccessKey: XXXXXX
+      s3ForcePathStyle: false
+      insecure: false
+    EOT
+      thanos_storage = <<EOT
+type: s3
+    config:
+        bucket: XXXXXX-6dd3-thanos
+        endpoint: fsn1.your-objectstorage.com
+        access_key: XXXXXX
+        secret_key: XXXXXX
+EOT
+      tempo_storage  = <<EOT
+backend: s3
+    s3:
+        access_key: XXXXXX
+        secret_key: XXXXXX
+        bucket:  XXXXXX-6dd3-tempo
+        endpoint: fsn1.your-objectstorage.com
+        insecure: false
+EOT
 
   ]
 
