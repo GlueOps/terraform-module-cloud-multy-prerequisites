@@ -27,6 +27,17 @@ resource "random_password" "dex_pomerium_client_secret" {
   special  = local.random_password_special_characters
 }
 
+resource "random_password" "dex_oauth2_client_secret" {
+  for_each = local.cluster_environments
+  length   = local.random_password_length
+  special  = local.random_password_special_characters
+}
+
+resource "random_password" "dex_oauth2_cookie_secret" {
+  for_each = local.cluster_environments
+  length   = local.random_password_length-1
+  special  = local.random_password_special_characters
+}
 
 resource "random_password" "grafana_admin_secret" {
   for_each = local.cluster_environments
@@ -42,7 +53,7 @@ locals {
 
 module "glueops_platform_helm_values" {
   for_each                                   = local.environment_map
-  source                                     = "git::https://github.com/GlueOps/platform-helm-chart-platform.git?ref=v0.56.5"
+  source                                     = "git::https://github.com/GlueOps/platform-helm-chart-platform.git?ref=oauth2"
   captain_repo_b64encoded_private_deploy_key = base64encode(module.captain_repository[each.value.environment_name].private_deploy_key)
   captain_repo_ssh_clone_url                 = module.captain_repository[each.value.environment_name].ssh_clone_url
   this_is_development                        = var.this_is_development
@@ -52,6 +63,8 @@ module "glueops_platform_helm_values" {
   dex_grafana_client_secret                  = random_password.dex_grafana_client_secret[each.value.environment_name].result
   dex_vault_client_secret                    = random_password.dex_vault_client_secret[each.value.environment_name].result
   dex_pomerium_client_secret                 = random_password.dex_pomerium_client_secret[each.value.environment_name].result
+  dex_oauth2_client_secret                   = random_password.dex_oauth2_client_secret[each.value.environment_name].result
+  dex_oauth2_cookie_secret                   = random_password.dex_oauth2_cookie_secret[each.value.environment_name].result
   vault_aws_access_key                       = aws_iam_access_key.vault_s3[each.value.environment_name].id
   vault_aws_secret_key                       = aws_iam_access_key.vault_s3[each.value.environment_name].secret
   loki_aws_access_key                        = aws_iam_access_key.loki_s3[each.value.environment_name].id
@@ -98,7 +111,7 @@ resource "aws_s3_object" "platform_helm_values" {
 
 module "argocd_helm_values" {
   for_each             = local.environment_map
-  source               = "git::https://github.com/GlueOps/docs-argocd.git?ref=v0.15.0"
+  source               = "git::https://github.com/GlueOps/docs-argocd.git?ref=oauth2"
   tenant_key           = var.tenant_key
   cluster_environment  = each.value.environment_name
   client_secret        = random_password.dex_argocd_client_secret[each.value.environment_name].result
