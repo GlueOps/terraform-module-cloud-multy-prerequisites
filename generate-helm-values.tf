@@ -21,11 +21,6 @@ resource "random_password" "dex_vault_client_secret" {
   special  = local.random_password_special_characters
 }
 
-resource "random_password" "dex_pomerium_client_secret" {
-  for_each = local.cluster_environments
-  length   = local.random_password_length
-  special  = local.random_password_special_characters
-}
 
 resource "random_password" "dex_oauth2_client_secret" {
   for_each = local.cluster_environments
@@ -62,7 +57,6 @@ module "glueops_platform_helm_values" {
   dex_argocd_client_secret                   = random_password.dex_argocd_client_secret[each.value.environment_name].result
   dex_grafana_client_secret                  = random_password.dex_grafana_client_secret[each.value.environment_name].result
   dex_vault_client_secret                    = random_password.dex_vault_client_secret[each.value.environment_name].result
-  dex_pomerium_client_secret                 = random_password.dex_pomerium_client_secret[each.value.environment_name].result
   dex_oauth2_client_secret                   = random_password.dex_oauth2_client_secret[each.value.environment_name].result
   dex_oauth2_cookie_secret                   = random_password.dex_oauth2_cookie_secret[each.value.environment_name].result
   vault_aws_access_key                       = aws_iam_access_key.vault_s3[each.value.environment_name].id
