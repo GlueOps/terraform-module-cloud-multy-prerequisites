@@ -1,6 +1,7 @@
 
 locals {
   random_password_length             = 45
+  oauth2_cookie_token_length         = 32
   random_password_special_characters = false
 }
 resource "random_password" "dex_argocd_client_secret" {
@@ -30,7 +31,7 @@ resource "random_password" "dex_oauth2_client_secret" {
 
 resource "random_password" "dex_oauth2_cookie_secret" {
   for_each = local.cluster_environments
-  length   = local.random_password_length-1
+  length   = local.oauth2_cookie_token_length
   special  = local.random_password_special_characters
 }
 
