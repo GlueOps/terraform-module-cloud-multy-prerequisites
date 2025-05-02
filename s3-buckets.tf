@@ -11,7 +11,7 @@ module "common_s3" {
   backup_region       = var.backup_region
 }
 
-module "common_s3" {
+module "common_s3_v2" {
   source = "./modules/multy-s3-bucket/0.2.0"
   providers = {
     aws.primaryregion = aws.primaryregion
