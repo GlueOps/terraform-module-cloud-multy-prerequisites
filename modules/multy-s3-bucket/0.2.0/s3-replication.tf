@@ -20,7 +20,7 @@ resource "aws_iam_role" "replication" {
   ]
 }
 POLICY
-  tags {
+  tags = {
     Name = "tf-role-s3-rplctn-${var.tenant_key}"
   }
 }
@@ -69,7 +69,7 @@ resource "aws_iam_policy" "replication" {
   ]
 }
 POLICY
-  tags {
+  tags = {
     Name = "tf-role-s3-rplctn-${var.tenant_key}"
   }
 }
