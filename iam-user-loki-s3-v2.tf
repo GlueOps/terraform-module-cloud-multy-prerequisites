@@ -1,7 +1,10 @@
 resource "aws_iam_user" "loki_s3_v2" {
   provider = aws.clientaccount
   for_each = aws_route53_zone.clusters
-  name     = random_uuid.loki_aws_iam_user[each.key].result
+  name     = random_uuid.loki_v2_aws_iam_user[each.key].result
+  tags = {
+    Name = "loki-s3-${aws_route53_zone.clusters[each.key].name}"
+  }
 }
 
 resource "aws_iam_user_policy_attachment" "loki_s3_v2" {
@@ -20,6 +23,6 @@ resource "aws_iam_access_key" "loki_s3_v2" {
 }
 
 
-resource "random_uuid" "loki_aws_iam_user" {
+resource "random_uuid" "loki_v2_aws_iam_user" {
   for_each = aws_route53_zone.clusters
 }

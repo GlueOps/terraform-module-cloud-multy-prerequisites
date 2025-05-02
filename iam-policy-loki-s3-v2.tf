@@ -1,7 +1,7 @@
 resource "aws_iam_policy" "loki_s3_v2" {
   provider = aws.clientaccount
   for_each = module.loki_s3
-  name     = random_uuid.loki_aws_iam_policy[each.key].result
+  name     = random_uuid.loki_v2_aws_iam_policy[each.key].result
   policy   = <<EOF
 {
     "Version": "2012-10-17",
@@ -28,6 +28,6 @@ EOF
   }
 }
 
-resource "random_uuid" "loki_aws_iam_policy" {
+resource "random_uuid" "loki_v2_aws_iam_policy" {
   for_each = module.loki_s3
 }
