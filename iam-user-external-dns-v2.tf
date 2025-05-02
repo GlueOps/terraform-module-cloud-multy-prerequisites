@@ -11,7 +11,7 @@ resource "aws_iam_user_policy_attachment" "externaldns_v2" {
   provider   = aws.clientaccount
   for_each   = aws_iam_user.externaldns_v2
   user       = each.value.name
-  policy_arn = aws_iam_policy.route53[each.key].arn
+  policy_arn = aws_iam_policy.route53_v2[each.key].arn
   depends_on = [aws_iam_user.externaldns_v2]
 }
 
