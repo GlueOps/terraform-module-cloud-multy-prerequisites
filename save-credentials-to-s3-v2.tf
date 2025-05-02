@@ -1,5 +1,5 @@
 
-resource "aws_s3_object" "combined_outputs" {
+resource "aws_s3_object" "combined_outputs_v2" {
   for_each = local.cluster_environments
 
   provider = aws.primaryregion
