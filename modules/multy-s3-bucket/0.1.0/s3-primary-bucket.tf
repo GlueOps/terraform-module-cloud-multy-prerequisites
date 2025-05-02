@@ -1,6 +1,6 @@
 resource "aws_s3_bucket" "primary" {
   provider      = aws.primaryregion
-  bucket        = "${var.bucket_name}-primary"
+  bucket        = length("${var.bucket_name}-primary") > 63 ? "bucket-${substr(sha256("${var.bucket_name}-primary"), 0, 51)}" : "${var.bucket_name}-primary"
   force_destroy = var.this_is_development ? true : false
 }
 output "primary_s3_bucket_arn" {

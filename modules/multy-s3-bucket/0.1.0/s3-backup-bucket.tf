@@ -1,6 +1,6 @@
 resource "aws_s3_bucket" "replica" {
   provider      = aws.replicaregion
-  bucket        = "${var.bucket_name}-replica"
+  bucket        = length("${var.bucket_name}-replica") > 63 ? "bucket-${substr(sha256("${var.bucket_name}-replica"), 0, 51)}" : "${var.bucket_name}-replica"
   force_destroy = var.this_is_development ? true : false
 }
 output "replica_s3_bucket_arn" {
