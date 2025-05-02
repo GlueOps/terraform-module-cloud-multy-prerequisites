@@ -1,6 +1,9 @@
+resource "random_uuid" "aws_iam_role_replication" {
+}
+
 resource "aws_iam_role" "replication" {
   provider = aws.primaryregion
-  name     = "tf-role-s3-rplctn-${var.bucket_name}"
+  name     = random_uuid.aws_iam_role_replication.result
 
   assume_role_policy = <<POLICY
 {
@@ -19,9 +22,12 @@ resource "aws_iam_role" "replication" {
 POLICY
 }
 
+resource "random_uuid" "aws_iam_policy" {
+}
+
 resource "aws_iam_policy" "replication" {
   provider = aws.primaryregion
-  name     = "tf-policy-s3-rplctn-${var.bucket_name}"
+  name     = random_uuid.aws_iam_policy.result
 
   policy = <<POLICY
 {
