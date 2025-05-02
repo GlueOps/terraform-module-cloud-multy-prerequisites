@@ -1,6 +1,6 @@
 resource "aws_iam_role" "replication" {
   provider = aws.primaryregion
-  name     = "tf-role-s3-rplctn-${var.bucket_name}"
+  name     = length("tf-role-s3-rplctn-${var.bucket_name}") > 63 ? "bucket-${substr(sha256("tf-role-s3-rplctn-${var.bucket_name}"), 0, 51)}" : "tf-role-s3-rplctn-${var.bucket_name}"
 
   assume_role_policy = <<POLICY
 {
