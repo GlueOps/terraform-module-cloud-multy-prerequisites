@@ -20,6 +20,9 @@ resource "aws_iam_role" "replication" {
   ]
 }
 POLICY
+  tags {
+    Name = "tf-role-s3-rplctn-${var.tenant_key}"
+  }
 }
 
 resource "random_uuid" "aws_iam_policy" {
@@ -66,6 +69,9 @@ resource "aws_iam_policy" "replication" {
   ]
 }
 POLICY
+  tags {
+    Name = "tf-role-s3-rplctn-${var.tenant_key}"
+  }
 }
 
 resource "aws_iam_role_policy_attachment" "replication" {
