@@ -1,4 +1,6 @@
 resource "aws_s3control_multi_region_access_point" "s3_multi_region_access_point" {
+  provider = aws.primaryregion
+
   details {
     name = random_uuid.s3_multi_region_access_point.result
 
