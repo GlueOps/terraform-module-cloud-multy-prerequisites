@@ -1,4 +1,4 @@
-variable "bucket_name" {
+variable "tenant_key" {
   description = "The root name of the s3 bucket to be created, will be suffixed with '-primary' and '-replica'"
   type        = string
   nullable    = false

@@ -2,6 +2,11 @@ resource "aws_s3_bucket" "primary" {
   provider      = aws.primaryregion
   bucket        = random_uuid.primary.result
   force_destroy = var.this_is_development ? true : false
+  tags = {
+    Name        = "${var.tenant_key}-primary"
+    tenant_name = var.tenant_key
+
+  }
 }
 
 

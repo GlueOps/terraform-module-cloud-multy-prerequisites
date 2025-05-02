@@ -2,6 +2,12 @@ resource "aws_s3_bucket" "replica" {
   provider      = aws.replicaregion
   bucket        = random_uuid.replica.result
   force_destroy = var.this_is_development ? true : false
+
+  tags = {
+    Name        = "${var.tenant_key}-replica"
+    tenant_name = var.tenant_key
+  }
+
 }
 
 resource "aws_s3_bucket_versioning" "replica" {

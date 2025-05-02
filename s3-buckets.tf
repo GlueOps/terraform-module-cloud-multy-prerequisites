@@ -18,7 +18,7 @@ module "common_s3_v2" {
     aws.replicaregion = aws.replicaregion
   }
 
-  bucket_name         = local.bucket_name
+  tenant_key          = var.tenant_key
   this_is_development = var.this_is_development
   tenant_account_id   = var.tenant_account_id
   primary_region      = var.primary_region
