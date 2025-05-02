@@ -10,7 +10,7 @@ resource "aws_s3control_multi_region_access_point" "s3_multi_region_access_point
       bucket = aws_s3_bucket.replica.id
     }
 
-    public_access_block = {
+    public_access_block {
       block_public_acls       = true
       block_public_policy     = true
       ignore_public_acls      = true
