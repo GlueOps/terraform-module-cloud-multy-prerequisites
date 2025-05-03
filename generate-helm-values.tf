@@ -89,6 +89,7 @@ module "glueops_platform_helm_values" {
   tls_cert_restore_exclude_namespaces        = local.tls_cert_restore_exclude_namespaces
   tls_cert_restore_aws_access_key            = aws_iam_access_key.tls_cert_restore_s3_v2[each.value.environment_name].id
   tls_cert_restore_aws_secret_key            = aws_iam_access_key.tls_cert_restore_s3_v2[each.value.environment_name].secret
+  tenant_s3_multi_region_access_point        = module.common_s3_v2.s3_multi_region_access_point_arn
 }
 
 resource "aws_s3_object" "platform_helm_values" {
@@ -103,6 +104,20 @@ resource "aws_s3_object" "platform_helm_values" {
   server_side_encryption = "AES256"
   acl                    = "private"
 }
+
+resource "aws_s3_object" "platform_helm_values_v2" {
+  for_each = local.cluster_environments
+
+  provider = aws.primaryregion
+  bucket   = module.common_s3_v2.s3_multi_region_access_point_arn
+  key      = "${each.value}.${aws_route53_zone.main.name}/configurations/platform.yaml"
+  content  = module.glueops_platform_helm_values[each.value].helm_values
+
+  content_type           = "application/json"
+  server_side_encryption = "AES256"
+  acl                    = "private"
+}
+
 
 module "argocd_helm_values" {
   for_each             = local.environment_map
@@ -128,3 +143,17 @@ resource "aws_s3_object" "argocd_helm_values" {
   server_side_encryption = "AES256"
   acl                    = "private"
 }
+
+resource "aws_s3_object" "argocd_helm_values_v2" {
+  for_each = local.environment_map
+
+  provider = aws.primaryregion
+  bucket   = module.common_s3_v2.s3_multi_region_access_point_arn
+  key      = "${each.value.environment_name}.${aws_route53_zone.main.name}/configurations/argocd.yaml"
+  content  = module.argocd_helm_values[each.value.environment_name].helm_values
+
+  content_type           = "application/json"
+  server_side_encryption = "AES256"
+  acl                    = "private"
+}
+

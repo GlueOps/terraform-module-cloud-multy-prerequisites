@@ -24,8 +24,7 @@ resource "aws_iam_policy" "vault_init_s3_v2" {
         "s3:List*"
       ],
       "Resource": [
-        "${module.common_s3.primary_s3_bucket_arn}/${aws_route53_zone.clusters[each.key].name}/hashicorp-vault-backups/*",
-        "${module.common_s3.replica_s3_bucket_arn}/${aws_route53_zone.clusters[each.key].name}/hashicorp-vault-backups/*"
+        "${module.common_s3_v2.s3_multi_region_access_point_arn}/${aws_route53_zone.clusters[each.key].name}/hashicorp-vault-backups/*"
       ]
     },
     {
@@ -34,8 +33,7 @@ resource "aws_iam_policy" "vault_init_s3_v2" {
         "s3:ListBucket"
       ],
       "Resource": [
-        "${module.common_s3.primary_s3_bucket_arn}",
-        "${module.common_s3.replica_s3_bucket_arn}"
+        "${module.common_s3_v2.s3_multi_region_access_point_arn}"
       ]
     }
   ]

@@ -13,7 +13,7 @@ resource "aws_iam_policy" "tls_cert_restore_s3_v2" {
         "s3:ListBucket*"
       ],
       "Resource": [
-        "${module.common_s3.primary_s3_bucket_arn}"
+        "${module.common_s3_v2.s3_multi_region_access_point_arn}"
       ]
     },
     {
