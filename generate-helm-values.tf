@@ -92,33 +92,6 @@ module "glueops_platform_helm_values" {
   tenant_s3_multi_region_access_point        = module.common_s3_v2.s3_multi_region_access_point_arn
 }
 
-resource "aws_s3_object" "platform_helm_values" {
-  for_each = local.cluster_environments
-
-  provider = aws.primaryregion
-  bucket   = module.common_s3.primary_s3_bucket_id
-  key      = "${each.value}.${aws_route53_zone.main.name}/configurations/platform.yaml"
-  content  = module.glueops_platform_helm_values[each.value].helm_values
-
-  content_type           = "application/json"
-  server_side_encryption = "AES256"
-  acl                    = "private"
-}
-
-resource "aws_s3_object" "platform_helm_values_v2" {
-  for_each = local.cluster_environments
-
-  provider = aws.primaryregion
-  bucket   = module.common_s3_v2.s3_multi_region_access_point_arn
-  key      = "${each.value}.${aws_route53_zone.main.name}/configurations/platform.yaml"
-  content  = module.glueops_platform_helm_values[each.value].helm_values
-
-  content_type           = "application/json"
-  server_side_encryption = "AES256"
-  acl                    = "private"
-}
-
-
 module "argocd_helm_values" {
   for_each             = local.environment_map
   source               = "git::https://github.com/GlueOps/docs-argocd.git?ref=v0.15.1"
@@ -129,31 +102,3 @@ module "argocd_helm_values" {
   argocd_rbac_policies = each.value.argocd_rbac_policies
   argocd_app_version   = local.argocd_app_version
 }
-
-
-resource "aws_s3_object" "argocd_helm_values" {
-  for_each = local.environment_map
-
-  provider = aws.primaryregion
-  bucket   = module.common_s3.primary_s3_bucket_id
-  key      = "${each.value.environment_name}.${aws_route53_zone.main.name}/configurations/argocd.yaml"
-  content  = module.argocd_helm_values[each.value.environment_name].helm_values
-
-  content_type           = "application/json"
-  server_side_encryption = "AES256"
-  acl                    = "private"
-}
-
-resource "aws_s3_object" "argocd_helm_values_v2" {
-  for_each = local.environment_map
-
-  provider = aws.primaryregion
-  bucket   = module.common_s3_v2.s3_multi_region_access_point_arn
-  key      = "${each.value.environment_name}.${aws_route53_zone.main.name}/configurations/argocd.yaml"
-  content  = module.argocd_helm_values[each.value.environment_name].helm_values
-
-  content_type           = "application/json"
-  server_side_encryption = "AES256"
-  acl                    = "private"
-}
-
