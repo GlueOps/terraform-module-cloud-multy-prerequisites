@@ -21,11 +21,5 @@ resource "aws_s3control_multi_region_access_point" "s3_multi_region_access_point
   }
 }
 
-output "s3_multi_region_access_point_arn" {
-  value = aws_s3control_multi_region_access_point.s3_multi_region_access_point.arn
-}
-
-
-
 resource "random_uuid" "s3_multi_region_access_point" {
 }
