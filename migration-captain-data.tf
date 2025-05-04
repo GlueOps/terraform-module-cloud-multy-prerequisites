@@ -25,13 +25,20 @@ locals {
 
   # Convert the list of keys into a set for use in for_each
   existing_object_keys_set = toset(local.existing_object_keys_list)
+
+  filtered_object_keys_set = toset([
+    for key in local.existing_object_keys_set : key
+    if !contains(key, "configurations/credentials.json")
+  ])
 }
+
+
 
 # Resource to copy the object from the source bucket for each key that exists
 # to the destination bucket.
 resource "aws_s3_object_copy" "migrated_objects" {
   provider = aws.clientaccount
-  for_each = local.existing_object_keys_set
+  for_each = local.filtered_object_keys_set
 
   source = "${local.source_bucket_for_captain_data}/${each.key}"
   bucket = module.common_s3_v2.s3_multi_region_access_point_arn
