@@ -8,7 +8,7 @@ data "aws_s3_objects" "captain_data" {
   for_each = aws_route53_zone.clusters
 
   bucket = local.source_bucket_for_captain_data
-  prefix = "${aws_route53_zone.clusters[each.key].name}/"
+  prefix = "${aws_route53_zone.clusters[each.key].name}/hashicorp-vault-init/"
 }
 
 
