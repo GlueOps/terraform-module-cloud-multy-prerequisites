@@ -28,7 +28,7 @@ locals {
 
   filtered_object_keys_set = toset([
     for key in local.existing_object_keys_set : key
-    if !contains(key, "configurations/credentials.json")
+    if !strcontains(key, "configurations/credentials.json")
   ])
 }
 
