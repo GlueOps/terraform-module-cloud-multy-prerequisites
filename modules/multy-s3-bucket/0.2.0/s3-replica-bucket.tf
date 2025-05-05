@@ -1,17 +1,20 @@
 resource "aws_s3_bucket" "replica" {
   provider      = aws.replicaregion
-  bucket        = length("${var.bucket_name}-replica") > 63 ? "bucket-${substr(sha256("${var.bucket_name}-replica"), 0, 51)}" : "${var.bucket_name}-replica"
+  bucket        = random_uuid.replica.result
   force_destroy = var.this_is_development ? true : false
-}
-output "replica_s3_bucket_arn" {
-  value = aws_s3_bucket.replica.arn
+
+  tags = {
+    Name        = "${var.tenant_key}-replica"
+    tenant_name = var.tenant_key
+  }
+
 }
 
 resource "aws_s3_bucket_versioning" "replica" {
   provider = aws.replicaregion
   bucket   = aws_s3_bucket.replica.id
   versioning_configuration {
-    status = var.enable_replication_and_versioning ? "Enabled" : "Suspended"
+    status = "Enabled"
   }
 }
 
@@ -50,4 +53,9 @@ resource "aws_s3_bucket_public_access_block" "replica" {
   block_public_policy     = true
   ignore_public_acls      = true
   restrict_public_buckets = true
+}
+
+
+
+resource "random_uuid" "replica" {
 }

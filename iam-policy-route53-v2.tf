@@ -1,7 +1,7 @@
-resource "aws_iam_policy" "route53" {
+resource "aws_iam_policy" "route53_v2" {
   provider = aws.clientaccount
   for_each = aws_route53_zone.clusters
-  name     = "route53-${aws_route53_zone.clusters[each.key].name}"
+  name     = random_uuid.route53_v2_aws_iam_policy[each.key].result
   policy   = <<EOF
 {
   "Version": "2012-10-17",
@@ -30,5 +30,11 @@ resource "aws_iam_policy" "route53" {
   ]
 }
 EOF
+  tags = {
+    Name = "route53-${aws_route53_zone.clusters[each.key].name}"
+  }
 }
 
+resource "random_uuid" "route53_v2_aws_iam_policy" {
+  for_each = aws_route53_zone.clusters
+}

@@ -1,6 +1,9 @@
+resource "random_uuid" "aws_iam_role_replication" {
+}
+
 resource "aws_iam_role" "replication" {
   provider = aws.primaryregion
-  name     = length("tf-role-s3-rplctn-${var.bucket_name}") > 63 ? "bucket-${substr(sha256("tf-role-s3-rplctn-${var.bucket_name}"), 0, 51)}" : "tf-role-s3-rplctn-${var.bucket_name}"
+  name     = random_uuid.aws_iam_role_replication.result
 
   assume_role_policy = <<POLICY
 {
@@ -17,11 +20,17 @@ resource "aws_iam_role" "replication" {
   ]
 }
 POLICY
+  tags = {
+    Name = "tf-role-s3-rplctn-${var.tenant_key}"
+  }
+}
+
+resource "random_uuid" "aws_iam_policy" {
 }
 
 resource "aws_iam_policy" "replication" {
   provider = aws.primaryregion
-  name     = "tf-policy-s3-rplctn-${var.bucket_name}"
+  name     = random_uuid.aws_iam_policy.result
 
   policy = <<POLICY
 {
@@ -34,7 +43,8 @@ resource "aws_iam_policy" "replication" {
       ],
       "Effect": "Allow",
       "Resource": [
-        "${aws_s3_bucket.primary.arn}"
+        "${aws_s3_bucket.primary.arn}",
+        "${aws_s3_bucket.replica.arn}"
       ]
     },
     {
@@ -45,7 +55,8 @@ resource "aws_iam_policy" "replication" {
       ],
       "Effect": "Allow",
       "Resource": [
-        "${aws_s3_bucket.primary.arn}/*"
+        "${aws_s3_bucket.primary.arn}/*",
+        "${aws_s3_bucket.replica.arn}/*"
       ]
     },
     {
@@ -55,11 +66,17 @@ resource "aws_iam_policy" "replication" {
         "s3:ReplicateTags"
       ],
       "Effect": "Allow",
-      "Resource": "${aws_s3_bucket.replica.arn}/*"
+      "Resource": [
+        "${aws_s3_bucket.primary.arn}/*",
+        "${aws_s3_bucket.replica.arn}/*"
+      ]
     }
   ]
 }
 POLICY
+  tags = {
+    Name = "tf-role-s3-rplctn-${var.tenant_key}"
+  }
 }
 
 resource "aws_iam_role_policy_attachment" "replication" {
@@ -84,11 +101,57 @@ resource "aws_s3_bucket_replication_configuration" "replication" {
     destination {
       bucket        = aws_s3_bucket.replica.arn
       storage_class = "STANDARD"
+      replication_time {
+        status = "Enabled"
+        time {
+          minutes = 15
+        }
+      }
+      metrics {
+        event_threshold {
+          minutes = 15
+        }
+        status = "Enabled"
+      }
+    }
+    delete_marker_replication {
+      status = "Enabled"
+    }
+  }
+}
+
+resource "aws_s3_bucket_replication_configuration" "replica" {
+  provider   = aws.replicaregion
+  depends_on = [aws_s3_bucket_versioning.replica, aws_s3_bucket_versioning.primary]
+
+  role   = aws_iam_role.replication.arn
+  bucket = aws_s3_bucket.replica.id
+
+  rule {
+    id = "replication"
+    filter {}
+
+    status = "Enabled"
+
+    destination {
+      bucket        = aws_s3_bucket.primary.arn
+      storage_class = "STANDARD"
+      replication_time {
+        status = "Enabled"
+        time {
+          minutes = 15
+        }
+      }
+      metrics {
+        event_threshold {
+          minutes = 15
+        }
+        status = "Enabled"
+      }
     }
     delete_marker_replication {
       status = "Enabled"
     }
   }
 
-  count = var.enable_replication_and_versioning ? 1 : 0
 }

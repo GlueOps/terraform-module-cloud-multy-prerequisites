@@ -1,21 +1,21 @@
 resource "aws_s3_bucket" "primary" {
   provider      = aws.primaryregion
-  bucket        = length("${var.bucket_name}-primary") > 63 ? "bucket-${substr(sha256("${var.bucket_name}-primary"), 0, 51)}" : "${var.bucket_name}-primary"
+  bucket        = random_uuid.primary.result
   force_destroy = var.this_is_development ? true : false
-}
-output "primary_s3_bucket_arn" {
-  value = aws_s3_bucket.primary.arn
+  tags = {
+    Name        = "${var.tenant_key}-primary"
+    tenant_name = var.tenant_key
+
+  }
 }
 
-output "primary_s3_bucket_id" {
-  value = aws_s3_bucket.primary.id
-}
+
 
 resource "aws_s3_bucket_versioning" "primary" {
   provider = aws.primaryregion
   bucket   = aws_s3_bucket.primary.id
   versioning_configuration {
-    status = var.enable_replication_and_versioning ? "Enabled" : "Suspended"
+    status = "Enabled"
   }
 }
 
@@ -54,4 +54,8 @@ resource "aws_s3_bucket_public_access_block" "primary" {
   block_public_policy     = true
   ignore_public_acls      = true
   restrict_public_buckets = true
+}
+
+
+resource "random_uuid" "primary" {
 }
