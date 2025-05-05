@@ -57,59 +57,32 @@ No requirements.
 
 | Name | Type |
 |------|------|
-| [aws_iam_access_key.certmanager](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_access_key) | resource |
 | [aws_iam_access_key.certmanager_v2](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_access_key) | resource |
-| [aws_iam_access_key.externaldns](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_access_key) | resource |
 | [aws_iam_access_key.externaldns_v2](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_access_key) | resource |
-| [aws_iam_access_key.loki_s3](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_access_key) | resource |
 | [aws_iam_access_key.loki_s3_v2](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_access_key) | resource |
-| [aws_iam_access_key.tls_cert_backup_s3](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_access_key) | resource |
 | [aws_iam_access_key.tls_cert_backup_s3_v2](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_access_key) | resource |
-| [aws_iam_access_key.tls_cert_restore_s3](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_access_key) | resource |
 | [aws_iam_access_key.tls_cert_restore_s3_v2](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_access_key) | resource |
-| [aws_iam_access_key.vault_init_s3](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_access_key) | resource |
 | [aws_iam_access_key.vault_init_s3_v2](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_access_key) | resource |
-| [aws_iam_access_key.vault_s3](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_access_key) | resource |
 | [aws_iam_access_key.vault_s3_backup_v2](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_access_key) | resource |
-| [aws_iam_policy.loki_s3](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy) | resource |
 | [aws_iam_policy.loki_s3_v2](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy) | resource |
-| [aws_iam_policy.route53](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy) | resource |
 | [aws_iam_policy.route53_v2](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy) | resource |
-| [aws_iam_policy.tls_cert_backup_s3](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy) | resource |
 | [aws_iam_policy.tls_cert_backup_s3_v2](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy) | resource |
-| [aws_iam_policy.tls_cert_restore_s3](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy) | resource |
 | [aws_iam_policy.tls_cert_restore_s3_v2](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy) | resource |
-| [aws_iam_policy.vault_init_s3](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy) | resource |
 | [aws_iam_policy.vault_init_s3_v2](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy) | resource |
-| [aws_iam_policy.vault_s3_backup](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy) | resource |
 | [aws_iam_policy.vault_s3_backup_v2](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy) | resource |
-| [aws_iam_user.certmanager](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_user) | resource |
 | [aws_iam_user.certmanager_v2](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_user) | resource |
-| [aws_iam_user.externaldns](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_user) | resource |
 | [aws_iam_user.externaldns_v2](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_user) | resource |
-| [aws_iam_user.loki_s3](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_user) | resource |
 | [aws_iam_user.loki_s3_v2](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_user) | resource |
-| [aws_iam_user.tls_cert_backup_s3](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_user) | resource |
 | [aws_iam_user.tls_cert_backup_s3_v2](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_user) | resource |
-| [aws_iam_user.tls_cert_restore_s3](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_user) | resource |
 | [aws_iam_user.tls_cert_restore_s3_v2](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_user) | resource |
-| [aws_iam_user.vault_init_s3](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_user) | resource |
 | [aws_iam_user.vault_init_s3_v2](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_user) | resource |
-| [aws_iam_user.vault_s3](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_user) | resource |
 | [aws_iam_user.vault_s3_backup_v2](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_user) | resource |
-| [aws_iam_user_policy_attachment.certmanager](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_user_policy_attachment) | resource |
 | [aws_iam_user_policy_attachment.certmanager_v2](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_user_policy_attachment) | resource |
-| [aws_iam_user_policy_attachment.externaldns](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_user_policy_attachment) | resource |
 | [aws_iam_user_policy_attachment.externaldns_v2](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_user_policy_attachment) | resource |
-| [aws_iam_user_policy_attachment.loki_s3](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_user_policy_attachment) | resource |
 | [aws_iam_user_policy_attachment.loki_s3_v2](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_user_policy_attachment) | resource |
-| [aws_iam_user_policy_attachment.tls_cert_backup_s3](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_user_policy_attachment) | resource |
 | [aws_iam_user_policy_attachment.tls_cert_backup_s3_v2](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_user_policy_attachment) | resource |
-| [aws_iam_user_policy_attachment.tls_cert_restore_s3](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_user_policy_attachment) | resource |
 | [aws_iam_user_policy_attachment.tls_cert_restore_s3_v2](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_user_policy_attachment) | resource |
-| [aws_iam_user_policy_attachment.vault_init_s3](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_user_policy_attachment) | resource |
 | [aws_iam_user_policy_attachment.vault_init_s3_v2](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_user_policy_attachment) | resource |
-| [aws_iam_user_policy_attachment.vault_s3](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_user_policy_attachment) | resource |
 | [aws_iam_user_policy_attachment.vault_s3_backup_v2](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_user_policy_attachment) | resource |
 | [aws_route53_hosted_zone_dnssec.cluster_zones](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route53_hosted_zone_dnssec) | resource |
 | [aws_route53_hosted_zone_dnssec.parent_tenant_zone](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route53_hosted_zone_dnssec) | resource |
@@ -122,7 +95,6 @@ No requirements.
 | [aws_route53_record.wildcard_for_apps](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route53_record) | resource |
 | [aws_route53_zone.clusters](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route53_zone) | resource |
 | [aws_route53_zone.main](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route53_zone) | resource |
-| [aws_s3_object_copy.migrated_objects](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_object_copy) | resource |
 | [random_password.dex_argocd_client_secret](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/password) | resource |
 | [random_password.dex_grafana_client_secret](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/password) | resource |
 | [random_password.dex_oauth2_client_secret](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/password) | resource |
@@ -143,7 +115,6 @@ No requirements.
 | [random_uuid.vault_s3_backup_v2_aws_iam_policy](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/uuid) | resource |
 | [random_uuid.vault_s3_backup_v2_aws_iam_user](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/uuid) | resource |
 | [aws_route53_zone.management_tenant_dns](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/route53_zone) | data source |
-| [aws_s3_objects.captain_data](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/s3_objects) | data source |
 
 ## Inputs
 
