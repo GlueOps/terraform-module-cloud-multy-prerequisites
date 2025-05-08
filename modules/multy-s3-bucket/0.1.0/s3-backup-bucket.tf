@@ -31,56 +31,12 @@ resource "aws_s3_bucket_lifecycle_configuration" "replica" {
   depends_on = [aws_s3_bucket_versioning.replica]
   bucket     = aws_s3_bucket.replica.id
   rule {
-    id = "expire_transition_vault"
+    id = "expire_non_current_version"
 
-    filter {
-      prefix = "backups_with_expiration_enabled/hashicorp-vault-backups/"
-    }
-
-    expiration {
-      days = 180
-    }
-
-    transition {
-      days          = var.this_is_development ? 30 : 60
-      storage_class = "GLACIER"
-    }
+    filter {}
 
     noncurrent_version_expiration {
-      noncurrent_days = 180
-    }
-
-    noncurrent_version_transition {
-      noncurrent_days = 30
-      storage_class   = "GLACIER"
-    }
-
-    status = "Enabled"
-  }
-
-  rule {
-    id = "expire_transition_tls"
-
-    filter {
-      prefix = "backups_with_expiration_enabled/tls-cert-backups/"
-    }
-
-    expiration {
-      days = 180
-    }
-
-    transition {
-      days          = var.this_is_development ? 20 : 60
-      storage_class = "GLACIER"
-    }
-
-    noncurrent_version_expiration {
-      noncurrent_days = 180
-    }
-
-    noncurrent_version_transition {
-      noncurrent_days = 30
-      storage_class   = "GLACIER"
+      noncurrent_days = var.this_is_development ? 14 : 180
     }
     status = "Enabled"
   }

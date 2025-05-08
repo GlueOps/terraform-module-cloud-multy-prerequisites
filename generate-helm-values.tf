@@ -42,7 +42,7 @@ resource "random_password" "grafana_admin_secret" {
 }
 
 locals {
-  vault_access_tokens_s3_key          = "backups_with_expiration_enabled/hashicorp-vault-init/vault_access.json"
+  vault_access_tokens_s3_key          = "hashicorp-vault-init/vault_access.json"
   tls_cert_backup_s3_key_prefix       = "backups_with_expiration_enabled/tls-cert-backups"
   tls_cert_restore_exclude_namespaces = "kube-system"
 }
