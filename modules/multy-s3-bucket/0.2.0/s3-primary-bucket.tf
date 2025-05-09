@@ -92,7 +92,7 @@ resource "aws_s3_bucket_lifecycle_configuration" "primary" {
       }
 
       noncurrent_version_transition {
-        noncurrent_days = noncurrent_days = var.this_is_development ? 15 : 30
+        noncurrent_days = var.this_is_development ? 15 : 30
         storage_class   = "GLACIER"
       }
 

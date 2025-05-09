@@ -34,8 +34,7 @@ resource "aws_s3_bucket_lifecycle_configuration" "replica" {
   depends_on = [aws_s3_bucket_versioning.replica]
   bucket     = aws_s3_bucket.replica.id
 
-   dynamic "rule" {
-
+  dynamic "rule" {
     for_each = aws_route53_zone.clusters
     content {
       id = "${rule.key}_expire_old_vault_backups"
@@ -54,7 +53,6 @@ resource "aws_s3_bucket_lifecycle_configuration" "replica" {
   }
 
   dynamic "rule" {
-
     for_each = aws_route53_zone.clusters
     content {
       id = "${rule.key}_expire_old_tls_backups"
@@ -73,9 +71,7 @@ resource "aws_s3_bucket_lifecycle_configuration" "replica" {
   }
 
   dynamic "rule" {
-    
     for_each = aws_route53_zone.clusters
-
     content {
       id = "${rule.key}_expire_transition_vault"
       filter {
@@ -108,7 +104,8 @@ resource "aws_s3_bucket_lifecycle_configuration" "replica" {
 
   dynamic "rule" {
     for_each = aws_route53_zone.clusters
-    content {
+
+    content{
       id = "${rule.key}_expire_transition_tls"
       filter {
         prefix = "${rule.key}/backups_with_expiration_enabled/tls-cert-backups/"
@@ -128,10 +125,11 @@ resource "aws_s3_bucket_lifecycle_configuration" "replica" {
       }
 
       noncurrent_version_transition {
-        noncurrent_days = 30
+        noncurrent_days = var.this_is_development ? 15 : 30
         storage_class   = "GLACIER"
       }
       status = "Enabled"
+
     }
   }
 }
