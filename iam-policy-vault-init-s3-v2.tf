@@ -27,7 +27,7 @@ resource "aws_iam_policy" "vault_init_s3_v2" {
       ],
       "Resource": [
         "${module.common_s3_v2.s3_multi_region_access_point_arn_for_object_level_policies}/${aws_route53_zone.clusters[each.key].name}/backups_with_expiration_enabled/hashicorp-vault-backups/*",
-        "${module.common_s3_v2.s3_primary_arn}/${aws_route53_zone.clusters[each.key].name}/backups_with_expiration_enabledhashicorp-vault-backups/*",
+        "${module.common_s3_v2.s3_primary_arn}/${aws_route53_zone.clusters[each.key].name}/backups_with_expiration_enabled/hashicorp-vault-backups/*",
         "${module.common_s3_v2.s3_replica_arn}/${aws_route53_zone.clusters[each.key].name}/backups_with_expiration_enabled/hashicorp-vault-backups/*"
       ]
     },
