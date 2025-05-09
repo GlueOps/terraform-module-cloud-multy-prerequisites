@@ -43,6 +43,7 @@ resource "aws_s3_bucket_lifecycle_configuration" "primary" {
     }
     status = "Enabled"
   }
+  
 }
 
 resource "aws_s3_bucket_public_access_block" "primary" {
