@@ -35,12 +35,12 @@ resource "aws_s3_bucket_lifecycle_configuration" "primary" {
   bucket     = aws_s3_bucket.primary.id
 
   dynamic "rule" {
-    for_each = aws_route53_zone.clusters
+    for_each = var.cluster_zone_names
     content {
-      id = "${rule.key}_expire_old_vault_backups"
+      id = "${rule.value}_expire_old_vault_backups"
 
       filter {
-        prefix = "${rule.key}/hashicorp-vault-backups/"
+        prefix = "${rule.value}/hashicorp-vault-backups/"
       }
 
       expiration {
@@ -53,12 +53,12 @@ resource "aws_s3_bucket_lifecycle_configuration" "primary" {
   }
 
   dynamic "rule" {
-    for_each = aws_route53_zone.clusters
+    for_each = var.cluster_zone_names
     content {
-      id = "${rule.key}_expire_old_tls_backups"
+      id = "${rule.value}_expire_old_tls_backups"
 
       filter {
-        prefix = "${rule.key}/tls-cert-backups/"
+        prefix = "${rule.value}/tls-cert-backups/"
       }
 
       expiration {
@@ -71,11 +71,11 @@ resource "aws_s3_bucket_lifecycle_configuration" "primary" {
   }
 
   dynamic "rule" {
-    for_each = aws_route53_zone.clusters
+    for_each = var.cluster_zone_names
     content {
-      id = "${rule.key}_expire_transition_vault"
+      id = "${rule.value}_expire_transition_vault"
       filter {
-        prefix = "${rule.key}/backups_with_expiration_enabled/hashicorp-vault-backups/"
+        prefix = "${rule.value}/backups_with_expiration_enabled/hashicorp-vault-backups/"
       }
 
       expiration {
@@ -103,12 +103,12 @@ resource "aws_s3_bucket_lifecycle_configuration" "primary" {
   }
 
   dynamic "rule" {
-    for_each = aws_route53_zone.clusters
+    for_each = var.cluster_zone_names
 
     content{
-      id = "${rule.key}_expire_transition_tls"
+      id = "${rule.value}_expire_transition_tls"
       filter {
-        prefix = "${rule.key}/backups_with_expiration_enabled/tls-cert-backups/"
+        prefix = "${rule.value}/backups_with_expiration_enabled/tls-cert-backups/"
       }
 
       expiration {
