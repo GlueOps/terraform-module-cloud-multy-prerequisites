@@ -33,15 +33,104 @@ resource "aws_s3_bucket_lifecycle_configuration" "replica" {
   provider   = aws.replicaregion
   depends_on = [aws_s3_bucket_versioning.replica]
   bucket     = aws_s3_bucket.replica.id
-  rule {
-    id = "expire_non_current_version"
 
-    filter {}
+  dynamic "rule" {
+    for_each = var.cluster_zone_names
+    content {
+      id = "${rule.value}_expire_old_vault_backups"
 
-    noncurrent_version_expiration {
-      noncurrent_days = var.this_is_development ? 14 : 180
+      filter {
+        prefix = "${rule.value}/hashicorp-vault-backups/"
+      }
+
+      expiration {
+        days = 15
+      }
+
+      status = "Enabled"
     }
-    status = "Enabled"
+    
+  }
+
+  dynamic "rule" {
+    for_each = var.cluster_zone_names
+    content {
+      id = "${rule.value}_expire_old_tls_backups"
+
+      filter {
+        prefix = "${rule.value}/tls-cert-backups/"
+      }
+
+      expiration {
+        days = 15
+      }
+
+      status = "Enabled"
+    }
+   
+  }
+
+  dynamic "rule" {
+    for_each = var.cluster_zone_names
+    content {
+      id = "${rule.value}_expire_transition_vault"
+      filter {
+        prefix = "${rule.value}/backups_with_expiration_enabled/hashicorp-vault-backups/"
+      }
+
+      expiration {
+        days = var.this_is_development ? 50: 180
+      }
+
+      transition {
+        days          = var.this_is_development ? 30 : 60
+        storage_class = "GLACIER"
+      }
+
+      noncurrent_version_expiration {
+        noncurrent_days = var.this_is_development ? 14 : 180
+      }
+
+      noncurrent_version_transition {
+        noncurrent_days = var.this_is_development ? 15 : 30
+        storage_class   = "GLACIER"
+      }
+
+      status = "Enabled"
+    }
+
+    
+  }
+
+  dynamic "rule" {
+    for_each = var.cluster_zone_names
+
+    content{
+      id = "${rule.value}_expire_transition_tls"
+      filter {
+        prefix = "${rule.value}/backups_with_expiration_enabled/tls-cert-backups/"
+      }
+
+      expiration {
+        days = var.this_is_development ? 50: 180
+      }
+
+      transition {
+        days          = var.this_is_development ? 20 : 60
+        storage_class = "GLACIER"
+      }
+
+      noncurrent_version_expiration {
+        noncurrent_days = var.this_is_development ? 14 : 180
+      }
+
+      noncurrent_version_transition {
+        noncurrent_days = var.this_is_development ? 15 : 30
+        storage_class   = "GLACIER"
+      }
+      status = "Enabled"
+
+    }
   }
 }
 

@@ -23,6 +23,7 @@ module "common_s3_v2" {
   tenant_account_id   = var.tenant_account_id
   primary_region      = var.primary_region
   backup_region       = var.backup_region
+  cluster_zone_names  = { for k, v in aws_route53_zone.clusters : k => v.name }
 }
 
 module "loki_s3" {
