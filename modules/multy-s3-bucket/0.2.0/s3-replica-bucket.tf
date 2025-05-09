@@ -91,11 +91,11 @@ resource "aws_s3_bucket_lifecycle_configuration" "replica" {
       }
 
       noncurrent_version_expiration {
-        noncurrent_days = 180
+        noncurrent_days = var.this_is_development ? 14 : 180
       }
 
       noncurrent_version_transition {
-        noncurrent_days = 30
+        noncurrent_days = var.this_is_development ? 15 : 30
         storage_class   = "GLACIER"
       }
 
@@ -123,7 +123,7 @@ resource "aws_s3_bucket_lifecycle_configuration" "replica" {
     }
 
     noncurrent_version_expiration {
-      noncurrent_days = 180
+      noncurrent_days = var.this_is_development ? 14 : 180
     }
 
     noncurrent_version_transition {
