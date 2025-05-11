@@ -116,7 +116,7 @@ resource "aws_s3_bucket_lifecycle_configuration" "replica" {
       }
 
       transition {
-        days          = var.this_is_development ? 20 : 60
+        days          = var.this_is_development ? 30 : 60
         storage_class = "GLACIER"
       }
 
@@ -128,8 +128,8 @@ resource "aws_s3_bucket_lifecycle_configuration" "replica" {
         noncurrent_days = var.this_is_development ? 15 : 30
         storage_class   = "GLACIER"
       }
-      status = "Enabled"
 
+      status = "Enabled"
     }
   }
 }
