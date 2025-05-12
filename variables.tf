@@ -116,9 +116,6 @@ locals {
   record_ttl                    = "60"
   ns_record_type                = "NS"
   bucket_name                   = "glueops-tenant-${var.tenant_key}"
-  vault_backup_s3_key_prefix    = "backups_with_expiration_enabled/hashicorp-vault-backups"
-  tls_cert_backup_s3_key_prefix = "backups_with_expiration_enabled/tls-cert-backups"
-
 }
 
 variable "opsgenie_emails" {

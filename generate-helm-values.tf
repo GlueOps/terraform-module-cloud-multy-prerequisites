@@ -84,8 +84,8 @@ module "glueops_platform_helm_values" {
   vault_init_controller_aws_access_secret    = aws_iam_access_key.vault_init_s3_v2[each.value.environment_name].secret
   tls_cert_backup_aws_access_key             = aws_iam_access_key.tls_cert_backup_s3_v2[each.value.environment_name].id
   tls_cert_backup_aws_secret_key             = aws_iam_access_key.tls_cert_backup_s3_v2[each.value.environment_name].secret
-  tls_cert_backup_s3_key_prefix              = local.tls_cert_backup_s3_key_prefix
-  vault_backup_s3_key_prefix                 = local.vault_backup_s3_key_prefix
+  tls_cert_backup_s3_key_prefix              = module.common_s3_v2.tls_cert_backup_s3_key_prefix
+  vault_backup_s3_key_prefix                 = module.common_s3_v2.vault_backup_s3_key_prefix
   tls_cert_restore_exclude_namespaces        = local.tls_cert_restore_exclude_namespaces
   tls_cert_restore_aws_access_key            = aws_iam_access_key.tls_cert_restore_s3_v2[each.value.environment_name].id
   tls_cert_restore_aws_secret_key            = aws_iam_access_key.tls_cert_restore_s3_v2[each.value.environment_name].secret
