@@ -103,7 +103,7 @@ resource "aws_s3_bucket_lifecycle_configuration" "primary" {
     content {
       id = "${rule.value}_expire_transition_vault"
       filter {
-        prefix = "${rule.value}/${module.common_s3_v2.vault_backup_s3_key_prefix}/"
+        prefix = "${rule.value}/${local.vault_backup_s3_key_prefix}/"
       }
 
       expiration {
@@ -136,7 +136,7 @@ resource "aws_s3_bucket_lifecycle_configuration" "primary" {
     content{
       id = "${rule.value}_expire_transition_tls"
       filter {
-        prefix = "${rule.value}/${module.common_s3_v2.tls_cert_backup_s3_key_prefix}/"
+        prefix = "${rule.value}/${local.tls_cert_backup_s3_key_prefix}/"
       }
 
       expiration {
