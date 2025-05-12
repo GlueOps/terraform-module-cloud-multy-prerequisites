@@ -44,7 +44,21 @@ resource "aws_s3_bucket_lifecycle_configuration" "primary" {
       }
 
       expiration {
-        days = 15
+        days = var.this_is_development ? 50: 180
+      }
+
+      transition {
+        days          = var.this_is_development ? 30 : 60
+        storage_class = "GLACIER"
+      }
+
+      noncurrent_version_expiration {
+        noncurrent_days = var.this_is_development ? 14 : 180
+      }
+
+      noncurrent_version_transition {
+        noncurrent_days = var.this_is_development ? 15 : 30
+        storage_class   = "GLACIER"
       }
 
       status = "Enabled"
@@ -62,7 +76,21 @@ resource "aws_s3_bucket_lifecycle_configuration" "primary" {
       }
 
       expiration {
-        days = 15
+        days = var.this_is_development ? 50: 180
+      }
+
+      transition {
+        days          = var.this_is_development ? 30 : 60
+        storage_class = "GLACIER"
+      }
+
+      noncurrent_version_expiration {
+        noncurrent_days = var.this_is_development ? 14 : 180
+      }
+
+      noncurrent_version_transition {
+        noncurrent_days = var.this_is_development ? 15 : 30
+        storage_class   = "GLACIER"
       }
 
       status = "Enabled"
@@ -75,7 +103,7 @@ resource "aws_s3_bucket_lifecycle_configuration" "primary" {
     content {
       id = "${rule.value}_expire_transition_vault"
       filter {
-        prefix = "${rule.value}/backups_with_expiration_enabled/hashicorp-vault-backups/"
+        prefix = "${rule.value}/${local.vault_backup_s3_key_prefix}/"
       }
 
       expiration {
@@ -108,7 +136,7 @@ resource "aws_s3_bucket_lifecycle_configuration" "primary" {
     content{
       id = "${rule.value}_expire_transition_tls"
       filter {
-        prefix = "${rule.value}/backups_with_expiration_enabled/tls-cert-backups/"
+        prefix = "${rule.value}/${local.tls_cert_backup_s3_key_prefix}/"
       }
 
       expiration {

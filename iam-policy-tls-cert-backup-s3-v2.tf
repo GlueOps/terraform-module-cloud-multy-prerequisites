@@ -13,9 +13,9 @@ resource "aws_iam_policy" "tls_cert_backup_s3_v2" {
         "s3:List*"
       ],
       "Resource": [
-        "${module.common_s3_v2.s3_multi_region_access_point_arn_for_object_level_policies}/${aws_route53_zone.clusters[each.key].name}/backups_with_expiration_enabled/tls-cert-backups/*",
-        "${module.common_s3_v2.s3_primary_arn}/${aws_route53_zone.clusters[each.key].name}/backups_with_expiration_enabled/tls-cert-backups/*",
-        "${module.common_s3_v2.s3_replica_arn}/${aws_route53_zone.clusters[each.key].name}/backups_with_expiration_enabled/tls-cert-backups/*"
+        "${module.common_s3_v2.s3_multi_region_access_point_arn_for_object_level_policies}/${aws_route53_zone.clusters[each.key].name}/${local.tls_cert_backup_s3_key_prefix}/*",
+        "${module.common_s3_v2.s3_primary_arn}/${aws_route53_zone.clusters[each.key].name}/${local.tls_cert_backup_s3_key_prefix}/*",
+        "${module.common_s3_v2.s3_replica_arn}/${aws_route53_zone.clusters[each.key].name}/${local.tls_cert_backup_s3_key_prefix}/*"
       ]
     }
   ]
