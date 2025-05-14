@@ -23,7 +23,7 @@ resource "aws_iam_policy" "vault_s3_backup_v2" {
     {
       "Effect": "Allow",
       "Action": [
-        "s3:GetObject",
+        "s3:GetObject"
       ],
       "Resource": [
         "${module.common_s3_v2.s3_multi_region_access_point_arn_for_object_level_policies}/${aws_route53_zone.clusters[each.key].name}/hashicorp-vault-init/*",
