@@ -11,6 +11,7 @@ resource "aws_iam_policy" "tls_cert_backup_s3_v2" {
       "Action": [
         "s3:PutObject",
         "s3:List*"
+        "s3:PutObjectTag",
       ],
       "Resource": [
         "${module.common_s3_v2.s3_multi_region_access_point_arn_for_object_level_policies}/${aws_route53_zone.clusters[each.key].name}/${module.common_s3_v2.tls_cert_backup_s3_key_prefix}/*",

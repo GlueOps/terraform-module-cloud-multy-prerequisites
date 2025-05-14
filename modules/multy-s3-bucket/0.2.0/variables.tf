@@ -33,7 +33,6 @@ variable "backup_region" {
 variable "cluster_zone_names" {
   description = "A map of cluster environment keys to their Route 53 Zone names."
   type        = map(string)
-  # default     = {}
 }
 
 locals {
