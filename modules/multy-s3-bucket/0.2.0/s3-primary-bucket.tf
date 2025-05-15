@@ -33,17 +33,133 @@ resource "aws_s3_bucket_lifecycle_configuration" "primary" {
   provider   = aws.primaryregion
   depends_on = [aws_s3_bucket_versioning.primary]
   bucket     = aws_s3_bucket.primary.id
-  rule {
-    id = "expire_non_current_version"
 
-    filter {}
+  dynamic "rule" {
+    for_each = var.cluster_zone_names
+    content {
+      id = "${rule.value}_expire_old_vault_backups"
 
-    noncurrent_version_expiration {
-      noncurrent_days = var.this_is_development ? 14 : 180
+      filter {
+        prefix = "${rule.value}/hashicorp-vault-backups/"
+      }
+
+      expiration {
+        days = var.this_is_development ? 50: 180
+      }
+
+      transition {
+        days          = var.this_is_development ? 30 : 60
+        storage_class = "GLACIER"
+      }
+
+      noncurrent_version_expiration {
+        noncurrent_days = var.this_is_development ? 30 : 100
+      }
+
+      noncurrent_version_transition {
+        noncurrent_days = var.this_is_development ? 15 : 30
+        storage_class   = "GLACIER"
+      }
+
+      status = "Enabled"
     }
-    status = "Enabled"
+    
   }
 
+  dynamic "rule" {
+    for_each = var.cluster_zone_names
+    content {
+      id = "${rule.value}_expire_old_tls_backups"
+
+      filter {
+        prefix = "${rule.value}/tls-cert-backups/"
+      }
+
+      expiration {
+        days = var.this_is_development ? 50: 180
+      }
+
+      transition {
+        days          = var.this_is_development ? 30 : 60
+        storage_class = "GLACIER"
+      }
+
+      noncurrent_version_expiration {
+        noncurrent_days = var.this_is_development ? 30 : 100
+      }
+
+      noncurrent_version_transition {
+        noncurrent_days = var.this_is_development ? 15 : 30
+        storage_class   = "GLACIER"
+      }
+
+      status = "Enabled"
+    }
+   
+  }
+
+  dynamic "rule" {
+    for_each = var.cluster_zone_names
+    content {
+      id = "${rule.value}_expire_transition_vault"
+      filter {
+        prefix = "${rule.value}/${local.vault_backup_s3_key_prefix}/"
+      }
+
+      expiration {
+        days = var.this_is_development ? 50: 180
+      }
+
+      transition {
+        days          = var.this_is_development ? 30 : 60
+        storage_class = "GLACIER"
+      }
+
+      noncurrent_version_expiration {
+        noncurrent_days = var.this_is_development ? 30 : 100
+      }
+
+      noncurrent_version_transition {
+        noncurrent_days = var.this_is_development ? 15 : 30
+        storage_class   = "GLACIER"
+      }
+
+      status = "Enabled"
+    }
+
+    
+  }
+
+  dynamic "rule" {
+    for_each = var.cluster_zone_names
+
+    content{
+      id = "${rule.value}_expire_transition_tls"
+      filter {
+        prefix = "${rule.value}/${local.tls_cert_backup_s3_key_prefix}/"
+      }
+
+      expiration {
+        days = var.this_is_development ? 50: 180
+      }
+
+      transition {
+        days          = var.this_is_development ? 30 : 60
+        storage_class = "GLACIER"
+      }
+
+      noncurrent_version_expiration {
+        noncurrent_days = var.this_is_development ? 30 : 100
+      }
+
+      noncurrent_version_transition {
+        noncurrent_days = var.this_is_development ? 15 : 30
+        storage_class   = "GLACIER"
+      }
+
+      status = "Enabled"
+    }
+  }
 }
 
 resource "aws_s3_bucket_public_access_block" "primary" {

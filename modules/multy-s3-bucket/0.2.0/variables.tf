@@ -30,4 +30,12 @@ variable "backup_region" {
   nullable    = false
 }
 
+variable "cluster_zone_names" {
+  description = "A map of cluster environment keys to their Route 53 Zone names."
+  type        = map(string)
+}
 
+locals {
+  vault_backup_s3_key_prefix    = "backups_with_expiration_enabled/hashicorp-vault-backups"
+  tls_cert_backup_s3_key_prefix = "backups_with_expiration_enabled/tls-cert-backups"
+}

@@ -16,3 +16,11 @@ output "s3_replica_arn" {
   value = aws_s3_bucket.replica.arn
 
 }
+
+output "tls_cert_backup_s3_key_prefix" {
+  value = local.tls_cert_backup_s3_key_prefix
+}
+
+output "vault_backup_s3_key_prefix" {
+  value = local.vault_backup_s3_key_prefix
+}
