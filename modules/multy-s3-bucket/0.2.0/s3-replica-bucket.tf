@@ -33,6 +33,7 @@ resource "aws_s3_bucket_lifecycle_configuration" "replica" {
   provider   = aws.replicaregion
   depends_on = [aws_s3_bucket_versioning.replica]
   bucket     = aws_s3_bucket.replica.id
+  count      = length(var.cluster_zone_names) > 0 ? 1 : 0
 
   dynamic "rule" {
     for_each = var.cluster_zone_names
