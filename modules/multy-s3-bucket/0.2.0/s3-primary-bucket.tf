@@ -33,6 +33,7 @@ resource "aws_s3_bucket_lifecycle_configuration" "primary" {
   provider   = aws.primaryregion
   depends_on = [aws_s3_bucket_versioning.primary]
   bucket     = aws_s3_bucket.primary.id
+  count      = length(var.cluster_zone_names) > 0 ? 1 : 0
 
   dynamic "rule" {
     for_each = var.cluster_zone_names
