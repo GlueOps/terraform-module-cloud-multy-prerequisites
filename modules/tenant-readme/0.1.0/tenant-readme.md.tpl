@@ -23,7 +23,7 @@ gh repo clone placeholder_github_owner/placeholder_repo_name
 
 <br /><br />
 
-## Select Cloud
+## Select a Cloud and Deploy K8s
 - [Deploy kubernetes (e.g. AWS/GCP/K3ds/Kubeadm/etc.)](https://glueops.getoutline.com/doc/k8s-cluster-setup-ZSRoUPqfM2)
 
 <br /><br />
@@ -50,6 +50,7 @@ gh repo clone placeholder_github_owner/placeholder_repo_name
 
     * [Configure Vault](https://github.com/GlueOps/terraform-module-kubernetes-hashicorp-vault-configuration)
 3. Access Cluster services
+    * [Cluster Info](https://cluster-info.placeholder_repo_name): https://cluster-info.placeholder_repo_name
     * [ArgoCD](https://argocd.placeholder_repo_name): https://argocd.placeholder_repo_name
     * [Valult](https://vault.placeholder_repo_name): https://vault.placeholder_repo_name
     * [Grafana](https://grafana.placeholder_repo_name): https://grafana.placeholder_repo_name
