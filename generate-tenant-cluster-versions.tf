@@ -1,5 +1,5 @@
 locals {
-  versions_yaml_content = file("VERSIONS/aws.yaml") # we should change this when cluster is kubeadm 
+  versions_yaml_content = file("aws.yaml") # we should change this when cluster is kubeadm 
   versions_data         = yamldecode(local.versions_yaml_content)
 }
 
