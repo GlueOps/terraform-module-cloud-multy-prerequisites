@@ -30,7 +30,7 @@ module "captain_repository_files" {
     "README.md"                                          = module.tenant_readmes[each.value.environment_name].tenant_readme
     "terraform/kubernetes/provider_versions.tf"          = local.provider_versions_tf_file
     "terraform/vault/configuration/provider_versions.tf" = local.provider_versions_tf_file
-
+    "VERSIONS/aws.yaml"                                  = module.tenant_cluster_versions[each.value.environment_name].tenant_cluster_versions
     ".gitignore" = <<EOT
 
 .terraform
