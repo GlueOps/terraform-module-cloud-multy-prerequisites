@@ -113,9 +113,9 @@ variable "backup_region" {
 
 locals {
   management_tenant_dns_zoneid = var.management_tenant_dns_zoneid
-  record_ttl                    = "60"
-  ns_record_type                = "NS"
-  bucket_name                   = "glueops-tenant-${var.tenant_key}"
+  record_ttl                   = "60"
+  ns_record_type               = "NS"
+  bucket_name                  = "glueops-tenant-${var.tenant_key}"
 }
 
 variable "opsgenie_emails" {
