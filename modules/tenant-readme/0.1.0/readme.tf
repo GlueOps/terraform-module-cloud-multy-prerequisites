@@ -33,10 +33,7 @@ variable "argocd_app_version" {
   description = "This is the appVersion of argocd. Example: v2.7.11"
 }
 
-variable "argocd_crd_version" {
-  type        = string
-  description = "This is the argocd crds version"
-}
+
 
 variable "argocd_helm_chart_version" {
   type        = string
@@ -69,7 +66,7 @@ output "tenant_readme" {
     "placeholder_repo_name", "${var.repository_name}"),
     "placeholder_tenant_key", "${var.tenant_key}"),
     "placeholder_cluster_environment", "${var.cluster_environment}"),
-    "placeholder_argocd_crd_version", "${var.argocd_crd_version}"),
+    "placeholder_argocd_crd_version", "${var.argocd_app_version}"),
     "placeholder_argocd_helm_chart_version", "${var.argocd_helm_chart_version}"),
     "placeholder_glueops_platform_version", "${var.glueops_platform_version}"),
     "placeholder_codespace_version", "${var.codespace_version}"),
