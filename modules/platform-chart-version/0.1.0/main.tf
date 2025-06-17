@@ -18,6 +18,6 @@ data "local_file" "version" {
 output "platform_versions" {
   value = replace(replace(
     data.local_file.version.content,
-    "glueops_platform_helm_chart_version_placeholder", "${var.argocd_helm_chart_version}"),
-    "argocd_helm_chart_version_placeholder", "${var.glueops_platform_version}")
+    "glueops_platform_helm_chart_version_placeholder", "${var.glueops_platform_version}"),
+    "argocd_helm_chart_version_placeholder",  "${var.argocd_helm_chart_version}")
 }
