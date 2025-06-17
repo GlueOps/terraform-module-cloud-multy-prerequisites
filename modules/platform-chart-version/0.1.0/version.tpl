@@ -1,0 +1,3 @@
+versions:
+  glueops_platform_helm_chart_version: glueops_platform_helm_chart_version_placeholder
+  argocd_helm_chart_version: argocd_helm_chart_version_placeholder
