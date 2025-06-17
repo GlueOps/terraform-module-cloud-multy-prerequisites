@@ -45,7 +45,7 @@ resource "aws_s3_bucket_lifecycle_configuration" "primary" {
       }
 
       expiration {
-        days = var.this_is_development ? 50: 180
+        days = var.this_is_development ? 50 : 180
       }
 
       transition {
@@ -64,7 +64,7 @@ resource "aws_s3_bucket_lifecycle_configuration" "primary" {
 
       status = "Enabled"
     }
-    
+
   }
 
   dynamic "rule" {
@@ -77,7 +77,7 @@ resource "aws_s3_bucket_lifecycle_configuration" "primary" {
       }
 
       expiration {
-        days = var.this_is_development ? 50: 180
+        days = var.this_is_development ? 50 : 180
       }
 
       transition {
@@ -96,7 +96,7 @@ resource "aws_s3_bucket_lifecycle_configuration" "primary" {
 
       status = "Enabled"
     }
-   
+
   }
 
   dynamic "rule" {
@@ -108,7 +108,7 @@ resource "aws_s3_bucket_lifecycle_configuration" "primary" {
       }
 
       expiration {
-        days = var.this_is_development ? 50: 180
+        days = var.this_is_development ? 50 : 180
       }
 
       transition {
@@ -128,20 +128,20 @@ resource "aws_s3_bucket_lifecycle_configuration" "primary" {
       status = "Enabled"
     }
 
-    
+
   }
 
   dynamic "rule" {
     for_each = var.cluster_zone_names
 
-    content{
+    content {
       id = "${rule.value}_expire_transition_tls"
       filter {
         prefix = "${rule.value}/${local.tls_cert_backup_s3_key_prefix}/"
       }
 
       expiration {
-        days = var.this_is_development ? 50: 180
+        days = var.this_is_development ? 50 : 180
       }
 
       transition {

@@ -40,5 +40,5 @@ output "tenant_cluster_versions" {
     "coredns_version_placeholder", "${var.coredns_version}"),
     "kube_proxy_version_placeholder", "${var.kube_proxy_version}"),
     "ami_release_version_placeholder", "${var.ami_release_version}"),
-    "kubernetes_version_placeholder", "${var.kubernetes_version}")
+  "kubernetes_version_placeholder", "${var.kubernetes_version}")
 }
