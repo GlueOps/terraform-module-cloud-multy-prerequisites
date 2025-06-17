@@ -31,6 +31,7 @@ module "captain_repository_files" {
     "terraform/kubernetes/provider_versions.tf"          = local.provider_versions_tf_file
     "terraform/vault/configuration/provider_versions.tf" = local.provider_versions_tf_file
     "VERSIONS/aws.yaml"                                  = module.tenant_cluster_versions[each.value.environment_name].tenant_cluster_versions
+    "VERSIONS/glueops.yaml"                              = module.glueops_platform_versions[each.value.environment_name].platform_versions
     ".gitignore"                                         = <<EOT
 
 .terraform
