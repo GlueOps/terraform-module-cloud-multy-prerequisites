@@ -17,4 +17,5 @@ module "tenant_readmes" {
   argocd_helm_chart_version = local.argocd_helm_chart_version
   glueops_platform_version  = local.glueops_platform_version
   tools_version             = local.tools_version
+  codespace_version         = local.codespace_version
 }
