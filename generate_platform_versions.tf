@@ -4,4 +4,5 @@ module "glueops_platform_versions" {
 
   argocd_helm_chart_version = local.argocd_helm_chart_version
   glueops_platform_version  = local.glueops_platform_version
+  codespace_version         = local.codespace_version
 }
