@@ -46,6 +46,6 @@ output "platform_versions" {
     "argocd_helm_chart_version_placeholder", "${var.argocd_helm_chart_version}"),
     "argocd_app_version_placeholder", "${var.argocd_app_version}"),
     "codespace_version_placeholder", "${var.codespace_version}"),
-    "calico_helm_chart_version_placeholder, "${var.calico_helm_chart_version}"),
-    "tigera_operator_version_placeholder, "${var.tigera_operator_version}")
+    "calico_helm_chart_version_placeholder", "${var.calico_helm_chart_version}"),
+  "tigera_operator_version_placeholder", "${var.tigera_operator_version}")
 }
