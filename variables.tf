@@ -1,4 +1,4 @@
-
+ 
 variable "management_tenant_dns_zoneid" {
   description = "The Route53 ZoneID that all the delegation is coming from."
   type        = string
@@ -119,10 +119,10 @@ locals {
 }
 
 locals {
-  argocd_app_version        = "v2.14.12"
+  argocd_app_version        = "v2.14.15"
   codespace_version         = "v0.95.0"
   argocd_helm_chart_version = "7.9.1"
-  glueops_platform_version  = "v0.59.2" # this also needs to be updated in the module.glueops_platform_helm_values // generate-helm-values.tf
+  glueops_platform_version  = "v0.60.0" # this also needs to be updated in the module.glueops_platform_helm_values // generate-helm-values.tf
   tools_version             = "v0.28.0"
   calico_helm_chart_version = "v3.29.3"
   tigera_operator_version   = "v1.36.7"
