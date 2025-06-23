@@ -125,6 +125,7 @@ locals {
   glueops_platform_version  = "v0.59.2" # this also needs to be updated in the module.glueops_platform_helm_values // generate-helm-values.tf
   tools_version             = "v0.28.0"
   calico_helm_chart_version = "v3.29.3"
+  calico_ctl_version        = "v3.29.3"
   tigera_operator_version   = "v1.36.7"
 }
 

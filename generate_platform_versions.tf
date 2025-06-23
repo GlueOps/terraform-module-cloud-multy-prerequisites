@@ -8,4 +8,5 @@ module "glueops_platform_versions" {
   codespace_version         = local.codespace_version
   calico_helm_chart_version = local.calico_helm_chart_version
   tigera_operator_version   = local.tigera_operator_version
+  calico_ctl_version        = local.calico_ctl_version
 }

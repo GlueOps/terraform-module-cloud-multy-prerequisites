@@ -12,13 +12,19 @@ variable "argocd_app_version" {
 
 
 variable "calico_helm_chart_version" {
-  description = "Codespace version"
+  description = "Calico helm chart version"
+  type        = string
+  nullable    = false
+}
+
+variable "calico_ctl_version" {
+  description = "Calico ctl version"
   type        = string
   nullable    = false
 }
 
 variable "tigera_operator_version" {
-  description = "Codespace version"
+  description = "calico tigera operator version"
   type        = string
   nullable    = false
 }
@@ -40,12 +46,13 @@ data "local_file" "version" {
 }
 
 output "platform_versions" {
-  value = replace(replace(replace(replace(replace(replace(
+  value = replace(replace(replace(replace(replace(replace(replace(
     data.local_file.version.content,
     "glueops_platform_helm_chart_version_placeholder", "${var.glueops_platform_version}"),
     "argocd_helm_chart_version_placeholder", "${var.argocd_helm_chart_version}"),
     "argocd_app_version_placeholder", "${var.argocd_app_version}"),
     "codespace_version_placeholder", "${var.codespace_version}"),
     "calico_helm_chart_version_placeholder", "${var.calico_helm_chart_version}"),
+    "calico_ctl_version_placeholder", "${var.calico_ctl_version}"),
   "tigera_operator_version_placeholder", "${var.tigera_operator_version}")
 }
