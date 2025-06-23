@@ -113,10 +113,22 @@ variable "backup_region" {
 
 locals {
   management_tenant_dns_zoneid = var.management_tenant_dns_zoneid
-  record_ttl                    = "60"
-  ns_record_type                = "NS"
-  bucket_name                   = "glueops-tenant-${var.tenant_key}"
+  record_ttl                   = "60"
+  ns_record_type               = "NS"
+  bucket_name                  = "glueops-tenant-${var.tenant_key}"
 }
+
+locals {
+  argocd_app_version        = "v2.14.12"
+  codespace_version         = "v0.95.0"
+  argocd_helm_chart_version = "7.9.1"
+  glueops_platform_version  = "v0.59.2" # this also needs to be updated in the module.glueops_platform_helm_values // generate-helm-values.tf
+  tools_version             = "v0.28.0"
+  calico_helm_chart_version = "v3.29.3"
+  calico_ctl_version        = "v3.29.3"
+  tigera_operator_version   = "v1.36.7"
+}
+
 
 variable "opsgenie_emails" {
   description = "List of user email addresses"
