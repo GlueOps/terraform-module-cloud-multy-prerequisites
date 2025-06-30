@@ -41,12 +41,18 @@ variable "codespace_version" {
   nullable    = false
 }
 
+variable "terraform_module_version" {
+  description = "terraform-module-cloud-aws-kubernetes-cluster version"
+  type        = string
+  nullable    = false
+}
+
 data "local_file" "version" {
   filename = "${path.module}/version.tpl"
 }
 
 output "platform_versions" {
-  value = replace(replace(replace(replace(replace(replace(replace(
+  value = replace(replace(replace(replace(replace(replace(replace(replace(
     data.local_file.version.content,
     "glueops_platform_helm_chart_version_placeholder", "${var.glueops_platform_version}"),
     "argocd_helm_chart_version_placeholder", "${var.argocd_helm_chart_version}"),
@@ -54,5 +60,6 @@ output "platform_versions" {
     "codespace_version_placeholder", "${var.codespace_version}"),
     "calico_helm_chart_version_placeholder", "${var.calico_helm_chart_version}"),
     "calico_ctl_version_placeholder", "${var.calico_ctl_version}"),
+    "terraform_module_version_placeholder", "${var.terraform_module_version}"),
   "tigera_operator_version_placeholder", "${var.tigera_operator_version}")
 }
