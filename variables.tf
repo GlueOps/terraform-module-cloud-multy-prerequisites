@@ -120,13 +120,14 @@ locals {
 
 locals {
   argocd_app_version        = "v2.14.15"
-  codespace_version         = "v0.96.0"
+  codespace_version         = "v0.96.2"
   argocd_helm_chart_version = "7.9.1"
   glueops_platform_version  = "v0.59.2" # this also needs to be updated in the module.glueops_platform_helm_values // generate-helm-values.tf
   tools_version             = "v0.28.0"
   calico_helm_chart_version = "v3.29.3"
   calico_ctl_version        = "v3.29.3"
   tigera_operator_version   = "v1.36.7"
+  terraform_module_version  = "v0.35.0"
 }
 
 
