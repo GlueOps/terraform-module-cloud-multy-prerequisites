@@ -20,5 +20,5 @@ versions:
     version: 1.30.11-20250610
 
   - name: kubernetes_version
-    version: 1.30
+    version: "1.30"
 
