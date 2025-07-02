@@ -12,4 +12,4 @@ versions:
     version: ami_release_version_placeholder
 
   - name: kubernetes_version
-    version: kubernetes_version_placeholder
+    version: "kubernetes_version_placeholder"
