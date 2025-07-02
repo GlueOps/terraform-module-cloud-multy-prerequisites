@@ -9,4 +9,5 @@ module "glueops_platform_versions" {
   calico_helm_chart_version = local.calico_helm_chart_version
   tigera_operator_version   = local.tigera_operator_version
   calico_ctl_version        = local.calico_ctl_version
+  terraform_module_version  = local.terraform_module_version
 }
