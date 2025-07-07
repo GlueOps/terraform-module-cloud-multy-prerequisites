@@ -127,7 +127,7 @@ locals {
   calico_helm_chart_version = "v3.29.3"
   calico_ctl_version        = "v3.29.3"
   tigera_operator_version   = "v1.36.7"
-  terraform_module_version  = "v0.35.0"
+  terraform_module_version  = "v0.36.0"
 }
 
 
