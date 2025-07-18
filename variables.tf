@@ -49,6 +49,7 @@ variable "cluster_environments" {
     github_tenant_app_b64enc_private_key = string
     admin_github_org_name                = string
     tenant_github_org_name               = string
+    kubeadm_cluster                      = optional(bool, false)
     vault_github_org_team_policy_mappings = list(object({
       oidc_groups = list(string)
       policy_name = string
@@ -66,6 +67,7 @@ variable "cluster_environments" {
       github_tenant_app_b64enc_private_key = "tenant-github-app-b64enc-private-key"
       admin_github_org_name                = "GlueOps"
       tenant_github_org_name               = "glueops-rocks"
+      kubeadm_cluster                      = false
       vault_github_org_team_policy_mappings = [
         {
           oidc_groups = ["GlueOps:vault_super_admins"]
