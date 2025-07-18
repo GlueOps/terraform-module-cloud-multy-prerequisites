@@ -34,18 +34,30 @@ variable "argocd_app_version" {
 }
 
 
+
+variable "argocd_helm_chart_version" {
+  type        = string
+  description = "Argocd helm chart version"
+}
+
+variable "glueops_platform_version" {
+  type        = string
+  description = "glueops platform version like v0.59.2"
+}
+
+variable "codespace_version" {
+  type        = string
+  description = "codespace version"
+}
+
+variable "tools_version" {
+  type        = string
+  description = "This is the tools version"
+}
+
 data "local_file" "readme" {
   filename = "${path.module}/tenant-readme.md.tpl"
 }
-
-locals {
-  codespace_version         = "v0.94.0"
-  argocd_crd_version        = var.argocd_app_version
-  argocd_helm_chart_version = "7.9.1"
-  glueops_platform_version  = "v0.59.2" # this also needs to be updated in the module.glueops_platform_helm_values // generate-helm-values.tf
-  tools_version             = "v0.28.0"
-}
-
 
 output "tenant_readme" {
   value = replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(
@@ -54,10 +66,10 @@ output "tenant_readme" {
     "placeholder_repo_name", "${var.repository_name}"),
     "placeholder_tenant_key", "${var.tenant_key}"),
     "placeholder_cluster_environment", "${var.cluster_environment}"),
-    "placeholder_argocd_crd_version", "${local.argocd_crd_version}"),
-    "placeholder_argocd_helm_chart_version", "${local.argocd_helm_chart_version}"),
-    "placeholder_glueops_platform_version", "${local.glueops_platform_version}"),
-    "placeholder_codespace_version", "${local.codespace_version}"),
+    "placeholder_argocd_crd_version", "${var.argocd_app_version}"),
+    "placeholder_argocd_helm_chart_version", "${var.argocd_helm_chart_version}"),
+    "placeholder_glueops_platform_version", "${var.glueops_platform_version}"),
+    "placeholder_codespace_version", "${var.codespace_version}"),
     "placeholder_tenant_github_org_name", "${var.tenant_github_org_name}"),
-  "placeholder_tools_version", "${local.tools_version}")
+  "placeholder_tools_version", "${var.tools_version}")
 }
