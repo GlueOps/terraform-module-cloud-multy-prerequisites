@@ -132,8 +132,8 @@ locals {
   terraform_module_version  = "v0.36.1"
 }
 
-
 variable "opsgenie_emails" {
   description = "List of user email addresses"
   type        = list(string)
+  default     = [] # this for backward compatability
 }

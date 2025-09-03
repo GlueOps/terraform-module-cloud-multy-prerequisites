@@ -71,7 +71,6 @@ module "glueops_platform_helm_values" {
   cluster_environment                        = each.value.environment_name
   aws_region                                 = var.primary_region
   tenant_key                                 = var.tenant_key
-  opsgenie_api_key                           = lookup(module.opsgenie_teams.opsgenie_prometheus_api_keys, split(".", each.value.environment_name)[0], null)
   admin_github_org_name                      = each.value.admin_github_org_name
   tenant_github_org_name                     = each.value.tenant_github_org_name
   grafana_admin_password                     = random_password.grafana_admin_secret[each.value.environment_name].result
