@@ -124,7 +124,7 @@ locals {
   argocd_app_version        = "v2.14.17"
   codespace_version         = "v0.105.1"
   argocd_helm_chart_version = "7.9.1"
-  glueops_platform_version  = "v0.61.3" # this also needs to be updated in the module.glueops_platform_helm_values // generate-helm-values.tf
+  glueops_platform_version  = "feat/removing_alerts" # this also needs to be updated in the module.glueops_platform_helm_values // generate-helm-values.tf
   tools_version             = "v0.28.0"
   calico_helm_chart_version = "v3.29.5"
   calico_ctl_version        = "v3.29.5"
