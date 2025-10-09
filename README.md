@@ -48,10 +48,9 @@ No requirements.
 | <a name="module_common_s3"></a> [common\_s3](#module\_common\_s3) | ./modules/multy-s3-bucket/0.1.0 | n/a |
 | <a name="module_common_s3_v2"></a> [common\_s3\_v2](#module\_common\_s3\_v2) | ./modules/multy-s3-bucket/0.2.0 | n/a |
 | <a name="module_dnssec_key"></a> [dnssec\_key](#module\_dnssec\_key) | git::https://github.com/GlueOps/terraform-module-cloud-aws-dnssec-kms-key.git | v0.3.0 |
-| <a name="module_glueops_platform_helm_values"></a> [glueops\_platform\_helm\_values](#module\_glueops\_platform\_helm\_values) | git::https://github.com/GlueOps/platform-helm-chart-platform.git | v0.61.3 |
+| <a name="module_glueops_platform_helm_values"></a> [glueops\_platform\_helm\_values](#module\_glueops\_platform\_helm\_values) | git::https://github.com/GlueOps/platform-helm-chart-platform.git | v0.62.0 |
 | <a name="module_glueops_platform_versions"></a> [glueops\_platform\_versions](#module\_glueops\_platform\_versions) | ./modules/platform-chart-version/0.1.0 | n/a |
 | <a name="module_loki_s3"></a> [loki\_s3](#module\_loki\_s3) | ./modules/multy-s3-bucket/0.1.0 | n/a |
-| <a name="module_opsgenie_teams"></a> [opsgenie\_teams](#module\_opsgenie\_teams) | ./modules/opsgenie/0.1.0 | n/a |
 | <a name="module_tenant_cluster_versions"></a> [tenant\_cluster\_versions](#module\_tenant\_cluster\_versions) | ./modules/kubernetes-versions/0.1.0 | n/a |
 | <a name="module_tenant_readmes"></a> [tenant\_readmes](#module\_tenant\_readmes) | ./modules/tenant-readme/0.1.0 | n/a |
 
@@ -127,7 +126,7 @@ No requirements.
 | <a name="input_github_owner"></a> [github\_owner](#input\_github\_owner) | The GitHub Owner where the tenant repo will be deployed. | `string` | n/a | yes |
 | <a name="input_management_tenant_dns_aws_account_id"></a> [management\_tenant\_dns\_aws\_account\_id](#input\_management\_tenant\_dns\_aws\_account\_id) | The company AWS account id for the management-tenant-dns account | `string` | n/a | yes |
 | <a name="input_management_tenant_dns_zoneid"></a> [management\_tenant\_dns\_zoneid](#input\_management\_tenant\_dns\_zoneid) | The Route53 ZoneID that all the delegation is coming from. | `string` | n/a | yes |
-| <a name="input_opsgenie_emails"></a> [opsgenie\_emails](#input\_opsgenie\_emails) | List of user email addresses | `list(string)` | n/a | yes |
+| <a name="input_opsgenie_emails"></a> [opsgenie\_emails](#input\_opsgenie\_emails) | List of user email addresses | `list(string)` | `[]` | no |
 | <a name="input_primary_region"></a> [primary\_region](#input\_primary\_region) | The primary S3 region to create S3 bucket in used for backups. This should be the same region as the one where the cluster is being deployed. | `string` | n/a | yes |
 | <a name="input_tenant_account_id"></a> [tenant\_account\_id](#input\_tenant\_account\_id) | The tenant AWS account id | `string` | n/a | yes |
 | <a name="input_tenant_key"></a> [tenant\_key](#input\_tenant\_key) | The tenant key | `string` | n/a | yes |

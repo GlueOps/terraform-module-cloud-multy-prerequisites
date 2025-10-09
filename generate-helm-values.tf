@@ -48,7 +48,7 @@ locals {
 
 module "glueops_platform_helm_values" {
   for_each                                   = local.environment_map
-  source                                     = "git::https://github.com/GlueOps/platform-helm-chart-platform.git?ref=v0.61.3"
+  source                                     = "git::https://github.com/GlueOps/platform-helm-chart-platform.git?ref=v0.62.0"
   captain_repo_b64encoded_private_deploy_key = base64encode(module.captain_repository[each.value.environment_name].private_deploy_key)
   captain_repo_ssh_clone_url                 = module.captain_repository[each.value.environment_name].ssh_clone_url
   this_is_development                        = var.this_is_development
@@ -71,7 +71,6 @@ module "glueops_platform_helm_values" {
   cluster_environment                        = each.value.environment_name
   aws_region                                 = var.primary_region
   tenant_key                                 = var.tenant_key
-  opsgenie_api_key                           = lookup(module.opsgenie_teams.opsgenie_prometheus_api_keys, split(".", each.value.environment_name)[0], null)
   admin_github_org_name                      = each.value.admin_github_org_name
   tenant_github_org_name                     = each.value.tenant_github_org_name
   grafana_admin_password                     = random_password.grafana_admin_secret[each.value.environment_name].result
