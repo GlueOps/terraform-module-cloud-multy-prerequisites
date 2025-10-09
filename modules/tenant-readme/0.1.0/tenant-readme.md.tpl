@@ -14,8 +14,8 @@ This README will outline the steps required to:
 ## Prerequisites (not k3d)
 
 1. User account in the desired cloud with necessary permissions to create Service Users capable of deploying a Kubernetes cluster.
-2. Create a new Cloud Development Environment in `#developer-workspaces` slack channel.
-3. This repository, `placeholder_repo_name`, cloned into the codespace required above. Once the Codespace is created, the repo can be cloned using 
+2. Create a new Cloud Development Environment (CDE) using `@GlueOps` in slack
+3. This repository, `placeholder_repo_name`, cloned into the CDE. Once the CDE is created, the repo can be cloned using 
 
 ```sh
 gh repo clone placeholder_github_owner/placeholder_repo_name
