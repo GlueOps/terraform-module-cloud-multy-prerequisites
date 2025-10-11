@@ -116,7 +116,7 @@ No requirements.
 | [random_uuid.vault_init_s3_v2_aws_iam_user](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/uuid) | resource |
 | [random_uuid.vault_s3_backup_v2_aws_iam_policy](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/uuid) | resource |
 | [random_uuid.vault_s3_backup_v2_aws_iam_user](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/uuid) | resource |
-| [time_sleep.aws_route53_key_signing_key_parent_tenant_zone_pause](https://registry.terraform.io/providers/hashicorp/time/latest/docs/resources/sleep) | resource |
+| [time_sleep.aws_route53_hosted_zone_dnssec_parent_tenant_zone_pause](https://registry.terraform.io/providers/hashicorp/time/latest/docs/resources/sleep) | resource |
 | [aws_route53_zone.management_tenant_dns](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/route53_zone) | data source |
 
 ## Inputs
