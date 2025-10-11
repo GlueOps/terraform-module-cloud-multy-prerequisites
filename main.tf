@@ -31,8 +31,14 @@ resource "aws_route53_key_signing_key" "parent_tenant_zone" {
   key_management_service_arn = module.dnssec_key.kms_key_arn
   name                       = "primary"
   status                     = "ACTIVE"
-  depends_on                 = [aws_route53_zone.main]
+  depends_on                 = [aws_route53_zone.main, time_sleep.aws_route53_key_signing_key_parent_tenant_zone_pause]
 
+}
+
+resource "time_sleep" "aws_route53_key_signing_key_parent_tenant_zone_pause" {
+  # This value will cause Terraform to pause for 1 minute
+  # during a 'terraform destroy' operation before proceeding.
+  destroy_duration = "1m"
 }
 
 resource "aws_route53_hosted_zone_dnssec" "parent_tenant_zone" {
