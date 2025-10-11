@@ -35,7 +35,7 @@ resource "aws_route53_key_signing_key" "parent_tenant_zone" {
 
 }
 
-resource "time_sleep" "aws_route53_hosted_zone_dnssec_parent_tenant_zone_pause" {
+resource "time_sleep" "aws_route53_key_signing_key_parent_tenant_zone_pause" {
   # This value will cause Terraform to pause for 1 minute
   # during a 'terraform destroy' operation before proceeding.
   destroy_duration = "1m"
