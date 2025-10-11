@@ -48,7 +48,7 @@ resource "aws_route53_hosted_zone_dnssec" "parent_tenant_zone" {
 ## ADD THIS RESOURCE (Sleep for the Main Zone) ##
 # This creates a delay after the DS record below is deleted.
 resource "time_sleep" "wait_for_main_zone_ds_propagation" {
-  destroy_duration = "${local.record_ttl}s" # Wait for the TTL duration
+  destroy_duration = "360s"
 
   # This dependency forces the correct destroy order.
   depends_on = [aws_route53_hosted_zone_dnssec.parent_tenant_zone]
@@ -106,7 +106,7 @@ resource "aws_route53_hosted_zone_dnssec" "cluster_zones" {
 resource "time_sleep" "wait_for_cluster_zone_ds_propagation" {
   for_each = aws_route53_zone.clusters
 
-  destroy_duration = "${local.record_ttl}s" # Wait for the TTL duration
+  destroy_duration = "360s"
 
   # This dependency ensures the correct destroy order for each cluster.
   depends_on = [aws_route53_hosted_zone_dnssec.cluster_zones]
