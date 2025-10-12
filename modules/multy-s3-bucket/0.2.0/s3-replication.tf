@@ -94,6 +94,9 @@ resource "aws_s3_bucket_replication_configuration" "replication" {
 
   rule {
     id = "replication"
+    filter {
+      prefix = ""
+    }
 
     status = "Enabled"
 
@@ -128,6 +131,9 @@ resource "aws_s3_bucket_replication_configuration" "replica" {
 
   rule {
     id = "replication"
+    filter {
+      prefix = ""
+    }
 
     status = "Enabled"
 
