@@ -62,7 +62,7 @@ resource "aws_route53_record" "enable_dnssec_for_parent_tenant_zone" {
   type     = "DS"
   ttl      = local.record_ttl
   records  = [aws_route53_key_signing_key.parent_tenant_zone.ds_record]
-  
+
   # This new dependency ensures this DS record is deleted BEFORE the sleep starts.
   depends_on = [time_sleep.wait_for_main_zone_ds_propagation]
 }
