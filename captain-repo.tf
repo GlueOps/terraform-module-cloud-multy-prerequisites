@@ -2,7 +2,7 @@ locals {
 
   provider_versions_tf_file = <<EOT
 module "provider_versions" {
-  source = "git::https://github.com/GlueOps/terraform-module-provider-versions.git?ref=v0.3.1"
+  source = "git::https://github.com/GlueOps/terraform-module-provider-versions.git?ref=v0.6.0"
 }
 
 EOT
