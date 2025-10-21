@@ -5,7 +5,7 @@ module "common_s3" {
     aws.replicaregion = aws.replicaregion
   }
   bucket_name         = local.bucket_name
-  this_is_development = var.this_is_development
+  this_is_development = true
   tenant_account_id   = var.tenant_account_id
   primary_region      = var.primary_region
   backup_region       = var.backup_region
