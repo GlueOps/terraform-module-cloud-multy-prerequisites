@@ -15,7 +15,7 @@ versions:
     version: v1.32.9-eksbuild.2
 
   - name: ami_release_version
-    version: 1.32.9-20251108
+    version: 1.32.9-20251120
 
   - name: kubernetes_version
     version: "1.32"
