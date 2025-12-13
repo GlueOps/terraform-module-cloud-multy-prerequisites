@@ -61,8 +61,9 @@ module "glueops_platform_helm_values" {
   dex_oauth2_cookie_secret                   = random_password.dex_oauth2_cookie_secret[each.value.environment_name].result
   vault_aws_access_key                       = aws_iam_access_key.vault_s3_backup_v2[each.value.environment_name].id
   vault_aws_secret_key                       = aws_iam_access_key.vault_s3_backup_v2[each.value.environment_name].secret
-  loki_aws_access_key                        = aws_iam_access_key.loki_s3_v2[each.value.environment_name].id
-  loki_aws_secret_key                        = aws_iam_access_key.loki_s3_v2[each.value.environment_name].secret
+  loki_storage                               = each.value.loki_storage
+  tempo_storage                              = each.value.tempo_storage
+  thanos_storage                             = each.value.thanos_storage
   certmanager_aws_access_key                 = aws_iam_access_key.certmanager_v2[each.value.environment_name].id
   certmanager_aws_secret_key                 = aws_iam_access_key.certmanager_v2[each.value.environment_name].secret
   externaldns_aws_access_key                 = aws_iam_access_key.externaldns_v2[each.value.environment_name].id
