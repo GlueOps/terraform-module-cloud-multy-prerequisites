@@ -55,7 +55,18 @@ variable "cluster_environments" {
       policy_name = string
     }))
     argocd_rbac_policies = string
-  }))
+    provider_credentials = map(any)
+    autoglue = optional(object({
+      autoglue_cluster_name = string
+
+      credentials = object({
+        autoglue_org_id     = string
+        autoglue_key        = string
+        autoglue_org_secret = string
+        base_url            = string
+      })
+    }), null)
+  })) # Defaults to null if not provided
   default = [
     {
       environment_name                     = "test"
@@ -78,6 +89,8 @@ variable "cluster_environments" {
           policy_name = "reader"
         }
       ]
+      provider_credentials = {}
+      autoglue             = null
       argocd_rbac_policies = <<EOT
       g, GlueOps:argocd_super_admins, role:admin
       g, glueops-rocks:developers, role:developers

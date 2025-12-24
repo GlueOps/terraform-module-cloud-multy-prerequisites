@@ -30,6 +30,7 @@ module "captain_repository_files" {
     "README.md"                                          = module.tenant_readmes[each.value.environment_name].tenant_readme
     "terraform/kubernetes/provider_versions.tf"          = local.provider_versions_tf_file
     "terraform/vault/configuration/provider_versions.tf" = local.provider_versions_tf_file
+    "terraform/gluekube/.tfvars"                         = module.generate_gluekube_creds[each.value.environment_name].gluekube_tfvars
     "VERSIONS/aws.yaml"                                  = module.tenant_cluster_versions[each.value.environment_name].tenant_cluster_versions
     "VERSIONS/glueops.yaml"                              = module.glueops_platform_versions[each.value.environment_name].platform_versions
     ".gitignore"                                         = <<EOT
