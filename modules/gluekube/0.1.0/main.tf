@@ -1,6 +1,21 @@
 
 variable "provider_credentials" {
-  description = "Provider credentials"
+  description = "Provider credentials as a map of provider identifiers to their credential objects. \
+Each provider entry should be an object with string fields required by that provider (for example, \
+for AWS: { access_key_id = string, secret_access_key = string, region = string }). \
+This map will be passed through to another module and JSON-encoded in the generated tfvars file."
+  # Expected structure (example):
+  # {
+  #   aws = {
+  #     access_key_id     = "AKIA..."
+  #     secret_access_key = "..."
+  #     region            = "us-east-1"
+  #   },
+  #   another_provider = {
+  #     client_id     = "..."
+  #     client_secret = "..."
+  #   }
+  # }
   type        = map(any)
 }
 
