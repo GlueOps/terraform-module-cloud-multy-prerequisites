@@ -2,6 +2,10 @@ resource "aws_iam_user" "autoglue" {
   provider = aws.clientaccount
   for_each = aws_route53_zone.clusters
   name     = random_uuid.autoglue_aws_iam_user[each.key].result
+
+  tags = {
+    Name = "route53-autoglue-${each.key}"
+  }
 }
 
 resource "aws_iam_user_policy_attachment" "autoglue" {
