@@ -9,6 +9,6 @@ autoglue_base_url   = "${autoglue_base_url}"
 
 aws_access_key_id     = "${aws_access_key_id}"
 aws_secret_access_key = "${aws_secret_access_key}"
-aws_region            = "${aws_region}"
 domain_name           = "${domain_name}"
 route53_zone_id       = "${route53_zone_id}"
+route53_region        = "${route53_region}"

@@ -45,10 +45,9 @@ variable "aws_secret_access_key" {
   sensitive   = true
 }
 
-variable "aws_region" {
+variable "route53_region" {
   description = "AWS region for Route53"
   type        = string
-  default     = "us-west-2"
 }
 
 variable "domain_name" {
@@ -72,8 +71,10 @@ output "gluekube_tfvars" {
     autoglue_base_url     = var.autoglue_base_url
     aws_access_key_id     = var.aws_access_key_id
     aws_secret_access_key = var.aws_secret_access_key
-    aws_region            = var.aws_region
     domain_name           = var.domain_name
     route53_zone_id       = var.route53_zone_id
+    route53_region        = var.route53_region
+
   })
+  sensitive = true
 }
