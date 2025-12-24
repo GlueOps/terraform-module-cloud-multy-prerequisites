@@ -1,7 +1,7 @@
 module "generate_gluekube_creds" {
   for_each = { 
     for k, v in local.environment_map : k => v 
-    if try(v.autoglue.autoglue_cluster_name != null, false) && v.provider_credentials != null
+    if try(v.autoglue.autoglue_cluster_name != null, false) && try(v.provider_credentials != null, false)
   }
   source                                     = "./modules/gluekube/0.1.0"
   aws_access_key_id                          = aws_iam_access_key.autoglue[each.value.environment_name].id
