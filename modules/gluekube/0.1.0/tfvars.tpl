@@ -1,4 +1,8 @@
-provider_credentials = ${jsonencode(provider_credentials)}
+provider_credentials = {
+  name   = "${provider_credentials.name}"
+  token  = "${provider_credentials.token}"
+  region = "${provider_credentials.region}"
+}
 
 autoglue_cluster_name = "${autoglue_cluster_name}"
 
