@@ -1,10 +1,11 @@
 
 variable "provider_credentials" {
-  description = "Provider-specific credentials for gluekube configuration, represented as a map from \
-provider identifiers (for example, \"aws\") to their credential objects. Each provider entry must be an \
-object whose string fields match the credential attributes required by that provider (for example, for \
-AWS Route53: { access_key_id = string, secret_access_key = string, region = string }). This map is passed \
-through to a downstream module and JSON-encoded into the generated tfvars file."
+  description = <<-EOT
+  Provider-specific credentials for gluekube configuration, represented as a map from 
+  provider identifiers (for example, \"aws\") to their credential objects. Each provider entry must be an \
+  object whose string fields match the credential attributes required by that provider (for example, for \
+  AWS Route53: { access_key_id = string, secret_access_key = string, region = string }). This map is passed \
+  through to a downstream module and JSON-encoded into the generated tfvars file."
   # Expected structure (example):
   # {
   #     access_key_id     = "AKIA..."
@@ -16,6 +17,7 @@ through to a downstream module and JSON-encoded into the generated tfvars file."
   #     client_secret = "..."
   #   }
   # }
+  EOT
   type        = map(any)
 }
 
@@ -78,7 +80,7 @@ variable "route53_zone_id" {
 
 output "gluekube_tfvars" {
   value = templatefile("${path.module}/tfvars.tpl", {
-    provider_credentials = var.provider_credentials
+    provider_credentials  = var.provider_credentials
     autoglue_cluster_name = var.autoglue_cluster_name
     autoglue_org_id       = var.autoglue_org_id
     autoglue_key          = var.autoglue_key
