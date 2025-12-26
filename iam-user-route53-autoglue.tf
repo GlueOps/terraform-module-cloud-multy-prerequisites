@@ -4,7 +4,7 @@ resource "aws_iam_user" "autoglue" {
   name     = random_uuid.autoglue_aws_iam_user[each.key].result
 
   tags = {
-    Name = "route53-autoglue-${each.key}"
+    Name = "route53-autoglue-${aws_route53_zone.clusters[each.key].name}"
   }
 }
 
