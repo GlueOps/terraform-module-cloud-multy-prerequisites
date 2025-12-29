@@ -97,5 +97,5 @@ output "gluekube_tfvars" {
 }
 
 output "gluekube_variables_tf" {
-  value = templatefile("${path.module}/variables.tf.tpl",)
+  value = templatefile("${path.module}/variables.tf.tpl",{})
 }
