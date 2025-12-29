@@ -95,3 +95,7 @@ output "gluekube_tfvars" {
   })
   sensitive = true
 }
+
+output "gluekube_variables_tf" {
+  value = templatefile("${path.module}/variables.tf.tpl",)
+}
