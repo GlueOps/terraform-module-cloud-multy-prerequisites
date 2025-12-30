@@ -77,25 +77,30 @@ variable "route53_zone_id" {
   type        = string
 }
 
+variable "autoglue_credentials_id" {
+  type        = string
+  description = "autoglue credentials_id"
+}
 
 output "gluekube_tfvars" {
   value = templatefile("${path.module}/tfvars.tpl", {
-    provider_credentials  = var.provider_credentials
-    autoglue_cluster_name = var.autoglue_cluster_name
-    autoglue_org_id       = var.autoglue_org_id
-    autoglue_key          = var.autoglue_key
-    autoglue_org_secret   = var.autoglue_org_secret
-    autoglue_base_url     = var.autoglue_base_url
-    aws_access_key_id     = var.aws_access_key_id
-    aws_secret_access_key = var.aws_secret_access_key
-    domain_name           = var.domain_name
-    route53_zone_id       = var.route53_zone_id
-    route53_region        = var.route53_region
+    provider_credentials    = var.provider_credentials
+    autoglue_cluster_name   = var.autoglue_cluster_name
+    autoglue_org_id         = var.autoglue_org_id
+    autoglue_key            = var.autoglue_key
+    autoglue_org_secret     = var.autoglue_org_secret
+    autoglue_base_url       = var.autoglue_base_url
+    aws_access_key_id       = var.aws_access_key_id
+    aws_secret_access_key   = var.aws_secret_access_key
+    domain_name             = var.domain_name
+    route53_zone_id         = var.route53_zone_id
+    route53_region          = var.route53_region
+    autoglue_credentials_id = var.autoglue_credentials_id
 
   })
   sensitive = true
 }
 
 output "gluekube_variables_tf" {
-  value = templatefile("${path.module}/variables.tf.tpl",{})
+  value = templatefile("${path.module}/variables.tf.tpl", {})
 }

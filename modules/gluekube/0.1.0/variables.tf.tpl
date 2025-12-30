@@ -56,3 +56,8 @@ variable "route53_zone_id" {
   description = "Route53 hosted zone ID"
   type        = string
 }
+
+variable "autoglue_credentials_id" {
+  type = string
+  description = "autoglue credentials_id"
+}

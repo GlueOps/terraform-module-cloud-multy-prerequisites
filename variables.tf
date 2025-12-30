@@ -37,6 +37,17 @@ variable "management_tenant_dns_aws_account_id" {
   nullable    = false
 }
 
+variable "autoglue_credentials" {
+  type = object({
+    autoglue_org_id     = string
+    autoglue_key        = string
+    autoglue_org_secret = string
+    base_url            = string
+  })
+  description = "The autoglue credentials object"
+  nullable    = true
+}
+
 variable "cluster_environments" {
   description = "The cluster environments and their respective github app ids"
   type = list(object({
@@ -56,16 +67,6 @@ variable "cluster_environments" {
     }))
     argocd_rbac_policies = string
     provider_credentials = optional(map(any), null)
-    autoglue = optional(object({
-      autoglue_cluster_name = string
-
-      credentials = object({
-        autoglue_org_id     = string
-        autoglue_key        = string
-        autoglue_org_secret = string
-        base_url            = string
-      })
-    }), null)
   }))
   default = [
     {

@@ -1,18 +1,44 @@
 module "generate_gluekube_creds" {
   for_each = {
     for k, v in local.environment_map : k => v
-    if try(v.autoglue.autoglue_cluster_name != null, false) && try(v.provider_credentials != null, false)
+    if try(v.provider_credentials != null, false)
   }
-  source                = "./modules/gluekube/0.1.0"
-  aws_access_key_id     = aws_iam_access_key.autoglue[each.value.environment_name].id
-  aws_secret_access_key = aws_iam_access_key.autoglue[each.value.environment_name].secret
-  domain_name           = "${each.value.environment_name}.${aws_route53_zone.main.name}"
-  route53_zone_id       = aws_route53_zone.clusters[each.value.environment_name].zone_id
-  route53_region        = var.primary_region
-  autoglue_org_id       = each.value.autoglue.credentials.autoglue_org_id
-  autoglue_key          = each.value.autoglue.credentials.autoglue_key
-  autoglue_org_secret   = each.value.autoglue.credentials.autoglue_org_secret
-  autoglue_base_url     = each.value.autoglue.credentials.base_url
-  autoglue_cluster_name = each.value.autoglue.autoglue_cluster_name
-  provider_credentials  = each.value.provider_credentials
+  source                  = "./modules/gluekube/0.1.0"
+  aws_access_key_id       = aws_iam_access_key.autoglue.id
+  aws_secret_access_key   = aws_iam_access_key.autoglue.secret
+  domain_name             = "${each.value.environment_name}.${aws_route53_zone.main.name}"
+  route53_zone_id         = aws_route53_zone.clusters[each.value.environment_name].zone_id
+  route53_region          = var.primary_region
+  autoglue_org_id         = var.autoglue_credentials.autoglue_org_id
+  autoglue_key            = var.autoglue_credentials.autoglue_key
+  autoglue_org_secret     = var.autoglue_credentials.autoglue_org_secret
+  autoglue_base_url       = var.autoglue_credentials.base_url
+  autoglue_cluster_name   = "${each.value.environment_name}.${aws_route53_zone.main.name}"
+  autoglue_credentials_id = autoglue_credential.route53.id
+  provider_credentials    = each.value.provider_credentials
+}
+
+resource "autoglue_credential" "route53" {
+  name                = "${var.tenant_key}-route53-autoglue-credentials"
+  account_id          = "1234567890"
+  credential_provider = "aws"
+  kind                = "aws_access_key"
+
+  schema_version = "1"
+
+
+  # Whatever your provider expects for the AWS/Route53 scope:
+  scope = {
+    service = "route53"
+  }
+
+  scope_version = 1
+  scope_kind    = "service"
+
+  secret = {
+    access_key_id     = var.autoglue_credentials.autoglue_key
+    secret_access_key = var.autoglue_credentials.autoglue_org_secret
+  }
+
+  region = var.primary_region
 }

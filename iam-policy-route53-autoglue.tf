@@ -1,7 +1,7 @@
 resource "aws_iam_policy" "route53_autoglue" {
+
   provider = aws.clientaccount
-  for_each = aws_route53_zone.clusters
-  name     = random_uuid.route53_autoglue_aws_iam_policy[each.key].result
+  name     = random_uuid.route53_autoglue_aws_iam_policy.result
   policy   = <<EOF
 {
   "Version": "2012-10-17",
@@ -11,9 +11,7 @@ resource "aws_iam_policy" "route53_autoglue" {
       "Action": [
         "route53:ChangeResourceRecordSets"
       ],
-      "Resource": [
-        "arn:aws:route53:::hostedzone/${aws_route53_zone.clusters[each.key].zone_id}"
-      ]
+      "Resource": "*"
     },
     {
       "Effect": "Allow",
@@ -32,10 +30,9 @@ resource "aws_iam_policy" "route53_autoglue" {
 }
 EOF
   tags = {
-    Name = "route53-autoglue-${aws_route53_zone.clusters[each.key].name}"
+    Name = "route53-autoglue"
   }
 }
 
 resource "random_uuid" "route53_autoglue_aws_iam_policy" {
-  for_each = aws_route53_zone.clusters
 }

@@ -9,6 +9,10 @@ terraform {
     random = {
       source = "hashicorp/random"
     }
+    autoglue = {
+      source  = "registry.terraform.io/GlueOps/autoglue"
+      version = "0.9.2"
+    }
   }
 }
 
@@ -42,4 +46,12 @@ provider "aws" {
   assume_role {
     role_arn = "arn:aws:iam::${var.tenant_account_id}:role/OrganizationAccountAccessRole"
   }
+}
+
+
+provider "autoglue" {
+  org_id     = var.autoglue_credentials.autoglue_org_id
+  base_url   = var.autoglue_credentials.base_url
+  org_key    = var.autoglue_credentials.autoglue_key
+  org_secret = var.autoglue_credentials.autoglue_org_secret
 }
