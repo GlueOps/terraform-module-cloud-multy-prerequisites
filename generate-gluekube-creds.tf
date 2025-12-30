@@ -36,8 +36,8 @@ resource "autoglue_credential" "route53" {
   scope_kind    = "service"
 
   secret = {
-    access_key_id     = var.autoglue_credentials.autoglue_key
-    secret_access_key = var.autoglue_credentials.autoglue_org_secret
+    access_key_id     = aws_iam_access_key.autoglue.id
+    secret_access_key = aws_iam_access_key.autoglue.secret
   }
 
   region = var.primary_region
