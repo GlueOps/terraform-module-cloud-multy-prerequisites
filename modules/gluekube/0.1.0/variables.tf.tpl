@@ -8,10 +8,6 @@ variable "autoglue_cluster_name" {
   type        = string
 }
 
-variable "autoglue_org_id" {
-  description = "AutoGlue organization ID"
-  type        = string
-}
 
 variable "autoglue_key" {
   description = "AutoGlue API key"

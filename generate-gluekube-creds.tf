@@ -9,7 +9,6 @@ module "generate_gluekube_creds" {
   domain_name             = "${each.value.environment_name}.${aws_route53_zone.main.name}"
   route53_zone_id         = aws_route53_zone.clusters[each.value.environment_name].zone_id
   route53_region          = var.primary_region
-  autoglue_org_id         = var.autoglue_credentials.autoglue_org_id
   autoglue_key            = var.autoglue_credentials.autoglue_key
   autoglue_org_secret     = var.autoglue_credentials.autoglue_org_secret
   autoglue_base_url       = var.autoglue_credentials.base_url

@@ -39,7 +39,6 @@ variable "management_tenant_dns_aws_account_id" {
 
 variable "autoglue_credentials" {
   type = object({
-    autoglue_org_id     = string
     autoglue_key        = string
     autoglue_org_secret = string
     base_url            = string

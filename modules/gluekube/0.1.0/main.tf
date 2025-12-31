@@ -26,12 +26,6 @@ variable "autoglue_cluster_name" {
   type        = string
 }
 
-variable "autoglue_org_id" {
-  description = "Autoglue organization ID"
-  type        = string
-  sensitive   = true
-}
-
 variable "autoglue_key" {
   description = "Autoglue API key"
   type        = string
@@ -86,7 +80,6 @@ output "gluekube_tfvars" {
   value = templatefile("${path.module}/tfvars.tpl", {
     provider_credentials    = var.provider_credentials
     autoglue_cluster_name   = var.autoglue_cluster_name
-    autoglue_org_id         = var.autoglue_org_id
     autoglue_key            = var.autoglue_key
     autoglue_org_secret     = var.autoglue_org_secret
     autoglue_base_url       = var.autoglue_base_url

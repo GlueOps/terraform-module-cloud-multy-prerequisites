@@ -6,7 +6,6 @@ provider_credentials = {
 
 autoglue_cluster_name = "${autoglue_cluster_name}"
 
-autoglue_org_id     = "${autoglue_org_id}"
 autoglue_key        = "${autoglue_key}"
 autoglue_org_secret = "${autoglue_org_secret}"
 autoglue_base_url   = "${autoglue_base_url}"
