@@ -17,26 +17,26 @@ module "generate_gluekube_creds" {
   provider_credentials    = each.value.provider_credentials
 }
 
-resource "autoglue_credential" "route53" {
-  count               = var.autoglue_credentials != null ? 1 : 0
-  name                = "${var.tenant_key}-route53-autoglue-credentials"
-  credential_provider = "aws"
-  kind                = "aws_access_key"
+# resource "autoglue_credential" "route53" {
+#   count               = var.autoglue_credentials != null ? 1 : 0
+#   name                = "${var.tenant_key}-route53-autoglue-credentials"
+#   credential_provider = "aws"
+#   kind                = "aws_access_key"
 
-  schema_version = "1"
+#   schema_version = "1"
 
 
-  # Whatever your provider expects for the AWS/Route53 scope:
-  scope = {
-    service = "route53"
-  }
+#   # Whatever your provider expects for the AWS/Route53 scope:
+#   scope = {
+#     service = "route53"
+#   }
 
-  scope_version = 1
-  scope_kind    = "service"
+#   scope_version = 1
+#   scope_kind    = "service"
 
-  secret = {
-    access_key_id     = aws_iam_access_key.autoglue.id
-    secret_access_key = aws_iam_access_key.autoglue.secret
-  }
+#   secret = {
+#     access_key_id     = aws_iam_access_key.autoglue.id
+#     secret_access_key = aws_iam_access_key.autoglue.secret
+#   }
 
-}
+# }
