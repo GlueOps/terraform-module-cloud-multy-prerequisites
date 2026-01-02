@@ -19,7 +19,6 @@ module "generate_gluekube_creds" {
 
 resource "autoglue_credential" "route53" {
   name                = "${var.tenant_key}-route53-autoglue-credentials"
-  account_id          = "1234567890"
   credential_provider = "aws"
   kind                = "aws_access_key"
 
@@ -39,5 +38,4 @@ resource "autoglue_credential" "route53" {
     secret_access_key = aws_iam_access_key.autoglue.secret
   }
 
-  region = var.primary_region
 }
