@@ -13,7 +13,7 @@ module "generate_gluekube_creds" {
   autoglue_org_secret     = var.autoglue_credentials.autoglue_org_secret
   autoglue_base_url       = var.autoglue_credentials.base_url
   autoglue_cluster_name   = "${each.value.environment_name}.${aws_route53_zone.main.name}"
-  autoglue_credentials_id = autoglue_credential.route53[0].id
+  autoglue_credentials_id = "empty"
   provider_credentials    = each.value.provider_credentials
 }
 
