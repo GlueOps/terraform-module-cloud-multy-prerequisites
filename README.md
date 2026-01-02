@@ -36,7 +36,6 @@ Some dependencies for this module must be creates prior to its use, including:
 
 | Name | Version |
 |------|---------|
-| <a name="provider_autoglue"></a> [autoglue](#provider\_autoglue) | 0.10.0 |
 | <a name="provider_aws.clientaccount"></a> [aws.clientaccount](#provider\_aws.clientaccount) | n/a |
 | <a name="provider_aws.management-tenant-dns"></a> [aws.management-tenant-dns](#provider\_aws.management-tenant-dns) | n/a |
 | <a name="provider_random"></a> [random](#provider\_random) | n/a |
@@ -62,7 +61,6 @@ Some dependencies for this module must be creates prior to its use, including:
 
 | Name | Type |
 |------|------|
-| autoglue_credential.route53 | resource |
 | [aws_iam_access_key.autoglue](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_access_key) | resource |
 | [aws_iam_access_key.certmanager_v2](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_access_key) | resource |
 | [aws_iam_access_key.externaldns_v2](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_access_key) | resource |
