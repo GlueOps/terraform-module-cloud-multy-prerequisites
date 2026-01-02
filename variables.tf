@@ -37,6 +37,16 @@ variable "management_tenant_dns_aws_account_id" {
   nullable    = false
 }
 
+variable "autoglue_credentials" {
+  type = object({
+    autoglue_key        = string
+    autoglue_org_secret = string
+    base_url            = string
+  })
+  description = "The autoglue credentials object"
+  nullable    = true
+}
+
 variable "cluster_environments" {
   description = "The cluster environments and their respective github app ids"
   type = list(object({
@@ -55,6 +65,7 @@ variable "cluster_environments" {
       policy_name = string
     }))
     argocd_rbac_policies = string
+    provider_credentials = optional(map(any), null)
   }))
   default = [
     {
@@ -78,6 +89,8 @@ variable "cluster_environments" {
           policy_name = "reader"
         }
       ]
+      provider_credentials = null
+      autoglue             = null
       argocd_rbac_policies = <<EOT
       g, GlueOps:argocd_super_admins, role:admin
       g, glueops-rocks:developers, role:developers

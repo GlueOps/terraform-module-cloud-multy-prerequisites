@@ -28,12 +28,15 @@ Some dependencies for this module must be creates prior to its use, including:
 
 ## Requirements
 
-No requirements.
+| Name | Version |
+|------|---------|
+| <a name="requirement_autoglue"></a> [autoglue](#requirement\_autoglue) | 0.10.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
+| <a name="provider_autoglue"></a> [autoglue](#provider\_autoglue) | 0.10.0 |
 | <a name="provider_aws.clientaccount"></a> [aws.clientaccount](#provider\_aws.clientaccount) | n/a |
 | <a name="provider_aws.management-tenant-dns"></a> [aws.management-tenant-dns](#provider\_aws.management-tenant-dns) | n/a |
 | <a name="provider_random"></a> [random](#provider\_random) | n/a |
@@ -48,7 +51,8 @@ No requirements.
 | <a name="module_common_s3"></a> [common\_s3](#module\_common\_s3) | ./modules/multy-s3-bucket/0.1.0 | n/a |
 | <a name="module_common_s3_v2"></a> [common\_s3\_v2](#module\_common\_s3\_v2) | ./modules/multy-s3-bucket/0.2.0 | n/a |
 | <a name="module_dnssec_key"></a> [dnssec\_key](#module\_dnssec\_key) | git::https://github.com/GlueOps/terraform-module-cloud-aws-dnssec-kms-key.git | v0.3.0 |
-| <a name="module_glueops_platform_helm_values"></a> [glueops\_platform\_helm\_values](#module\_glueops\_platform\_helm\_values) | git::https://github.com/GlueOps/platform-helm-chart-platform.git | v0.66.0 |
+| <a name="module_generate_gluekube_creds"></a> [generate\_gluekube\_creds](#module\_generate\_gluekube\_creds) | ./modules/gluekube/0.1.0 | n/a |
+| <a name="module_glueops_platform_helm_values"></a> [glueops\_platform\_helm\_values](#module\_glueops\_platform\_helm\_values) | git::https://github.com/GlueOps/platform-helm-chart-platform.git | v0.67.0 |
 | <a name="module_glueops_platform_versions"></a> [glueops\_platform\_versions](#module\_glueops\_platform\_versions) | ./modules/platform-chart-version/0.1.0 | n/a |
 | <a name="module_loki_s3"></a> [loki\_s3](#module\_loki\_s3) | ./modules/multy-s3-bucket/0.1.0 | n/a |
 | <a name="module_tenant_cluster_versions"></a> [tenant\_cluster\_versions](#module\_tenant\_cluster\_versions) | ./modules/kubernetes-versions/0.1.0 | n/a |
@@ -58,6 +62,8 @@ No requirements.
 
 | Name | Type |
 |------|------|
+| autoglue_credential.route53 | resource |
+| [aws_iam_access_key.autoglue](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_access_key) | resource |
 | [aws_iam_access_key.certmanager_v2](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_access_key) | resource |
 | [aws_iam_access_key.externaldns_v2](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_access_key) | resource |
 | [aws_iam_access_key.loki_s3_v2](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_access_key) | resource |
@@ -66,11 +72,13 @@ No requirements.
 | [aws_iam_access_key.vault_init_s3_v2](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_access_key) | resource |
 | [aws_iam_access_key.vault_s3_backup_v2](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_access_key) | resource |
 | [aws_iam_policy.loki_s3_v2](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy) | resource |
+| [aws_iam_policy.route53_autoglue](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy) | resource |
 | [aws_iam_policy.route53_v2](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy) | resource |
 | [aws_iam_policy.tls_cert_backup_s3_v2](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy) | resource |
 | [aws_iam_policy.tls_cert_restore_s3_v2](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy) | resource |
 | [aws_iam_policy.vault_init_s3_v2](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy) | resource |
 | [aws_iam_policy.vault_s3_backup_v2](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy) | resource |
+| [aws_iam_user.autoglue](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_user) | resource |
 | [aws_iam_user.certmanager_v2](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_user) | resource |
 | [aws_iam_user.externaldns_v2](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_user) | resource |
 | [aws_iam_user.loki_s3_v2](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_user) | resource |
@@ -78,6 +86,7 @@ No requirements.
 | [aws_iam_user.tls_cert_restore_s3_v2](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_user) | resource |
 | [aws_iam_user.vault_init_s3_v2](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_user) | resource |
 | [aws_iam_user.vault_s3_backup_v2](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_user) | resource |
+| [aws_iam_user_policy_attachment.autoglue](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_user_policy_attachment) | resource |
 | [aws_iam_user_policy_attachment.certmanager_v2](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_user_policy_attachment) | resource |
 | [aws_iam_user_policy_attachment.externaldns_v2](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_user_policy_attachment) | resource |
 | [aws_iam_user_policy_attachment.loki_s3_v2](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_user_policy_attachment) | resource |
@@ -102,10 +111,12 @@ No requirements.
 | [random_password.dex_oauth2_cookie_secret](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/password) | resource |
 | [random_password.dex_vault_client_secret](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/password) | resource |
 | [random_password.grafana_admin_secret](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/password) | resource |
+| [random_uuid.autoglue_aws_iam_user](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/uuid) | resource |
 | [random_uuid.certmanager_v2_aws_iam_user](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/uuid) | resource |
 | [random_uuid.externaldns_v2_aws_iam_user](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/uuid) | resource |
 | [random_uuid.loki_v2_aws_iam_policy](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/uuid) | resource |
 | [random_uuid.loki_v2_aws_iam_user](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/uuid) | resource |
+| [random_uuid.route53_autoglue_aws_iam_policy](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/uuid) | resource |
 | [random_uuid.route53_v2_aws_iam_policy](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/uuid) | resource |
 | [random_uuid.tls_cert_backup_s3_v2_aws_iam_policy](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/uuid) | resource |
 | [random_uuid.tls_cert_backup_s3_v2_aws_iam_user](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/uuid) | resource |
@@ -121,8 +132,9 @@ No requirements.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| <a name="input_autoglue_credentials"></a> [autoglue\_credentials](#input\_autoglue\_credentials) | The autoglue credentials object | <pre>object({<br/>    autoglue_key        = string<br/>    autoglue_org_secret = string<br/>    base_url            = string<br/>  })</pre> | n/a | yes |
 | <a name="input_backup_region"></a> [backup\_region](#input\_backup\_region) | The secondary S3 region to create S3 bucket in used for backups. This should be different than the primary region and will have the data from the primary region replicated to it. | `string` | n/a | yes |
-| <a name="input_cluster_environments"></a> [cluster\_environments](#input\_cluster\_environments) | The cluster environments and their respective github app ids | <pre>list(object({<br/>    environment_name                     = string<br/>    host_network_enabled                 = bool<br/>    github_oauth_app_client_id           = string<br/>    github_oauth_app_client_secret       = string<br/>    github_tenant_app_id                 = string<br/>    github_tenant_app_installation_id    = string<br/>    github_tenant_app_b64enc_private_key = string<br/>    admin_github_org_name                = string<br/>    tenant_github_org_name               = string<br/>    kubeadm_cluster                      = optional(bool, false)<br/>    vault_github_org_team_policy_mappings = list(object({<br/>      oidc_groups = list(string)<br/>      policy_name = string<br/>    }))<br/>    argocd_rbac_policies = string<br/>  }))</pre> | <pre>[<br/>  {<br/>    "admin_github_org_name": "GlueOps",<br/>    "argocd_rbac_policies": "      g, GlueOps:argocd_super_admins, role:admin\n      g, glueops-rocks:developers, role:developers\n      p, role:developers, clusters, get, *, allow\n      p, role:developers, *, get, development, allow\n      p, role:developers, repositories, *, development/*, allow\n      p, role:developers, applications, *, development/*, allow\n      p, role:developers, exec, *, development/*, allow\n",<br/>    "environment_name": "test",<br/>    "github_oauth_app_client_id": "oauth-app-id",<br/>    "github_oauth_app_client_secret": "oauth-app-secret",<br/>    "github_tenant_app_b64enc_private_key": "tenant-github-app-b64enc-private-key",<br/>    "github_tenant_app_id": "tenant-github-app-id",<br/>    "github_tenant_app_installation_id": "tenant-github-app-installation-id",<br/>    "host_network_enabled": true,<br/>    "kubeadm_cluster": false,<br/>    "tenant_github_org_name": "glueops-rocks",<br/>    "vault_github_org_team_policy_mappings": [<br/>      {<br/>        "oidc_groups": [<br/>          "GlueOps:vault_super_admins"<br/>        ],<br/>        "policy_name": "editor"<br/>      },<br/>      {<br/>        "oidc_groups": [<br/>          "GlueOps:vault_super_admins",<br/>          "testing-okta:developers"<br/>        ],<br/>        "policy_name": "reader"<br/>      }<br/>    ]<br/>  }<br/>]</pre> | no |
+| <a name="input_cluster_environments"></a> [cluster\_environments](#input\_cluster\_environments) | The cluster environments and their respective github app ids | <pre>list(object({<br/>    environment_name                     = string<br/>    host_network_enabled                 = bool<br/>    github_oauth_app_client_id           = string<br/>    github_oauth_app_client_secret       = string<br/>    github_tenant_app_id                 = string<br/>    github_tenant_app_installation_id    = string<br/>    github_tenant_app_b64enc_private_key = string<br/>    admin_github_org_name                = string<br/>    tenant_github_org_name               = string<br/>    kubeadm_cluster                      = optional(bool, false)<br/>    vault_github_org_team_policy_mappings = list(object({<br/>      oidc_groups = list(string)<br/>      policy_name = string<br/>    }))<br/>    argocd_rbac_policies = string<br/>    provider_credentials = optional(map(any), null)<br/>  }))</pre> | <pre>[<br/>  {<br/>    "admin_github_org_name": "GlueOps",<br/>    "argocd_rbac_policies": "      g, GlueOps:argocd_super_admins, role:admin\n      g, glueops-rocks:developers, role:developers\n      p, role:developers, clusters, get, *, allow\n      p, role:developers, *, get, development, allow\n      p, role:developers, repositories, *, development/*, allow\n      p, role:developers, applications, *, development/*, allow\n      p, role:developers, exec, *, development/*, allow\n",<br/>    "autoglue": null,<br/>    "environment_name": "test",<br/>    "github_oauth_app_client_id": "oauth-app-id",<br/>    "github_oauth_app_client_secret": "oauth-app-secret",<br/>    "github_tenant_app_b64enc_private_key": "tenant-github-app-b64enc-private-key",<br/>    "github_tenant_app_id": "tenant-github-app-id",<br/>    "github_tenant_app_installation_id": "tenant-github-app-installation-id",<br/>    "host_network_enabled": true,<br/>    "kubeadm_cluster": false,<br/>    "provider_credentials": null,<br/>    "tenant_github_org_name": "glueops-rocks",<br/>    "vault_github_org_team_policy_mappings": [<br/>      {<br/>        "oidc_groups": [<br/>          "GlueOps:vault_super_admins"<br/>        ],<br/>        "policy_name": "editor"<br/>      },<br/>      {<br/>        "oidc_groups": [<br/>          "GlueOps:vault_super_admins",<br/>          "testing-okta:developers"<br/>        ],<br/>        "policy_name": "reader"<br/>      }<br/>    ]<br/>  }<br/>]</pre> | no |
 | <a name="input_github_owner"></a> [github\_owner](#input\_github\_owner) | The GitHub Owner where the tenant repo will be deployed. | `string` | n/a | yes |
 | <a name="input_management_tenant_dns_aws_account_id"></a> [management\_tenant\_dns\_aws\_account\_id](#input\_management\_tenant\_dns\_aws\_account\_id) | The company AWS account id for the management-tenant-dns account | `string` | n/a | yes |
 | <a name="input_management_tenant_dns_zoneid"></a> [management\_tenant\_dns\_zoneid](#input\_management\_tenant\_dns\_zoneid) | The Route53 ZoneID that all the delegation is coming from. | `string` | n/a | yes |
