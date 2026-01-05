@@ -135,14 +135,14 @@ locals {
 
 locals {
   argocd_app_version        = "v3.0.20"
-  codespace_version         = "v0.115.0"
+  codespace_version         = "v0.118.0"
   argocd_helm_chart_version = "8.2.7"
-  glueops_platform_version  = "v0.66.0" # this also needs to be updated in the module.glueops_platform_helm_values // generate-helm-values.tf
+  glueops_platform_version  = "v0.67.0" # this also needs to be updated in the module.glueops_platform_helm_values // generate-helm-values.tf
   tools_version             = "v0.33.0"
   calico_helm_chart_version = "v3.30.4"
   calico_ctl_version        = "v3.30.4"
   tigera_operator_version   = "v1.38.7"
-  terraform_module_version  = "v0.43.0"
+  terraform_module_version  = "v0.44.0"
 }
 
 variable "opsgenie_emails" {
