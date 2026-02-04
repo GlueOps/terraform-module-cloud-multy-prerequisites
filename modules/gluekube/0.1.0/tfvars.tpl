@@ -1,4 +1,4 @@
-provider_credentials = ${provider_credentials}
+provider_credentials = ${jsonencode(provider_credentials)}
 
 autoglue_cluster_name = "${autoglue_cluster_name}"
 
