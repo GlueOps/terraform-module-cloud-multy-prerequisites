@@ -78,6 +78,7 @@ module "glueops_platform_helm_values" {
   github_tenant_app_installation_id          = each.value.github_tenant_app_installation_id
   github_tenant_app_b64enc_private_key       = each.value.github_tenant_app_b64enc_private_key
   host_network_enabled                       = each.value.host_network_enabled
+  traefik_enable_internal_lb                 = each.value.traefik_enable_internal_lb
   kubeadm_cluster                            = each.value.kubeadm_cluster
   vault_init_controller_s3_key               = "${aws_route53_zone.clusters[each.value.environment_name].name}/${local.vault_access_tokens_s3_key}"
   vault_init_controller_aws_access_key       = aws_iam_access_key.vault_init_s3_v2[each.value.environment_name].id
