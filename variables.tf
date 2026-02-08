@@ -52,7 +52,7 @@ variable "cluster_environments" {
   type = list(object({
     environment_name                     = string
     host_network_enabled                 = bool
-    traefik_enable_internal_lb           = bool
+    traefik_enable_internal_lb           = optional(bool, false)
     github_oauth_app_client_id           = string
     github_oauth_app_client_secret       = string
     github_tenant_app_id                 = string
