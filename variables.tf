@@ -52,6 +52,9 @@ variable "cluster_environments" {
   type = list(object({
     environment_name                     = string
     host_network_enabled                 = bool
+    traefik_enable_internal_lb           = optional(bool, false)
+    traefik_enable_public_lb             = optional(bool, true)
+    ingress_nginx_enable_public_lb       = optional(bool, true)
     github_oauth_app_client_id           = string
     github_oauth_app_client_secret       = string
     github_tenant_app_id                 = string
@@ -71,6 +74,9 @@ variable "cluster_environments" {
     {
       environment_name                     = "test"
       host_network_enabled                 = true
+      traefik_enable_internal_lb           = false
+      traefik_enable_public_lb             = true
+      ingress_nginx_enable_public_lb       = true
       github_oauth_app_client_id           = "oauth-app-id"
       github_oauth_app_client_secret       = "oauth-app-secret"
       github_tenant_app_id                 = "tenant-github-app-id"
