@@ -151,7 +151,7 @@ locals {
 
 locals {
   argocd_app_version        = "v3.0.20"
-  codespace_version         = "v0.129.0"
+  codespace_version         = "v0.130.0"
   argocd_helm_chart_version = "8.2.7"
   glueops_platform_version  = "v0.69.3" # this also needs to be updated in the module.glueops_platform_helm_values // generate-helm-values.tf
   tools_version             = "v0.34.0"
