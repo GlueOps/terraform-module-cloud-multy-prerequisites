@@ -158,7 +158,7 @@ locals {
   calico_helm_chart_version = "v3.30.4"
   calico_ctl_version        = "v3.30.4"
   tigera_operator_version   = "v1.38.7"
-  terraform_module_version  = "v0.45.0"
+  terraform_module_version  = "v0.46.0"
 }
 
 variable "opsgenie_emails" {
