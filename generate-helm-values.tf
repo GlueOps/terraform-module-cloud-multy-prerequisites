@@ -80,7 +80,12 @@ module "glueops_platform_helm_values" {
   host_network_enabled                       = each.value.host_network_enabled
   traefik_enable_internal_lb                 = each.value.traefik_enable_internal_lb
   traefik_enable_public_lb                   = each.value.traefik_enable_public_lb
-  ingress_nginx_enable_public_lb             = each.value.ingress_nginx_enable_public_lb
+  nginx_enable_public_lb                     = each.value.nginx_enable_public_lb
+  prometheus_volume_claim_storage_request    = each.value.prometheus_volume_claim_storage_request
+  vault_data_storage                         = each.value.vault_data_storage
+  nginx_controller_replica_count             = each.value.nginx_controller_replica_count
+  traefik_internal_lb_deployment_replicas    = each.value.traefik_internal_lb_deployment_replicas
+  traefik_public_lb_deployment_replicas      = each.value.traefik_public_lb_deployment_replicas
   kubeadm_cluster                            = each.value.kubeadm_cluster
   vault_init_controller_s3_key               = "${aws_route53_zone.clusters[each.value.environment_name].name}/${local.vault_access_tokens_s3_key}"
   vault_init_controller_aws_access_key       = aws_iam_access_key.vault_init_s3_v2[each.value.environment_name].id
