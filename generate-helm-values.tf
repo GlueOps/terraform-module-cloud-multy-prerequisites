@@ -48,7 +48,7 @@ locals {
 
 module "glueops_platform_helm_values" {
   for_each                                   = local.environment_map
-  source                                     = "git::https://github.com/GlueOps/platform-helm-chart-platform.git?ref=feat/adding-monitoring-stack"
+  source                                     = "git::https://github.com/GlueOps/platform-helm-chart-platform.git?ref=feat/adding-monitoring-stack-feb-updates"
   captain_repo_b64encoded_private_deploy_key = base64encode(module.captain_repository[each.value.environment_name].private_deploy_key)
   captain_repo_ssh_clone_url                 = module.captain_repository[each.value.environment_name].ssh_clone_url
   this_is_development                        = var.this_is_development
@@ -79,6 +79,14 @@ module "glueops_platform_helm_values" {
   github_tenant_app_installation_id          = each.value.github_tenant_app_installation_id
   github_tenant_app_b64enc_private_key       = each.value.github_tenant_app_b64enc_private_key
   host_network_enabled                       = each.value.host_network_enabled
+  traefik_enable_internal_lb                 = each.value.traefik_enable_internal_lb
+  traefik_enable_public_lb                   = each.value.traefik_enable_public_lb
+  nginx_enable_public_lb                     = each.value.nginx_enable_public_lb
+  prometheus_volume_claim_storage_request    = each.value.prometheus_volume_claim_storage_request
+  vault_data_storage                         = each.value.vault_data_storage
+  nginx_controller_replica_count             = each.value.nginx_controller_replica_count
+  traefik_internal_lb_deployment_replicas    = each.value.traefik_internal_lb_deployment_replicas
+  traefik_public_lb_deployment_replicas      = each.value.traefik_public_lb_deployment_replicas
   kubeadm_cluster                            = each.value.kubeadm_cluster
   vault_init_controller_s3_key               = "${aws_route53_zone.clusters[each.value.environment_name].name}/${local.vault_access_tokens_s3_key}"
   vault_init_controller_aws_access_key       = aws_iam_access_key.vault_init_s3_v2[each.value.environment_name].id
@@ -95,7 +103,7 @@ module "glueops_platform_helm_values" {
 
 module "argocd_helm_values" {
   for_each             = local.environment_map
-  source               = "git::https://github.com/GlueOps/docs-argocd.git?ref=v0.16.0"
+  source               = "git::https://github.com/GlueOps/docs-argocd.git?ref=v0.18.1"
   tenant_key           = var.tenant_key
   cluster_environment  = each.value.environment_name
   client_secret        = random_password.dex_argocd_client_secret[each.value.environment_name].result

@@ -37,19 +37,37 @@ variable "management_tenant_dns_aws_account_id" {
   nullable    = false
 }
 
+variable "autoglue_credentials" {
+  type = object({
+    autoglue_key        = string
+    autoglue_org_secret = string
+    base_url            = string
+  })
+  description = "The autoglue credentials object"
+  nullable    = true
+}
+
 variable "cluster_environments" {
   description = "The cluster environments and their respective github app ids"
   type = list(object({
-    environment_name                     = string
-    host_network_enabled                 = bool
-    github_oauth_app_client_id           = string
-    github_oauth_app_client_secret       = string
-    github_tenant_app_id                 = string
-    github_tenant_app_installation_id    = string
-    github_tenant_app_b64enc_private_key = string
-    admin_github_org_name                = string
-    tenant_github_org_name               = string
-    kubeadm_cluster                      = optional(bool, false)
+    environment_name                        = string
+    host_network_enabled                    = bool
+    traefik_enable_internal_lb              = optional(bool, false)
+    traefik_enable_public_lb                = optional(bool, true)
+    nginx_enable_public_lb                  = optional(bool, true)
+    prometheus_volume_claim_storage_request = optional(string, "50")
+    vault_data_storage                      = optional(string, "10")
+    nginx_controller_replica_count          = optional(string, "2")
+    traefik_internal_lb_deployment_replicas = optional(string, "2")
+    traefik_public_lb_deployment_replicas   = optional(string, "2")
+    github_oauth_app_client_id              = string
+    github_oauth_app_client_secret          = string
+    github_tenant_app_id                    = string
+    github_tenant_app_installation_id       = string
+    github_tenant_app_b64enc_private_key    = string
+    admin_github_org_name                   = string
+    tenant_github_org_name                  = string
+    kubeadm_cluster                         = optional(bool, false)
     vault_github_org_team_policy_mappings = list(object({
       oidc_groups = list(string)
       policy_name = string
@@ -58,19 +76,28 @@ variable "cluster_environments" {
     thanos_storage       = string
     tempo_storage        = string
     argocd_rbac_policies = string
+    provider_credentials = optional(map(any), null)
   }))
   default = [
     {
-      environment_name                     = "test"
-      host_network_enabled                 = true
-      github_oauth_app_client_id           = "oauth-app-id"
-      github_oauth_app_client_secret       = "oauth-app-secret"
-      github_tenant_app_id                 = "tenant-github-app-id"
-      github_tenant_app_installation_id    = "tenant-github-app-installation-id"
-      github_tenant_app_b64enc_private_key = "tenant-github-app-b64enc-private-key"
-      admin_github_org_name                = "GlueOps"
-      tenant_github_org_name               = "glueops-rocks"
-      kubeadm_cluster                      = false
+      environment_name                        = "test"
+      host_network_enabled                    = true
+      traefik_enable_internal_lb              = false
+      traefik_enable_public_lb                = true
+      nginx_enable_public_lb                  = true
+      prometheus_volume_claim_storage_request = "50"
+      vault_data_storage                      = "10"
+      nginx_controller_replica_count          = "2"
+      traefik_internal_lb_deployment_replicas = "2"
+      traefik_public_lb_deployment_replicas   = "2"
+      github_oauth_app_client_id              = "oauth-app-id"
+      github_oauth_app_client_secret          = "oauth-app-secret"
+      github_tenant_app_id                    = "tenant-github-app-id"
+      github_tenant_app_installation_id       = "tenant-github-app-installation-id"
+      github_tenant_app_b64enc_private_key    = "tenant-github-app-b64enc-private-key"
+      admin_github_org_name                   = "GlueOps"
+      tenant_github_org_name                  = "glueops-rocks"
+      kubeadm_cluster                         = false
       vault_github_org_team_policy_mappings = [
         {
           oidc_groups = ["GlueOps:vault_super_admins"]
@@ -81,6 +108,8 @@ variable "cluster_environments" {
           policy_name = "reader"
         }
       ]
+      provider_credentials = null
+      autoglue             = null
       argocd_rbac_policies = <<EOT
       g, GlueOps:argocd_super_admins, role:admin
       g, glueops-rocks:developers, role:developers
@@ -158,14 +187,14 @@ locals {
 
 locals {
   argocd_app_version        = "v3.0.20"
-  codespace_version         = "v0.115.0"
+  codespace_version         = "v0.130.0"
   argocd_helm_chart_version = "8.2.7"
-  glueops_platform_version  = "feat/adding-monitoring-stack" # this also needs to be updated in the module.glueops_platform_helm_values // generate-helm-values.tf
-  tools_version             = "v0.33.0"
+  glueops_platform_version  = "feat/adding-monitoring-stack-feb-updates" # this also needs to be updated in the module.glueops_platform_helm_values // generate-helm-values.tf
+  tools_version             = "v0.34.0"
   calico_helm_chart_version = "v3.30.4"
   calico_ctl_version        = "v3.30.4"
   tigera_operator_version   = "v1.38.7"
-  terraform_module_version  = "v0.43.0"
+  terraform_module_version  = "v0.46.0"
 }
 
 variable "opsgenie_emails" {
