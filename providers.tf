@@ -11,7 +11,7 @@ terraform {
     }
     autoglue = {
       source  = "registry.terraform.io/GlueOps/autoglue"
-      version = "0.10.0"
+      version = "0.10.5"
     }
   }
 }
