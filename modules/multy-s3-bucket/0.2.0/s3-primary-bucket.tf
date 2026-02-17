@@ -1,3 +1,25 @@
+locals {
+  # Consolidate all backup paths to avoid repeating code 4 times
+  backup_prefixes = flatten([
+    for zone in var.cluster_zone_names : [
+      "${zone}/hashicorp-vault-backups/",
+      "${zone}/tls-cert-backups/",
+      "${zone}/${local.vault_backup_s3_key_prefix}/",
+      "${zone}/${local.tls_cert_backup_s3_key_prefix}/"
+    ]
+  ])
+
+  # Configuration Toggles
+  target_storage_class = var.this_is_development ? "STANDARD_IA" : "GLACIER"
+  
+  # If Dev, expire after IA minimum (30+1). If Prod, expire after Glacier minimum (60+90+1).
+  expire_days = var.this_is_development ? 31 : 151
+
+  # Non-current logic
+  noncurrent_expire_days = var.this_is_development ? 30 : 121
+}
+
+
 resource "aws_s3_bucket" "primary" {
   provider      = aws.primaryregion
   bucket        = random_uuid.primary.result
@@ -8,8 +30,6 @@ resource "aws_s3_bucket" "primary" {
 
   }
 }
-
-
 
 resource "aws_s3_bucket_versioning" "primary" {
   provider = aws.primaryregion
@@ -36,129 +56,44 @@ resource "aws_s3_bucket_lifecycle_configuration" "primary" {
   count      = length(var.cluster_zone_names) > 0 ? 1 : 0
 
   dynamic "rule" {
-    for_each = var.cluster_zone_names
+    for_each = toset(local.backup_prefixes)
     content {
-      id = "${rule.value}_expire_old_vault_backups"
+      id     = "${replace(rule.value, "/", "_")}lifecycle"
+      status = "Enabled"
 
       filter {
-        prefix = "${rule.value}/hashicorp-vault-backups/"
-      }
-
-      expiration {
-        days = var.this_is_development ? 50 : 180
+        and {
+          prefix                   = rule.value
+          object_size_greater_than = 131072 # 128 KB in bytes
+        }
       }
 
       transition {
-        days          = var.this_is_development ? 30 : 60
-        storage_class = "GLACIER"
+        days          = 0
+        storage_class = "STANDARD_IA"
       }
 
-      noncurrent_version_expiration {
-        noncurrent_days = var.this_is_development ? 30 : 100
-      }
-
-      noncurrent_version_transition {
-        noncurrent_days = var.this_is_development ? 15 : 30
-        storage_class   = "GLACIER"
-      }
-
-      status = "Enabled"
-    }
-
-  }
-
-  dynamic "rule" {
-    for_each = var.cluster_zone_names
-    content {
-      id = "${rule.value}_expire_old_tls_backups"
-
-      filter {
-        prefix = "${rule.value}/tls-cert-backups/"
+      # Only transition to Glacier if NOT in development
+      dynamic "transition" {
+        for_each = var.this_is_development ? [] : [1]
+        content {
+          days          = 60
+          storage_class = "GLACIER"
+        }
       }
 
       expiration {
-        days = var.this_is_development ? 50 : 180
-      }
-
-      transition {
-        days          = var.this_is_development ? 30 : 60
-        storage_class = "GLACIER"
+        days = local.expire_days
       }
 
       noncurrent_version_expiration {
-        noncurrent_days = var.this_is_development ? 30 : 100
+        noncurrent_days = local.noncurrent_version_expiration_days
       }
 
-      noncurrent_version_transition {
-        noncurrent_days = var.this_is_development ? 15 : 30
-        storage_class   = "GLACIER"
+      # Clean up those failed uploads to save cash
+      abort_incomplete_multipart_upload {
+        days_after_initiation = 1
       }
-
-      status = "Enabled"
-    }
-
-  }
-
-  dynamic "rule" {
-    for_each = var.cluster_zone_names
-    content {
-      id = "${rule.value}_expire_transition_vault"
-      filter {
-        prefix = "${rule.value}/${local.vault_backup_s3_key_prefix}/"
-      }
-
-      expiration {
-        days = var.this_is_development ? 50 : 180
-      }
-
-      transition {
-        days          = var.this_is_development ? 30 : 60
-        storage_class = "GLACIER"
-      }
-
-      noncurrent_version_expiration {
-        noncurrent_days = var.this_is_development ? 30 : 100
-      }
-
-      noncurrent_version_transition {
-        noncurrent_days = var.this_is_development ? 15 : 30
-        storage_class   = "GLACIER"
-      }
-
-      status = "Enabled"
-    }
-
-
-  }
-
-  dynamic "rule" {
-    for_each = var.cluster_zone_names
-
-    content {
-      id = "${rule.value}_expire_transition_tls"
-      filter {
-        prefix = "${rule.value}/${local.tls_cert_backup_s3_key_prefix}/"
-      }
-
-      expiration {
-        days = var.this_is_development ? 50 : 180
-      }
-
-      transition {
-        days          = var.this_is_development ? 30 : 60
-        storage_class = "GLACIER"
-      }
-
-      noncurrent_version_expiration {
-        noncurrent_days = var.this_is_development ? 30 : 100
-      }
-
-      noncurrent_version_transition {
-        noncurrent_days = var.this_is_development ? 15 : 30
-        storage_class   = "GLACIER"
-      }
-
-      status = "Enabled"
     }
   }
 }
