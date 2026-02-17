@@ -1,25 +1,3 @@
-locals {
-  # Consolidate all backup paths to avoid repeating code 4 times
-  backup_prefixes = flatten([
-    for zone in var.cluster_zone_names : [
-      "${zone}/hashicorp-vault-backups/",
-      "${zone}/tls-cert-backups/",
-      "${zone}/${local.vault_backup_s3_key_prefix}/",
-      "${zone}/${local.tls_cert_backup_s3_key_prefix}/"
-    ]
-  ])
-
-  # Configuration Toggles
-  target_storage_class = var.this_is_development ? "STANDARD_IA" : "GLACIER"
-  
-  # If Dev, expire after IA minimum (30+1). If Prod, expire after Glacier minimum (60+90+1).
-  expire_days = var.this_is_development ? 31 : 151
-
-  # Non-current logic
-  noncurrent_expire_days = var.this_is_development ? 30 : 121
-}
-
-
 resource "aws_s3_bucket" "primary" {
   provider      = aws.primaryregion
   bucket        = random_uuid.primary.result
@@ -64,16 +42,15 @@ resource "aws_s3_bucket_lifecycle_configuration" "primary" {
       filter {
         and {
           prefix                   = rule.value
-          object_size_greater_than = 131072 # 128 KB in bytes
+          object_size_greater_than = 131072 # 128 KB
         }
       }
 
       transition {
-        days          = 0
+        days          = 1 # Day 1 is safer for replicas
         storage_class = "STANDARD_IA"
       }
 
-      # Only transition to Glacier if NOT in development
       dynamic "transition" {
         for_each = var.this_is_development ? [] : [1]
         content {
@@ -86,11 +63,18 @@ resource "aws_s3_bucket_lifecycle_configuration" "primary" {
         days = local.expire_days
       }
 
-      noncurrent_version_expiration {
-        noncurrent_days = local.noncurrent_version_expiration_days
+      dynamic "noncurrent_version_transition" {
+        for_each = var.this_is_development ? [] : [1]
+        content {
+          noncurrent_days = local.noncurrent_transition_days
+          storage_class   = "GLACIER"
+        }
       }
 
-      # Clean up those failed uploads to save cash
+      noncurrent_version_expiration {
+        noncurrent_days = local.noncurrent_expire_days
+      }
+
       abort_incomplete_multipart_upload {
         days_after_initiation = 1
       }
