@@ -30,13 +30,13 @@ Some dependencies for this module must be creates prior to its use, including:
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_autoglue"></a> [autoglue](#requirement\_autoglue) | 0.10.0 |
+| <a name="requirement_autoglue"></a> [autoglue](#requirement\_autoglue) | 0.10.5 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_autoglue"></a> [autoglue](#provider\_autoglue) | 0.10.0 |
+| <a name="provider_autoglue"></a> [autoglue](#provider\_autoglue) | 0.10.5 |
 | <a name="provider_aws.clientaccount"></a> [aws.clientaccount](#provider\_aws.clientaccount) | n/a |
 | <a name="provider_aws.management-tenant-dns"></a> [aws.management-tenant-dns](#provider\_aws.management-tenant-dns) | n/a |
 | <a name="provider_random"></a> [random](#provider\_random) | n/a |
