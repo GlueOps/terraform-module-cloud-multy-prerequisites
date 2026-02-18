@@ -14,5 +14,5 @@ locals {
 
   # Non-current logic
   noncurrent_transition_days = 30
-  noncurrent_expire_days     = var.this_is_development ? 30 : 121 
+  noncurrent_expire_days     = var.this_is_development ? 30 : 121
 }
