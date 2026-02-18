@@ -47,7 +47,7 @@ resource "aws_s3_bucket_lifecycle_configuration" "primary" {
       }
 
       transition {
-        days          = 1 # Day 1 is safer for replicas
+        days          = 1 # Transition after 1 day to optimize storage costs
         storage_class = "STANDARD_IA"
       }
 
