@@ -52,7 +52,7 @@ Some dependencies for this module must be creates prior to its use, including:
 | <a name="module_common_s3_v2"></a> [common\_s3\_v2](#module\_common\_s3\_v2) | ./modules/multy-s3-bucket/0.2.0 | n/a |
 | <a name="module_dnssec_key"></a> [dnssec\_key](#module\_dnssec\_key) | git::https://github.com/GlueOps/terraform-module-cloud-aws-dnssec-kms-key.git | v0.3.0 |
 | <a name="module_generate_gluekube_creds"></a> [generate\_gluekube\_creds](#module\_generate\_gluekube\_creds) | ./modules/gluekube/0.1.0 | n/a |
-| <a name="module_glueops_platform_helm_values"></a> [glueops\_platform\_helm\_values](#module\_glueops\_platform\_helm\_values) | git::https://github.com/GlueOps/platform-helm-chart-platform.git | v0.70.2 |
+| <a name="module_glueops_platform_helm_values"></a> [glueops\_platform\_helm\_values](#module\_glueops\_platform\_helm\_values) | git::https://github.com/GlueOps/platform-helm-chart-platform.git | v0.70.3 |
 | <a name="module_glueops_platform_versions"></a> [glueops\_platform\_versions](#module\_glueops\_platform\_versions) | ./modules/platform-chart-version/0.1.0 | n/a |
 | <a name="module_loki_s3"></a> [loki\_s3](#module\_loki\_s3) | ./modules/multy-s3-bucket/0.1.0 | n/a |
 | <a name="module_tenant_cluster_versions"></a> [tenant\_cluster\_versions](#module\_tenant\_cluster\_versions) | ./modules/kubernetes-versions/0.1.0 | n/a |
