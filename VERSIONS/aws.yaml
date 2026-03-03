@@ -2,7 +2,7 @@ versions:
   - name: csi_driver_version
     # kubernetesVersion and addonName provided
     # renovate: eksAddonsFilter={"kubernetesVersion":"1.33","addonName":"aws-ebs-csi-driver"}
-    version: v1.55.0-eksbuild.2
+    version: v1.56.0-eksbuild.1
 
   - name: coredns_version
     # kubernetesVersion and addonName provided
