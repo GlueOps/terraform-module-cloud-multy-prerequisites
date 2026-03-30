@@ -102,11 +102,12 @@ module "glueops_platform_helm_values" {
 
 module "argocd_helm_values" {
   for_each             = local.environment_map
-  source               = "git::https://github.com/GlueOps/docs-argocd.git?ref=v0.18.2"
+  source               = "git::https://github.com/GlueOps/docs-argocd.git?ref=feat/gatekeeper"
   tenant_key           = var.tenant_key
   cluster_environment  = each.value.environment_name
   client_secret        = random_password.dex_argocd_client_secret[each.value.environment_name].result
   glueops_root_domain  = data.aws_route53_zone.management_tenant_dns.name
   argocd_rbac_policies = each.value.argocd_rbac_policies
   argocd_app_version   = local.argocd_app_version
+  gatekeeper_tag       = "v0.14.2@sha256:469cf89b25048c2d99979ec474aad80fe2e1714f0fa741d508b23098796e3b6c"
 }
