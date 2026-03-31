@@ -109,5 +109,5 @@ module "argocd_helm_values" {
   glueops_root_domain  = data.aws_route53_zone.management_tenant_dns.name
   argocd_rbac_policies = each.value.argocd_rbac_policies
   argocd_app_version   = local.argocd_app_version
-  gatekeeper_tag       = "v0.14.2@sha256:469cf89b25048c2d99979ec474aad80fe2e1714f0fa741d508b23098796e3b6c"
+  gatekeeper_tag       = "v0.1.0@sha256:969ac53b93a8ba2524494adbfd4587da5537c0c8d7232a5f4f5d67dcfe66874a"
 }
