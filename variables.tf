@@ -159,6 +159,7 @@ locals {
   calico_ctl_version        = "v3.31.4"
   tigera_operator_version   = "v1.40.7"
   terraform_module_version  = "v0.48.0"
+  gatekeeper_tag            = "v0.1.0@sha256:969ac53b93a8ba2524494adbfd4587da5537c0c8d7232a5f4f5d67dcfe66874a"
 }
 
 variable "opsgenie_emails" {
