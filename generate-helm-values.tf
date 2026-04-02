@@ -114,7 +114,7 @@ module "argocd_helm_values" {
 
 module "calico_helm_values" {
   for_each                = local.environment_map
-  source                  = module.calico.calico_helm_values
+  source                  = "./modules/calico"
   calicoctl_version       = local.calico_ctl_version
   tigera_operator_version = local.tigera_operator_version
 }
