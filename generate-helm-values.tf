@@ -110,3 +110,11 @@ module "argocd_helm_values" {
   argocd_rbac_policies = each.value.argocd_rbac_policies
   argocd_app_version   = local.argocd_app_version
 }
+
+
+module "calico_helm_values" {
+  for_each                = local.environment_map
+  source                  = module.calico.calico_helm_values
+  calicoctl_version       = local.calico_ctl_version
+  tigera_operator_version = local.tigera_operator_version
+}
