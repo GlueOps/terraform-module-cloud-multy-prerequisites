@@ -40,8 +40,8 @@ podLabels: {}
 # Image and registry configuration for the tigera/operator pod.
 tigeraOperator:
   image: tigera/operator
-  version: tigera_operator_version_placeholder
+  version: ${tigera_operator_version_placeholder}
   registry: quay.io
 calicoctl:
   image: docker.io/calico/ctl
-  tag: calicoctl_version_placeholder
+  tag: ${calicoctl_version_placeholder}
