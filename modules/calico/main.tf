@@ -10,7 +10,7 @@ variable "tigera_operator_version" {
 
 output "helm_values" {
   value = templatefile("${path.module}/values.tpl", {
-    calicoctl_version_placeholder = var.calicoctl_version,
+    calicoctl_version_placeholder       = var.calicoctl_version,
     tigera_operator_version_placeholder = var.tigera_operator_version
   })
 }
