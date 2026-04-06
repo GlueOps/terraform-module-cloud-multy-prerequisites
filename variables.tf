@@ -160,6 +160,7 @@ locals {
   tigera_operator_version   = "v1.40.7"
   terraform_module_version  = "v0.48.0"
   gatekeeper_tag            = "v0.1.1@sha256:33f96e0ecc628078c00c68722a670fb72693860219219972503df0ee2c6a3ece"
+  gatekeeper_platform_allowed_namespaces = "glueops-core,${var.cluster_environments}"
 }
 
 variable "opsgenie_emails" {
