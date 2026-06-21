@@ -57,3 +57,15 @@ variable "autoglue_credentials_id" {
   type = string
   description = "autoglue credentials_id"
 }
+
+variable "waggle_endpoint" {
+  type    = string
+}
+
+variable "waggle_api_key" {
+  type    = string
+}
+
+variable "waggle_datacenter_id" {
+  type    = string
+}

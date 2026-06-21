@@ -12,6 +12,10 @@ module "generate_gluekube_creds" {
   autoglue_key            = var.autoglue_credentials.autoglue_key
   autoglue_org_secret     = var.autoglue_credentials.autoglue_org_secret
   autoglue_base_url       = var.autoglue_credentials.base_url
+    
+  waggle_endpoint         = var.waggle_credentials.waggle_endpoint
+  waggle_api_key          = var.waggle_credentials.waggle_api_key
+  waggle_datacenter_id    = var.waggle_credentials.waggle_datacenter_id
   autoglue_cluster_name   = "${each.value.environment_name}.${aws_route53_zone.main.name}"
   autoglue_credentials_id = autoglue_credential.route53.id
   provider_credentials    = each.value.provider_credentials

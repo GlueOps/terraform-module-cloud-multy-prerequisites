@@ -47,6 +47,18 @@ variable "autoglue_credentials" {
   nullable    = true
 }
 
+
+variable "waggle_credentials" {
+  type = object({
+    waggle_endpoint        = string
+    waggle_api_key         = string
+    waggle_datacenter_id   = string
+  })
+  description = "The waggle credentials object"
+  nullable    = false
+}
+
+
 variable "cluster_environments" {
   description = "The cluster environments and their respective github app ids"
   type = list(object({
