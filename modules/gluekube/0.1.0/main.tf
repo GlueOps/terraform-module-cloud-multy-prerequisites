@@ -86,7 +86,8 @@ variable "waggle_api_key" {
 }
 
 variable "waggle_datacenter_id" {
-  type    = string
+  description = "Waggle datacenter identifier"
+  type        = string
 }
 
 output "gluekube_tfvars" {
