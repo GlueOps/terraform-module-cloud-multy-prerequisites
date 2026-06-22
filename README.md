@@ -143,6 +143,7 @@ Some dependencies for this module must be creates prior to its use, including:
 | <a name="input_tenant_account_id"></a> [tenant\_account\_id](#input\_tenant\_account\_id) | The tenant AWS account id | `string` | n/a | yes |
 | <a name="input_tenant_key"></a> [tenant\_key](#input\_tenant\_key) | The tenant key | `string` | n/a | yes |
 | <a name="input_this_is_development"></a> [this\_is\_development](#input\_this\_is\_development) | The development cluster environment and data/resources can be destroyed! | `string` | `false` | no |
+| <a name="input_waggle_credentials"></a> [waggle\_credentials](#input\_waggle\_credentials) | The waggle credentials object | <pre>object({<br/>    waggle_endpoint        = string<br/>    waggle_api_key         = string<br/>    waggle_datacenter_id   = string<br/>  })</pre> | n/a | yes |
 
 ## Outputs
 

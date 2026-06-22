@@ -76,6 +76,20 @@ variable "autoglue_credentials_id" {
   description = "autoglue credentials_id"
 }
 
+variable "waggle_endpoint" {
+  description = "Waggle API endpoint URL"
+  type        = string
+}
+
+variable "waggle_api_key" {
+  type    = string
+}
+
+variable "waggle_datacenter_id" {
+  description = "Waggle datacenter identifier"
+  type        = string
+}
+
 output "gluekube_tfvars" {
   value = templatefile("${path.module}/tfvars.tpl", {
     provider_credentials    = var.provider_credentials
@@ -89,7 +103,9 @@ output "gluekube_tfvars" {
     route53_zone_id         = var.route53_zone_id
     route53_region          = var.route53_region
     autoglue_credentials_id = var.autoglue_credentials_id
-
+    waggle_endpoint         = var.waggle_endpoint
+    waggle_api_key          = var.waggle_api_key
+    waggle_datacenter_id    = var.waggle_datacenter_id
   })
   sensitive = true
 }
