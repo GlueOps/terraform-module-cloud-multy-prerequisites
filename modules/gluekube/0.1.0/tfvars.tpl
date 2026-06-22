@@ -12,7 +12,9 @@ domain_name           = "${domain_name}"
 route53_zone_id       = "${route53_zone_id}"
 route53_region        = "${route53_region}"
 autoglue_credentials_id = "${autoglue_credentials_id}"
+%{ if include_waggle_credentials ~}
 
 waggle_endpoint = "${waggle_endpoint}"
 waggle_api_key = "${waggle_api_key}"
 waggle_datacenter_id = "${waggle_datacenter_id}"
+%{ endif ~}

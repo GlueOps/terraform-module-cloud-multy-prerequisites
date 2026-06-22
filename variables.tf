@@ -48,16 +48,6 @@ variable "autoglue_credentials" {
 }
 
 
-variable "waggle_credentials" {
-  type = object({
-    waggle_endpoint        = string
-    waggle_api_key         = string
-    waggle_datacenter_id   = string
-  })
-  description = "The waggle credentials object"
-  nullable    = false
-}
-
 
 variable "cluster_environments" {
   description = "The cluster environments and their respective github app ids"
@@ -86,6 +76,11 @@ variable "cluster_environments" {
     }))
     argocd_rbac_policies = string
     provider_credentials = optional(map(any), null)
+    waggle_credentials = optional(object({
+      waggle_endpoint      = string
+      waggle_api_key       = string
+      waggle_datacenter_id = string
+    }), null)
   }))
   default = [
     {
@@ -118,6 +113,7 @@ variable "cluster_environments" {
         }
       ]
       provider_credentials = null
+      waggle_credentials   = null
       autoglue             = null
       argocd_rbac_policies = <<EOT
       g, GlueOps:argocd_super_admins, role:admin
