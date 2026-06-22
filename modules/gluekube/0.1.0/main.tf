@@ -77,7 +77,8 @@ variable "autoglue_credentials_id" {
 }
 
 variable "waggle_endpoint" {
-  type    = string
+  description = "Waggle API endpoint URL"
+  type        = string
 }
 
 variable "waggle_api_key" {
