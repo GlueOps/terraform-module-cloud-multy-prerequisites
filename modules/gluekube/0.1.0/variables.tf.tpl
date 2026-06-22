@@ -58,6 +58,7 @@ variable "autoglue_credentials_id" {
   description = "autoglue credentials_id"
 }
 
+%{ if include_waggle_credentials ~}
 variable "waggle_endpoint" {
   description = "Waggle API endpoint URL"
   type        = string
@@ -71,3 +72,4 @@ variable "waggle_datacenter_id" {
   description = "Waggle datacenter identifier"
   type        = string
 }
+%{ endif ~}
