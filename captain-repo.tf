@@ -26,6 +26,7 @@ module "captain_repository_files" {
   repository_name = module.captain_repository[each.key].repository_name
   files_to_create = {
     "argocd.yaml"                                        = module.argocd_helm_values[each.value.environment_name].helm_values
+    "calico.yaml"                                        = module.calico_helm_values[each.value.environment_name].helm_values
     "platform.yaml"                                      = module.glueops_platform_helm_values[each.value.environment_name].helm_values
     "README.md"                                          = module.tenant_readmes[each.value.environment_name].tenant_readme
     "terraform/kubernetes/provider_versions.tf"          = local.provider_versions_tf_file
