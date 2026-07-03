@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.83.1](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/compare/v0.83.0...v0.83.1) (2026-07-03)
+
+
+### Bug Fixes
+
+* aws terraform module version ([#638](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/issues/638)) ([2d0ab02](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/commit/2d0ab021d6957ed67828155b6a14b8ec7a7b0cdf))
+
 ## [0.83.0](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/compare/v0.82.0...v0.83.0) (2026-07-03)
 
 
