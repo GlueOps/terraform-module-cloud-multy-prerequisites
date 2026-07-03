@@ -10,11 +10,18 @@ jobs:
       with:
         ref: ${{ github.event.pull_request.head.ref }}
 
-    - name: Render terraform docs and push changes back to PR
+    # Verify the injected terraform-docs block in README.md is current, but do
+    # NOT push a commit back to the PR branch. Auto-pushing a
+    # "docs: automated update of terraform docs" commit caused that message to
+    # win the squash-merge on single-/empty-commit PRs, so release-please saw a
+    # `docs:` subject instead of the real `feat:`/`fix:` and misclassified (or
+    # dropped) the change. This runs as a required check instead: regenerate
+    # docs locally (`terraform-docs`) and commit them if this fails.
+    - name: Check terraform docs are up to date
       uses: terraform-docs/gh-actions@main
       with:
         working-dir: .
         output-file: README.md
         output-method: inject
-        git-push: "true"
-        git-commit-message: "docs: automated update of terraform docs"
+        git-push: "false"
+        fail-on-diff: "true"
