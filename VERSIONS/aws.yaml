@@ -1,21 +1,22 @@
 versions:
   - name: csi_driver_version
     # kubernetesVersion and addonName provided
-    # renovate: eksAddonsFilter={"kubernetesVersion":"1.33","addonName":"aws-ebs-csi-driver"}
-    version: v1.55.0-eksbuild.2
+    # renovate: eksAddonsFilter={"kubernetesVersion":"1.34","addonName":"aws-ebs-csi-driver"}
+    version: v1.62.0-eksbuild.1
 
   - name: coredns_version
     # kubernetesVersion and addonName provided
-    # renovate: eksAddonsFilter={"kubernetesVersion":"1.33","addonName":"coredns"}
-    version: v1.13.2-eksbuild.1
+    # renovate: eksAddonsFilter={"kubernetesVersion":"1.34","addonName":"coredns"}
+    version: v1.13.2-eksbuild.11
   
   - name: kube_proxy_version
     # kubernetesVersion and addonName provided
-    # renovate: eksAddonsFilter={"kubernetesVersion":"1.33","addonName":"kube-proxy"}
-    version: v1.33.7-eksbuild.2
+    # renovate: eksAddonsFilter={"kubernetesVersion":"1.34","addonName":"kube-proxy"}
+    version: v1.34.6-eksbuild.13
+
 
   - name: ami_release_version
-    version: 1.33.5-20260129
+    version: 1.34.9-20260618
 
   - name: kubernetes_version
-    version: "1.33"
+    version: "1.34"

@@ -48,7 +48,7 @@ locals {
 
 module "glueops_platform_helm_values" {
   for_each                                   = local.environment_map
-  source                                     = "git::https://github.com/GlueOps/platform-helm-chart-platform.git?ref=feat/adding-monitoring-stack-feb-updates"
+  source                                     = "git::https://github.com/GlueOps/platform-helm-chart-platform.git?ref=feat/adding-monitoring-stack-updated-july-2026"
   captain_repo_b64encoded_private_deploy_key = base64encode(module.captain_repository[each.value.environment_name].private_deploy_key)
   captain_repo_ssh_clone_url                 = module.captain_repository[each.value.environment_name].ssh_clone_url
   this_is_development                        = var.this_is_development
@@ -82,7 +82,6 @@ module "glueops_platform_helm_values" {
   traefik_enable_internal_lb                 = each.value.traefik_enable_internal_lb
   traefik_enable_public_lb                   = each.value.traefik_enable_public_lb
   nginx_enable_public_lb                     = each.value.nginx_enable_public_lb
-  prometheus_volume_claim_storage_request    = each.value.prometheus_volume_claim_storage_request
   vault_data_storage                         = each.value.vault_data_storage
   nginx_controller_replica_count             = each.value.nginx_controller_replica_count
   traefik_internal_lb_deployment_replicas    = each.value.traefik_internal_lb_deployment_replicas
@@ -103,11 +102,12 @@ module "glueops_platform_helm_values" {
 
 module "argocd_helm_values" {
   for_each             = local.environment_map
-  source               = "git::https://github.com/GlueOps/docs-argocd.git?ref=v0.18.1"
+  source               = "git::https://github.com/GlueOps/docs-argocd.git?ref=v0.19.1"
   tenant_key           = var.tenant_key
   cluster_environment  = each.value.environment_name
   client_secret        = random_password.dex_argocd_client_secret[each.value.environment_name].result
   glueops_root_domain  = data.aws_route53_zone.management_tenant_dns.name
   argocd_rbac_policies = each.value.argocd_rbac_policies
   argocd_app_version   = local.argocd_app_version
+  gatekeeper_tag       = local.gatekeeper_tag
 }

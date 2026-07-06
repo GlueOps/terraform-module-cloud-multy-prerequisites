@@ -76,24 +76,52 @@ variable "autoglue_credentials_id" {
   description = "autoglue credentials_id"
 }
 
+variable "include_waggle_credentials" {
+  description = "Whether to include waggle credentials in the generated files"
+  type        = bool
+  default     = false
+}
+
+variable "waggle_endpoint" {
+  description = "Waggle API endpoint URL"
+  type        = string
+  default     = ""
+}
+
+variable "waggle_api_key" {
+  type    = string
+  default = ""
+}
+
+variable "waggle_datacenter_id" {
+  description = "Waggle datacenter identifier"
+  type        = string
+  default     = ""
+}
+
 output "gluekube_tfvars" {
   value = templatefile("${path.module}/tfvars.tpl", {
-    provider_credentials    = var.provider_credentials
-    autoglue_cluster_name   = var.autoglue_cluster_name
-    autoglue_key            = var.autoglue_key
-    autoglue_org_secret     = var.autoglue_org_secret
-    autoglue_base_url       = var.autoglue_base_url
-    aws_access_key_id       = var.aws_access_key_id
-    aws_secret_access_key   = var.aws_secret_access_key
-    domain_name             = var.domain_name
-    route53_zone_id         = var.route53_zone_id
-    route53_region          = var.route53_region
-    autoglue_credentials_id = var.autoglue_credentials_id
-
+    provider_credentials       = var.provider_credentials
+    autoglue_cluster_name      = var.autoglue_cluster_name
+    autoglue_key               = var.autoglue_key
+    autoglue_org_secret        = var.autoglue_org_secret
+    autoglue_base_url          = var.autoglue_base_url
+    aws_access_key_id          = var.aws_access_key_id
+    aws_secret_access_key      = var.aws_secret_access_key
+    domain_name                = var.domain_name
+    route53_zone_id            = var.route53_zone_id
+    route53_region             = var.route53_region
+    autoglue_credentials_id    = var.autoglue_credentials_id
+    include_waggle_credentials = var.include_waggle_credentials
+    waggle_endpoint            = var.waggle_endpoint
+    waggle_api_key             = var.waggle_api_key
+    waggle_datacenter_id       = var.waggle_datacenter_id
   })
   sensitive = true
 }
 
 output "gluekube_variables_tf" {
-  value = templatefile("${path.module}/variables.tf.tpl", {})
+  value = templatefile("${path.module}/variables.tf.tpl", {
+    include_waggle_credentials = var.include_waggle_credentials
+  })
 }

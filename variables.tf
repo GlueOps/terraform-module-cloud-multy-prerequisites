@@ -47,6 +47,8 @@ variable "autoglue_credentials" {
   nullable    = true
 }
 
+
+
 variable "cluster_environments" {
   description = "The cluster environments and their respective github app ids"
   type = list(object({
@@ -55,7 +57,6 @@ variable "cluster_environments" {
     traefik_enable_internal_lb              = optional(bool, false)
     traefik_enable_public_lb                = optional(bool, true)
     nginx_enable_public_lb                  = optional(bool, true)
-    prometheus_volume_claim_storage_request = optional(string, "50")
     vault_data_storage                      = optional(string, "10")
     nginx_controller_replica_count          = optional(string, "2")
     traefik_internal_lb_deployment_replicas = optional(string, "2")
@@ -77,6 +78,11 @@ variable "cluster_environments" {
     tempo_storage        = string
     argocd_rbac_policies = string
     provider_credentials = optional(map(any), null)
+    waggle_credentials = optional(object({
+      waggle_endpoint      = string
+      waggle_api_key       = string
+      waggle_datacenter_id = string
+    }), null)
   }))
   default = [
     {
@@ -85,7 +91,6 @@ variable "cluster_environments" {
       traefik_enable_internal_lb              = false
       traefik_enable_public_lb                = true
       nginx_enable_public_lb                  = true
-      prometheus_volume_claim_storage_request = "50"
       vault_data_storage                      = "10"
       nginx_controller_replica_count          = "2"
       traefik_internal_lb_deployment_replicas = "2"
@@ -109,6 +114,7 @@ variable "cluster_environments" {
         }
       ]
       provider_credentials = null
+      waggle_credentials   = null
       autoglue             = null
       argocd_rbac_policies = <<EOT
       g, GlueOps:argocd_super_admins, role:admin
@@ -120,7 +126,7 @@ variable "cluster_environments" {
       p, role:developers, exec, *, development/*, allow
 EOT
 
-   loki_storage   = <<EOT
+      loki_storage   = <<EOT
 bucketNames:
         chunks: XXXXXX-6dd3-loki
         ruler: XXXXXX-6dd3-loki
@@ -152,7 +158,7 @@ backend: s3
         endpoint: fsn1.your-objectstorage.com
         insecure: false
 EOT
-  },
+    },
 
   ]
 
@@ -186,15 +192,16 @@ locals {
 }
 
 locals {
-  argocd_app_version        = "v3.0.20"
-  codespace_version         = "v0.130.0"
-  argocd_helm_chart_version = "8.2.7"
-  glueops_platform_version  = "feat/adding-monitoring-stack-feb-updates" # this also needs to be updated in the module.glueops_platform_helm_values // generate-helm-values.tf
-  tools_version             = "v0.34.0"
-  calico_helm_chart_version = "v3.30.4"
-  calico_ctl_version        = "v3.30.4"
-  tigera_operator_version   = "v1.38.7"
-  terraform_module_version  = "v0.46.0"
+  argocd_app_version        = "v3.2.12"
+  codespace_version         = "v0.145.0"
+  argocd_helm_chart_version = "9.3.7"
+  glueops_platform_version  = "feat/adding-monitoring-stack-updated-july-2026" # this also needs to be updated in the module.glueops_platform_helm_values // generate-helm-values.tf
+  tools_version             = "v0.36.0"
+  calico_helm_chart_version = "v3.31.4"
+  calico_ctl_version        = "v3.31.4"
+  tigera_operator_version   = "v1.40.7"
+  terraform_module_version  = "v0.50.0"
+  gatekeeper_tag            = "v0.1.1@sha256:33f96e0ecc628078c00c68722a670fb72693860219219972503df0ee2c6a3ece"
 }
 
 variable "opsgenie_emails" {
