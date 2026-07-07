@@ -31,23 +31,35 @@ gh repo clone placeholder_github_owner/placeholder_repo_name
 ## Deploying GlueOps the Platform
 
 1. Deploy ArgoCD
-    * The below command installs ArgoCD CRDs, ArgoCD Helm Chart, and watches services until they are available
-    
+    * From the root of this repository run:
+
     ```sh
-    source <(curl -s https://raw.githubusercontent.com/GlueOps/development-only-utilities/placeholder_tools_version/tools/glueops-platform/deploy-argocd) && \
-        deploy-argocd -c placeholder_argocd_crd_version -h placeholder_argocd_helm_chart_version
+    captain_utils
     ```
 
-    * Ensure all services are available and running before proceeding to the next step
+    * Then step through the menus:
+        1. Select `production`
+        2. Select `argocd`
+        3. Select the ArgoCD helm chart version (pinned by `VERSIONS/glueops.yaml`)
+        4. Select the ArgoCD App Version (pinned by `VERSIONS/glueops.yaml`)
+        5. Review the diff shown in the pager, then press `q` to exit it
+        6. Confirm `Apply upgrade`. This installs the ArgoCD CRDs, the kube-prometheus-stack CRDs, and the ArgoCD Helm Chart.
+    * Ensure all services are available and running before proceeding to the next step (`captain_utils` -> `production` -> `inspect_pods`, or `watch kubectl get pods -n glueops-core`)
 
 2. Deploy the GlueOps Platform
-    * Install the GlueOps platform using
+    * Run `captain_utils` again:
 
     ```sh
-    source <(curl -s https://raw.githubusercontent.com/GlueOps/development-only-utilities/placeholder_tools_version/tools/glueops-platform/deploy-glueops-platform) && \
-        deploy-glueops-platform -v placeholder_glueops_platform_version
+    captain_utils
     ```
 
+    * Then step through the menus:
+        1. Select `production`
+        2. Select `glueops-platform`
+        3. Select the GlueOps Platform version (pinned by `VERSIONS/glueops.yaml`)
+        4. Review the diff shown in the pager, then press `q` to exit it
+        5. Confirm `Apply upgrade` to install the GlueOps Platform helm chart
+    * Monitor with `watch kubectl get applications -n glueops-core` until all applications are synced and healthy, except `vault`
     * [Configure Vault](https://github.com/GlueOps/terraform-module-kubernetes-hashicorp-vault-configuration)
 3. Access Cluster services
     * [Cluster Info](https://cluster-info.placeholder_repo_name): https://cluster-info.placeholder_repo_name

@@ -41,6 +41,12 @@ variable "codespace_version" {
   nullable    = false
 }
 
+variable "kube_prometheus_stack_version" {
+  description = "kube-prometheus-stack helm chart version (used to install its CRDs)"
+  type        = string
+  nullable    = false
+}
+
 variable "terraform_module_version" {
   description = "terraform-module-cloud-aws-kubernetes-cluster version"
   type        = string
@@ -52,7 +58,7 @@ data "local_file" "version" {
 }
 
 output "platform_versions" {
-  value = replace(replace(replace(replace(replace(replace(replace(replace(
+  value = replace(replace(replace(replace(replace(replace(replace(replace(replace(
     data.local_file.version.content,
     "glueops_platform_helm_chart_version_placeholder", "${var.glueops_platform_version}"),
     "argocd_helm_chart_version_placeholder", "${var.argocd_helm_chart_version}"),
@@ -61,5 +67,6 @@ output "platform_versions" {
     "calico_helm_chart_version_placeholder", "${var.calico_helm_chart_version}"),
     "calico_ctl_version_placeholder", "${var.calico_ctl_version}"),
     "terraform_module_version_placeholder", "${var.terraform_module_version}"),
-  "tigera_operator_version_placeholder", "${var.tigera_operator_version}")
+    "tigera_operator_version_placeholder", "${var.tigera_operator_version}"),
+  "kube_prometheus_stack_version_placeholder", "${var.kube_prometheus_stack_version}")
 }
