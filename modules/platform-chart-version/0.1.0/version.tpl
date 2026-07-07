@@ -15,3 +15,5 @@ versions:
     version: tigera_operator_version_placeholder
   - name: terraform_module_version
     version: terraform_module_version_placeholder
+  - name: kube_prometheus_stack_version
+    version: kube_prometheus_stack_version_placeholder
