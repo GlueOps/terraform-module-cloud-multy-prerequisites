@@ -40,13 +40,13 @@ gh repo clone placeholder_github_owner/placeholder_repo_name
     * Ensure all services are available and running before proceeding to the next step (`captain_utils` -> `inspect_pods`, or `watch kubectl get pods -n glueops-core`)
 
 2. Deploy the GlueOps Platform
-    * Install the GlueOps platform using
+    * Run `captain_utils` again, then select `production` -> `glueops-platform`. It shows a diff for confirmation, then installs the GlueOps Platform helm chart using the version pinned in `VERSIONS/glueops.yaml`.
 
     ```sh
-    source <(curl -s https://raw.githubusercontent.com/GlueOps/development-only-utilities/placeholder_tools_version/tools/glueops-platform/deploy-glueops-platform) && \
-        deploy-glueops-platform -v placeholder_glueops_platform_version
+    captain_utils
     ```
 
+    * Monitor with `watch kubectl get applications -n glueops-core` until all applications are synced and healthy, except `vault`
     * [Configure Vault](https://github.com/GlueOps/terraform-module-kubernetes-hashicorp-vault-configuration)
 3. Access Cluster services
     * [Cluster Info](https://cluster-info.placeholder_repo_name): https://cluster-info.placeholder_repo_name
