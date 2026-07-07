@@ -109,6 +109,10 @@ variable "cluster_environments" {
         },
         {
           oidc_groups = ["GlueOps:vault_super_admins", "testing-okta:developers"]
+          policy_name = "updater"
+        },
+        {
+          oidc_groups = ["GlueOps:vault_super_admins", "testing-okta:developers"]
           policy_name = "reader"
         }
       ]
