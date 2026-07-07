@@ -31,14 +31,13 @@ gh repo clone placeholder_github_owner/placeholder_repo_name
 ## Deploying GlueOps the Platform
 
 1. Deploy ArgoCD
-    * The below command installs ArgoCD CRDs, ArgoCD Helm Chart, and watches services until they are available
-    
+    * From the root of this repository run `captain_utils`, then select `production` -> `argocd`. It installs the ArgoCD CRDs, the kube-prometheus-stack CRDs, and the ArgoCD Helm Chart using the versions pinned in `VERSIONS/glueops.yaml`.
+
     ```sh
-    source <(curl -s https://raw.githubusercontent.com/GlueOps/development-only-utilities/placeholder_tools_version/tools/glueops-platform/deploy-argocd) && \
-        deploy-argocd -c placeholder_argocd_crd_version -h placeholder_argocd_helm_chart_version
+    captain_utils
     ```
 
-    * Ensure all services are available and running before proceeding to the next step
+    * Ensure all services are available and running before proceeding to the next step (`captain_utils` -> `inspect_pods`, or `watch kubectl get pods -n glueops-core`)
 
 2. Deploy the GlueOps Platform
     * Install the GlueOps platform using
