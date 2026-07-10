@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.84.3](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/compare/v0.84.2...v0.84.3) (2026-07-10)
+
+
+### Miscellaneous Chores
+
+* **patch:** update glueops/platform-helm-chart-platform to v0.75.2 #patch ([#657](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/issues/657)) ([60e55fb](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/commit/60e55fbbd45b0410848ed31a5436dad93aeec729))
+
 ## [0.84.2](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/compare/v0.84.1...v0.84.2) (2026-07-10)
 
 
