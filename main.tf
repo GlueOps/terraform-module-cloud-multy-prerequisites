@@ -1,132 +1,50 @@
-data "aws_route53_zone" "management_tenant_dns" {
-  provider = aws.management-tenant-dns
-  zone_id  = local.management_tenant_dns_zoneid
+# Backwards-compatible wrapper.
+#
+# The resources that used to live at the root of this module have been split into
+# two submodules so tenants can control versions per cluster:
+#   - modules/tenant-base:     shared per-tenant resources (parent zone, DNSSEC KMS
+#                              key, shared S3 buckets, autoglue route53 IAM)
+#   - modules/captain-cluster: everything scoped to a cluster environment, including
+#                              every version pin (helm values, VERSIONS files, etc.)
+#
+# Tenants that call this module at the root (e.g. ?ref=main) get identical behavior
+# to before the split: one captain-cluster instantiation covering all environments,
+# with state migrated in place via moved.tf. To control versions per cluster,
+# instantiate //modules/tenant-base once and //modules/captain-cluster once per
+# cluster environment, each pinned to its own release tag.
+
+module "tenant_base" {
+  source = "./modules/tenant-base"
+  providers = {
+    aws.clientaccount         = aws.clientaccount
+    aws.management-tenant-dns = aws.management-tenant-dns
+    aws.primaryregion         = aws.primaryregion
+    aws.replicaregion         = aws.replicaregion
+  }
+  tenant_key                   = var.tenant_key
+  tenant_account_id            = var.tenant_account_id
+  management_tenant_dns_zoneid = var.management_tenant_dns_zoneid
+  this_is_development          = var.this_is_development
+  primary_region               = var.primary_region
+  backup_region                = var.backup_region
+  environment_names            = [for e in var.cluster_environments : e.environment_name]
 }
 
-resource "aws_route53_zone" "main" {
-  provider = aws.clientaccount
-  name     = "${var.tenant_key}.${data.aws_route53_zone.management_tenant_dns.name}"
-}
-
-resource "aws_route53_record" "delegation_to_parent_tenant_zone" {
-  provider   = aws.management-tenant-dns
-  zone_id    = data.aws_route53_zone.management_tenant_dns.zone_id
-  name       = aws_route53_zone.main.name
-  type       = local.ns_record_type
-  ttl        = local.record_ttl
-  records    = aws_route53_zone.main.name_servers
-  depends_on = [aws_route53_zone.main]
-}
-
-
-
-module "dnssec_key" {
-  source         = "git::https://github.com/GlueOps/terraform-module-cloud-aws-dnssec-kms-key.git?ref=v0.3.0"
-  aws_account_id = var.tenant_account_id
-}
-
-resource "aws_route53_key_signing_key" "parent_tenant_zone" {
-  provider                   = aws.clientaccount
-  hosted_zone_id             = aws_route53_zone.main.zone_id
-  key_management_service_arn = module.dnssec_key.kms_key_arn
-  name                       = "primary"
-  status                     = "ACTIVE"
-  depends_on                 = [aws_route53_zone.main]
-
-}
-
-resource "aws_route53_hosted_zone_dnssec" "parent_tenant_zone" {
-  provider = aws.clientaccount
-  depends_on = [
-    aws_route53_key_signing_key.parent_tenant_zone,
-    aws_route53_zone.main
-  ]
-  hosted_zone_id = aws_route53_key_signing_key.parent_tenant_zone.hosted_zone_id
-}
-
-resource "aws_route53_record" "enable_dnssec_for_parent_tenant_zone" {
-  provider = aws.management-tenant-dns
-  zone_id  = data.aws_route53_zone.management_tenant_dns.zone_id
-  name     = aws_route53_zone.main.name
-  type     = "DS"
-  ttl      = local.record_ttl
-  records  = [aws_route53_key_signing_key.parent_tenant_zone.ds_record]
-}
-
-
-resource "aws_route53_zone" "clusters" {
-  provider = aws.clientaccount
-  for_each = local.cluster_environments
-  name     = "${each.value}.${var.tenant_key}.${data.aws_route53_zone.management_tenant_dns.name}"
-  depends_on = [
-    aws_route53_zone.main
-  ]
-  force_destroy = var.this_is_development ? true : false
-}
-
-resource "aws_route53_key_signing_key" "cluster_zones" {
-  provider                   = aws.clientaccount
-  for_each                   = aws_route53_zone.clusters
-  hosted_zone_id             = aws_route53_zone.clusters[each.key].zone_id
-  key_management_service_arn = module.dnssec_key.kms_key_arn
-  name                       = "primary"
-  status                     = "ACTIVE"
-  depends_on = [
-    aws_route53_zone.clusters
-  ]
-}
-
-resource "aws_route53_hosted_zone_dnssec" "cluster_zones" {
-  provider = aws.clientaccount
-
-  for_each = aws_route53_zone.clusters
-
-  depends_on = [
-    aws_route53_key_signing_key.cluster_zones,
-    aws_route53_zone.clusters
-  ]
-  hosted_zone_id = aws_route53_key_signing_key.cluster_zones[each.key].hosted_zone_id
-}
-
-resource "aws_route53_record" "cluster_zone_dnssec_records" {
-  provider = aws.clientaccount
-  for_each = aws_route53_zone.clusters
-  zone_id  = aws_route53_zone.main.zone_id
-  name     = each.value.name
-  type     = "DS"
-  ttl      = local.record_ttl
-  records  = [aws_route53_key_signing_key.cluster_zones[each.key].ds_record]
-  depends_on = [
-    aws_route53_hosted_zone_dnssec.cluster_zones,
-    aws_route53_zone.main,
-    aws_route53_zone.clusters
-  ]
-}
-
-resource "aws_route53_record" "cluster_zone_ns_records" {
-  provider = aws.clientaccount
-  for_each = aws_route53_zone.clusters
-  zone_id  = aws_route53_zone.main.zone_id
-  name     = each.value.name
-  type     = local.ns_record_type
-  ttl      = local.record_ttl
-  records  = aws_route53_zone.clusters[each.key].name_servers
-  depends_on = [
-    aws_route53_zone.main,
-    aws_route53_zone.clusters
-  ]
-}
-
-
-resource "aws_route53_record" "wildcard_for_apps" {
-  provider = aws.clientaccount
-  for_each = aws_route53_zone.clusters
-  zone_id  = each.value.zone_id
-  name     = "*.apps.${each.value.name}"
-  type     = "CNAME"
-  ttl      = local.record_ttl
-  records  = ["ingress.${each.value.name}"]
-  depends_on = [
-    aws_route53_zone.clusters
-  ]
+module "captain_cluster" {
+  source = "./modules/captain-cluster"
+  providers = {
+    aws.clientaccount = aws.clientaccount
+    aws.primaryregion = aws.primaryregion
+    aws.replicaregion = aws.replicaregion
+  }
+  cluster_environments = var.cluster_environments
+  tenant               = module.tenant_base.captain_cluster_inputs
+  tenant_autoglue_iam  = module.tenant_base.autoglue_iam_credentials
+  tenant_key           = var.tenant_key
+  tenant_account_id    = var.tenant_account_id
+  this_is_development  = var.this_is_development
+  primary_region       = var.primary_region
+  backup_region        = var.backup_region
+  github_owner         = var.github_owner
+  autoglue_credentials = var.autoglue_credentials
 }

@@ -67,7 +67,7 @@ module "glueops_platform_helm_values" {
   certmanager_aws_secret_key                 = aws_iam_access_key.certmanager_v2[each.value.environment_name].secret
   externaldns_aws_access_key                 = aws_iam_access_key.externaldns_v2[each.value.environment_name].id
   externaldns_aws_secret_key                 = aws_iam_access_key.externaldns_v2[each.value.environment_name].secret
-  glueops_root_domain                        = data.aws_route53_zone.management_tenant_dns.name
+  glueops_root_domain                        = var.tenant.management_tenant_dns_zone_name
   cluster_environment                        = each.value.environment_name
   aws_region                                 = var.primary_region
   tenant_key                                 = var.tenant_key
@@ -92,12 +92,12 @@ module "glueops_platform_helm_values" {
   vault_init_controller_aws_access_secret    = aws_iam_access_key.vault_init_s3_v2[each.value.environment_name].secret
   tls_cert_backup_aws_access_key             = aws_iam_access_key.tls_cert_backup_s3_v2[each.value.environment_name].id
   tls_cert_backup_aws_secret_key             = aws_iam_access_key.tls_cert_backup_s3_v2[each.value.environment_name].secret
-  tls_cert_backup_s3_key_prefix              = module.common_s3_v2.tls_cert_backup_s3_key_prefix
-  vault_backup_s3_key_prefix                 = module.common_s3_v2.vault_backup_s3_key_prefix
+  tls_cert_backup_s3_key_prefix              = var.tenant.tls_cert_backup_s3_key_prefix
+  vault_backup_s3_key_prefix                 = var.tenant.vault_backup_s3_key_prefix
   tls_cert_restore_exclude_namespaces        = local.tls_cert_restore_exclude_namespaces
   tls_cert_restore_aws_access_key            = aws_iam_access_key.tls_cert_restore_s3_v2[each.value.environment_name].id
   tls_cert_restore_aws_secret_key            = aws_iam_access_key.tls_cert_restore_s3_v2[each.value.environment_name].secret
-  tenant_s3_multi_region_access_point        = module.common_s3_v2.s3_multi_region_access_point_arn
+  tenant_s3_multi_region_access_point        = var.tenant.s3_multi_region_access_point_arn
 }
 
 module "argocd_helm_values" {
@@ -106,7 +106,7 @@ module "argocd_helm_values" {
   tenant_key           = var.tenant_key
   cluster_environment  = each.value.environment_name
   client_secret        = random_password.dex_argocd_client_secret[each.value.environment_name].result
-  glueops_root_domain  = data.aws_route53_zone.management_tenant_dns.name
+  glueops_root_domain  = var.tenant.management_tenant_dns_zone_name
   argocd_rbac_policies = each.value.argocd_rbac_policies
   argocd_app_version   = local.argocd_app_version
   gatekeeper_tag       = local.gatekeeper_tag

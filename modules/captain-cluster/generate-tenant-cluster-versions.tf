@@ -1,10 +1,10 @@
 locals {
-  versions_yaml_content = file("${path.module}/VERSIONS/aws.yaml") # we should change this when cluster is kubeadm 
+  versions_yaml_content = file("${path.module}/../../VERSIONS/aws.yaml") # we should change this when cluster is kubeadm
   versions_data         = yamldecode(local.versions_yaml_content)
 }
 
 module "tenant_cluster_versions" {
-  source   = "./modules/kubernetes-versions/0.1.0"
+  source   = "../kubernetes-versions/0.1.0"
   for_each = local.environment_map
 
   csi_driver_version  = one([for v in local.versions_data.versions : v.version if v.name == "csi_driver_version"])
