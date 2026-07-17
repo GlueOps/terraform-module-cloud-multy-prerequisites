@@ -4,8 +4,15 @@
 # direct per-cluster module calls (module "tenant_base" + one
 # module "cluster_<environment_name>" block per cluster environment).
 #
-# Usage, from the tenant repo after tofu init:
-#   tofu state list | bash generate-moved-blocks.sh > moved-migration.tf
+# Usage, from a checkout of this repo at the ref the tenant last applied:
+#   bash docs/generate-moved-blocks.sh nonprod prod > moved-migration.tf
+#
+# No state access needed: every resource and module call in
+# modules/captain-cluster is for_each'd by environment name, so the full
+# address set is (names found in the module source) x (environment names).
+# Blocks for instances that do not exist in a tenant's state (e.g.
+# generate_gluekube_creds for environments without provider_credentials) are
+# ignored by tofu — emitting them unconditionally is safe.
 #
 # Assumptions:
 #   - the old wrapper call is named module "tenant" and is DELETED in the same PR
@@ -19,28 +26,28 @@
 # follow-up PR once the migration has applied.
 set -euo pipefail
 
-PREFIX='module.tenant.module.captain_cluster'
+MODULE_DIR="$(cd "$(dirname "$0")/../modules/captain-cluster" && pwd)"
+[ $# -ge 1 ] || { echo "usage: $0 <environment_name>..." >&2; exit 1; }
 
 printf 'moved {\n  from = module.tenant.module.tenant_base\n  to   = module.tenant_base\n}\n'
 
-grep -F "$PREFIX." \
-  | grep -F '["' \
-  | while IFS= read -r addr; do
-      rest=${addr#"$PREFIX".}
-      case $rest in
-        module.*)
-          # nested module call: move the whole module instance, its resources ride along
-          inst=$(sed -E 's/^(module\.[A-Za-z0-9_-]+\["[^"]+"\]).*/\1/' <<<"$rest")
-          ;;
-        *)
-          # direct resource instance
-          inst=$(sed -E 's/^([A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\["[^"]+"\]).*/\1/' <<<"$rest")
-          ;;
-      esac
-      printf '%s\n' "$inst"
-    done \
+# strip heredoc bodies first: generated-file templates contain module blocks at
+# column 0 that are text, not module calls in this module
+awk '
+  inheredoc { if ($0 ~ ("^[[:space:]]*" tag "$")) inheredoc = 0; next }
+  /<</ {
+    tmp = $0
+    sub(/.*<<-?/, "", tmp)
+    sub(/[^A-Z0-9_].*/, "", tmp)
+    if (tmp != "") { tag = tmp; inheredoc = 1 }
+  }
+  { print }
+' "$MODULE_DIR"/*.tf \
+  | grep -oE '^(resource "[a-z0-9_]+" "[a-z0-9_]+"|module "[a-z0-9_]+")' \
+  | sed -E 's/^resource "([^"]+)" "([^"]+)"$/\1.\2/; s/^module "([^"]+)"$/module.\1/' \
   | sort -u \
-  | while IFS= read -r inst; do
-      env=$(sed -E 's/.*\["([^"]+)"\].*/\1/' <<<"$inst")
-      printf '\nmoved {\n  from = %s.%s\n  to   = module.cluster_%s.%s\n}\n' "$PREFIX" "$inst" "$env" "$inst"
+  | while IFS= read -r name; do
+      for env in "$@"; do
+        printf '\nmoved {\n  from = module.tenant.module.captain_cluster.%s["%s"]\n  to   = module.cluster_%s.%s["%s"]\n}\n' "$name" "$env" "$env" "$name" "$env"
+      done
     done
