@@ -275,6 +275,77 @@ provider "autoglue" {{
 open('providers.tf', 'w').write(providers)
 if 'opsgenie_emails' in attrs:
     print('note: dropped opsgenie_emails (unused)', file=sys.stderr)
+
+# prune locals the migration left unreferenced (e.g. an opsgenie_emails local
+# whose only consumer was the dropped argument). Fixpoint: removing one local
+# can orphan another it referenced.
+import glob
+
+def locals_attrs(text, body_start):
+    # top-level attributes of a locals block: (name, abs_start, abs_end)
+    out = []
+    i = body_start
+    depth = 0
+    heredoc = None
+    cur_name = None
+    cur_start = None
+    for line in text[body_start:].splitlines(keepends=True):
+        stripped = line.strip()
+        if heredoc:
+            if stripped == heredoc:
+                heredoc = None
+        elif cur_name is None and stripped == '}' and depth == 0:
+            if False:
+                pass
+            return out, i  # end of locals block
+        else:
+            am = re.match(r'^  ([a-z0-9_]+)\s*=', line) if depth == 0 else None
+            if am and cur_name is None:
+                cur_name, cur_start = am.group(1), i
+            hd = re.search(r'<<-?([A-Z][A-Z0-9_]*)\s*$', line)
+            if hd:
+                heredoc = hd.group(1)
+            else:
+                depth += line.count('{') + line.count('[') - line.count('}') - line.count(']')
+        i += len(line)
+        if cur_name is not None and depth == 0 and heredoc is None:
+            out.append((cur_name, cur_start, i))
+            cur_name = None
+    return out, i
+
+pruned_any = True
+pruned_names = []
+while pruned_any:
+    pruned_any = False
+    files = sorted(glob.glob('*.tf'))
+    corpus = {f: open(f).read() for f in files}
+    everything = '\n'.join(corpus.values())
+    for f in files:
+        text = corpus[f]
+        edits = []
+        for m in re.finditer(r'^locals \{\n', text, re.M):
+            attrs_spans, _ = locals_attrs(text, m.end())
+            for name, s, e in attrs_spans:
+                if not re.search(r'\blocal\.' + re.escape(name) + r'\b', everything):
+                    edits.append((s, e, name))
+        if edits:
+            for s, e, name in sorted(edits, reverse=True):
+                text = text[:s] + text[e:]
+                pruned_names.append(name)
+            # drop locals blocks that became empty
+            text = re.sub(r'^locals \{\n\s*\}\n', '', text, flags=re.M)
+            open(f, 'w').write(text)
+            pruned_any = True
+    if pruned_any:
+        continue
+
+for f in sorted(glob.glob('*.tf')):
+    if open(f).read().strip() == '':
+        os.remove(f)
+        print(f'note: removed empty {f}', file=sys.stderr)
+if pruned_names:
+    print(f'note: pruned unreferenced locals: {", ".join(sorted(set(pruned_names)))}', file=sys.stderr)
+
 print(f'environments: {", ".join(names)}', file=sys.stderr)
 print(old_label)
 PYEOF

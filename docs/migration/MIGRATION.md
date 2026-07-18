@@ -25,8 +25,9 @@ bash /tmp/multy/docs/generate-migration.sh vX.Y.Z
 
 This rewrites `tenant.tf` (tenant facts once on `tenant_base`, one
 `cluster_<env>` block per environment carried over verbatim), writes
-`providers.tf`, and writes `moved-migration.tf`. It fails loudly on anything
-it does not recognize. Review the diff, then go to the gate (step 4).
+`providers.tf`, writes `moved-migration.tf`, and prunes locals the migration
+leaves unreferenced (e.g. `opsgenie_emails`). It fails loudly on anything it
+does not recognize. Review the diff, then go to the gate (step 4).
 
 The manual steps below are equivalent:
 
