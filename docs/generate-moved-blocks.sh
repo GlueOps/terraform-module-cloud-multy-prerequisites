@@ -48,12 +48,13 @@ REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 # (generated-file templates contain blocks that are text, not declarations)
 inventory() {
   awk '
+    FNR == 1 { inheredoc = 0 }
     inheredoc { if ($0 ~ ("^[[:space:]]*" tag "$")) inheredoc = 0; next }
     /^[[:space:]]*(#|\/\/)/ { next }
-    /<</ {
+    /<<-?[A-Za-z_][A-Za-z0-9_]*[[:space:]]*$/ {
       tmp = $0
       sub(/.*<<-?/, "", tmp)
-      sub(/[^A-Z0-9_].*/, "", tmp)
+      sub(/[^A-Za-z0-9_].*/, "", tmp)
       if (tmp != "") { tag = tmp; inheredoc = 1 }
     }
     { print }
@@ -64,14 +65,31 @@ inventory() {
 }
 
 if [ $# -eq 0 ]; then
-  # derive environment names from the root .tf files in the current directory
+  # derive environment names from the root .tf files in the current directory:
+  # only module "cluster_<env>" blocks that actually source //modules/captain-cluster
+  # count (a pre-existing unrelated module that happens to be named cluster_*
+  # must not produce moved blocks)
   ls ./*.tf > /dev/null 2>&1 || { echo "no .tf files in current directory; pass environment names explicitly" >&2; exit 1; }
   if grep -qE "^module \"$OLD_LABEL\"" ./*.tf; then
     echo "a root .tf file still declares module \"$OLD_LABEL\" — delete the old call first" >&2
     exit 1
   fi
-  envs=$(grep -hoE '^module "cluster_[A-Za-z0-9_-]+"' ./*.tf | sed -E 's/^module "cluster_([A-Za-z0-9_-]+)"$/\1/' | sort -u)
-  [ -n "$envs" ] || { echo 'no module "cluster_<env>" blocks found in root .tf files' >&2; exit 1; }
+  envs=$(awk '
+    FNR == 1 { pending = "" }
+    /^module "cluster_[A-Za-z0-9_-]+"[[:space:]]*\{/ {
+      lbl = $2
+      gsub(/"/, "", lbl)
+      sub(/^cluster_/, "", lbl)
+      pending = lbl
+      next
+    }
+    pending != "" && $0 ~ /^[[:space:]]*source[[:space:]]*=/ {
+      if ($0 ~ /\/\/modules\/captain-cluster/) print pending
+      pending = ""
+    }
+    /^\}/ { pending = "" }
+  ' ./*.tf | sort -u)
+  [ -n "$envs" ] || { echo 'no module "cluster_<env>" blocks sourcing //modules/captain-cluster found in root .tf files' >&2; exit 1; }
   # shellcheck disable=SC2086
   set -- $envs
 fi
