@@ -150,9 +150,3 @@ variable "backup_region" {
   type        = string
   nullable    = false
 }
-
-variable "opsgenie_emails" {
-  description = "List of user email addresses"
-  type        = list(string)
-  default     = [] # this for backward compatability
-}
