@@ -25,6 +25,22 @@ variable "tenant_account_id" {
   nullable    = false
 }
 
+variable "github_owner" {
+  description = "The GitHub Owner where the tenant repo will be deployed."
+  type        = string
+  nullable    = false
+}
+
+variable "autoglue_credentials" {
+  type = object({
+    autoglue_key        = string
+    autoglue_org_secret = string
+    base_url            = string
+  })
+  description = "The autoglue credentials object"
+  nullable    = true
+}
+
 variable "environment_names" {
   description = "The environment names of every cluster environment in this tenant. Used to derive the cluster zone names for the shared backup bucket lifecycle rules."
   type        = list(string)

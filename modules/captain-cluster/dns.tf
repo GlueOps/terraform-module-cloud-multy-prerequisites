@@ -1,8 +1,8 @@
 resource "aws_route53_zone" "clusters" {
   provider      = aws.clientaccount
   for_each      = local.cluster_environments
-  name          = "${each.value}.${var.tenant_key}.${var.tenant.management_tenant_dns_zone_name}"
-  force_destroy = var.this_is_development ? true : false
+  name          = "${each.value}.${var.tenant.tenant_key}.${var.tenant.management_tenant_dns_zone_name}"
+  force_destroy = var.tenant.this_is_development ? true : false
 }
 
 resource "aws_route53_key_signing_key" "cluster_zones" {

@@ -36,6 +36,8 @@ blocks are chained and no-op wherever they don't apply).
 3. Rewrite `tenant.tf`:
 
    ```hcl
+   # All tenant-scoped values are stated ONCE, here. Cluster blocks only carry
+   # providers, the two bundles, and their own environment.
    module "tenant_base" {
      source = "git::https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites.git//modules/tenant-base?ref=vX.Y.Z"
      providers = {
@@ -50,6 +52,8 @@ blocks are chained and no-op wherever they don't apply).
      this_is_development          = false
      primary_region               = "<region>"
      backup_region                = "<region>"
+     github_owner                 = local.github_owner
+     autoglue_credentials         = local.autoglue_credentials
      environment_names            = ["nonprod", "prod"]
    }
 
@@ -60,15 +64,8 @@ blocks are chained and no-op wherever they don't apply).
        aws.primaryregion = aws.primaryregion
        aws.replicaregion = aws.replicaregion
      }
-     tenant               = module.tenant_base.captain_cluster_inputs
-     tenant_autoglue_iam  = module.tenant_base.autoglue_iam_credentials
-     tenant_key           = "<tenant_key>"
-     tenant_account_id    = "<aws account id>"
-     this_is_development  = false
-     primary_region       = "<region>"
-     backup_region        = "<region>"
-     github_owner         = local.github_owner
-     autoglue_credentials = local.autoglue_credentials
+     tenant         = module.tenant_base.captain_cluster_inputs
+     tenant_secrets = module.tenant_base.captain_cluster_secrets
      cluster_environments = [
        { environment_name = "nonprod", /* … carried over verbatim … */ }
      ]

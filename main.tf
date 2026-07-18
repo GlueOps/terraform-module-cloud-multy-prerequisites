@@ -27,6 +27,8 @@ module "tenant_base" {
   this_is_development          = var.this_is_development
   primary_region               = var.primary_region
   backup_region                = var.backup_region
+  github_owner                 = var.github_owner
+  autoglue_credentials         = var.autoglue_credentials
   environment_names            = [for e in var.cluster_environments : e.environment_name]
 }
 
@@ -39,12 +41,5 @@ module "captain_cluster" {
   }
   cluster_environments = var.cluster_environments
   tenant               = module.tenant_base.captain_cluster_inputs
-  tenant_autoglue_iam  = module.tenant_base.autoglue_iam_credentials
-  tenant_key           = var.tenant_key
-  tenant_account_id    = var.tenant_account_id
-  this_is_development  = var.this_is_development
-  primary_region       = var.primary_region
-  backup_region        = var.backup_region
-  github_owner         = var.github_owner
-  autoglue_credentials = var.autoglue_credentials
+  tenant_secrets       = module.tenant_base.captain_cluster_secrets
 }

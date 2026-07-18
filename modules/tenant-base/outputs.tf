@@ -1,6 +1,12 @@
 output "captain_cluster_inputs" {
   description = "Non-secret shared tenant values consumed by each captain-cluster module instantiation."
   value = {
+    tenant_key                                                 = var.tenant_key
+    tenant_account_id                                          = var.tenant_account_id
+    this_is_development                                        = var.this_is_development
+    primary_region                                             = var.primary_region
+    backup_region                                              = var.backup_region
+    github_owner                                               = var.github_owner
     parent_zone_id                                             = aws_route53_zone.main.zone_id
     parent_zone_name                                           = aws_route53_zone.main.name
     management_tenant_dns_zone_name                            = data.aws_route53_zone.management_tenant_dns.name
@@ -15,11 +21,14 @@ output "captain_cluster_inputs" {
   }
 }
 
-output "autoglue_iam_credentials" {
-  description = "IAM access key for the shared route53 autoglue user. Kept separate from captain_cluster_inputs so the non-secret bundle stays readable in plans."
+output "captain_cluster_secrets" {
+  description = "Shared tenant secrets consumed by each captain-cluster module instantiation. Kept separate from captain_cluster_inputs so the non-secret bundle stays readable in plans."
   sensitive   = true
   value = {
-    access_key_id     = aws_iam_access_key.autoglue.id
-    secret_access_key = aws_iam_access_key.autoglue.secret
+    autoglue_iam = {
+      access_key_id     = aws_iam_access_key.autoglue.id
+      secret_access_key = aws_iam_access_key.autoglue.secret
+    }
+    autoglue_credentials = var.autoglue_credentials
   }
 }

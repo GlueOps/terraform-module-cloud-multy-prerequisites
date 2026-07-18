@@ -2,6 +2,12 @@
 variable "tenant" {
   description = "Shared tenant values produced by the tenant-base module (its captain_cluster_inputs output)."
   type = object({
+    tenant_key                                                 = string
+    tenant_account_id                                          = string
+    this_is_development                                        = string
+    primary_region                                             = string
+    backup_region                                              = string
+    github_owner                                               = string
     parent_zone_id                                             = string
     parent_zone_name                                           = string
     management_tenant_dns_zone_name                            = string
@@ -17,49 +23,21 @@ variable "tenant" {
   nullable = false
 }
 
-variable "tenant_autoglue_iam" {
-  description = "IAM access key of the shared route53 autoglue user (tenant-base autoglue_iam_credentials output)."
+variable "tenant_secrets" {
+  description = "Shared tenant secrets produced by the tenant-base module (its captain_cluster_secrets output)."
   type = object({
-    access_key_id     = string
-    secret_access_key = string
+    autoglue_iam = object({
+      access_key_id     = string
+      secret_access_key = string
+    })
+    autoglue_credentials = optional(object({
+      autoglue_key        = string
+      autoglue_org_secret = string
+      base_url            = string
+    }))
   })
   sensitive = true
   nullable  = false
-}
-
-variable "this_is_development" {
-  description = "The development cluster environment and data/resources can be destroyed!"
-  type        = string
-  nullable    = false
-  default     = false
-}
-
-variable "tenant_key" {
-  description = "The tenant key"
-  type        = string
-  nullable    = false
-}
-
-variable "tenant_account_id" {
-  description = "The tenant AWS account id"
-  type        = string
-  nullable    = false
-}
-
-variable "github_owner" {
-  description = "The GitHub Owner where the tenant repo will be deployed."
-  type        = string
-  nullable    = false
-}
-
-variable "autoglue_credentials" {
-  type = object({
-    autoglue_key        = string
-    autoglue_org_secret = string
-    base_url            = string
-  })
-  description = "The autoglue credentials object"
-  nullable    = true
 }
 
 
@@ -108,20 +86,8 @@ locals {
   cluster_environments = toset(keys(local.environment_map))
 }
 
-variable "primary_region" {
-  description = "The primary S3 region to create S3 bucket in used for backups. This should be the same region as the one where the cluster is being deployed."
-  type        = string
-  nullable    = false
-}
-
-variable "backup_region" {
-  description = "The secondary S3 region to create S3 bucket in used for backups. This should be different than the primary region and will have the data from the primary region replicated to it."
-  type        = string
-  nullable    = false
-}
-
 locals {
   record_ttl     = "60"
   ns_record_type = "NS"
-  bucket_name    = "glueops-tenant-${var.tenant_key}"
+  bucket_name    = "glueops-tenant-${var.tenant.tenant_key}"
 }

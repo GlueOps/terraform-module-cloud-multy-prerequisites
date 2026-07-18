@@ -51,7 +51,7 @@ module "configure_vault_cluster" {
       ${join(",\n    ", [for mapping in each.value.vault_github_org_team_policy_mappings : "{ oidc_groups = ${jsonencode(mapping.oidc_groups)}, policy_name = \"${mapping.policy_name}\" }"])}
     ]
 
-    aws_region     = "${var.primary_region}"
+    aws_region     = "${var.tenant.primary_region}"
     aws_s3_bucket_name  = "${var.tenant.s3_multi_region_access_point_arn}"
     aws_s3_key_vault_secret_file     = "${aws_route53_zone.clusters[each.key].name}/${local.vault_access_tokens_s3_key}"
     aws_access_key = "${aws_iam_access_key.vault_init_s3_v2[each.value.environment_name].id}"

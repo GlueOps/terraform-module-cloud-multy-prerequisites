@@ -51,7 +51,7 @@ module "glueops_platform_helm_values" {
   source                                     = "git::https://github.com/GlueOps/platform-helm-chart-platform.git?ref=v0.75.2"
   captain_repo_b64encoded_private_deploy_key = base64encode(module.captain_repository[each.value.environment_name].private_deploy_key)
   captain_repo_ssh_clone_url                 = module.captain_repository[each.value.environment_name].ssh_clone_url
-  this_is_development                        = var.this_is_development
+  this_is_development                        = var.tenant.this_is_development
   dex_github_client_id                       = each.value.github_oauth_app_client_id
   dex_github_client_secret                   = each.value.github_oauth_app_client_secret
   dex_argocd_client_secret                   = random_password.dex_argocd_client_secret[each.value.environment_name].result
@@ -69,8 +69,8 @@ module "glueops_platform_helm_values" {
   externaldns_aws_secret_key                 = aws_iam_access_key.externaldns_v2[each.value.environment_name].secret
   glueops_root_domain                        = var.tenant.management_tenant_dns_zone_name
   cluster_environment                        = each.value.environment_name
-  aws_region                                 = var.primary_region
-  tenant_key                                 = var.tenant_key
+  aws_region                                 = var.tenant.primary_region
+  tenant_key                                 = var.tenant.tenant_key
   admin_github_org_name                      = each.value.admin_github_org_name
   tenant_github_org_name                     = each.value.tenant_github_org_name
   grafana_admin_password                     = random_password.grafana_admin_secret[each.value.environment_name].result
@@ -103,7 +103,7 @@ module "glueops_platform_helm_values" {
 module "argocd_helm_values" {
   for_each             = local.environment_map
   source               = "git::https://github.com/GlueOps/docs-argocd.git?ref=v0.19.1"
-  tenant_key           = var.tenant_key
+  tenant_key           = var.tenant.tenant_key
   cluster_environment  = each.value.environment_name
   client_secret        = random_password.dex_argocd_client_secret[each.value.environment_name].result
   glueops_root_domain  = var.tenant.management_tenant_dns_zone_name
