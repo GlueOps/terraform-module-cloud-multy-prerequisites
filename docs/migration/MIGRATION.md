@@ -28,7 +28,7 @@ blocks are chained and no-op wherever they don't apply).
    **Conventional names only, zero commands** — copy
    `docs/migration/moved-migration.tf` (from the module ref you are pinning)
    into the tenant repo root, verbatim. It covers: `nonprod`, `prod`, `dev`,
-   `test`, `qa`, `staging`, `uat`, `sandbox`. Other names need the generated
+   `test`, `qa`, `staging`, `uat`, `sandbox`, `another-nonprod-env`. Other names need the generated
    variant above (or a PR extending the list per the file's header).
 2. Add `providers.tf` to the tenant repo — the same four aliased AWS providers
    and autoglue provider the module configured internally (see the template

@@ -1,7 +1,7 @@
 # GENERATED FILE — do not edit by hand.
 # Regenerate after any change to moved.tf, modules/captain-cluster, or the
 # conventional environment list:
-#   bash docs/generate-moved-blocks.sh --chained nonprod prod dev test qa staging uat sandbox > docs/migration/moved-migration.tf
+#   bash docs/generate-moved-blocks.sh --chained nonprod prod dev test qa staging uat sandbox another-nonprod-env > docs/migration/moved-migration.tf
 #
 # Copy this file VERBATIM into a tenant repo alongside the rewritten
 # tenant.tf (see docs/migration/MIGRATION.md). Blocks for environments a
@@ -434,6 +434,11 @@ moved {
 }
 
 moved {
+  from = module.tenant.module.captain_cluster.aws_iam_access_key.certmanager_v2["another-nonprod-env"]
+  to   = module.cluster_another-nonprod-env.aws_iam_access_key.certmanager_v2["another-nonprod-env"]
+}
+
+moved {
   from = module.tenant.module.captain_cluster.aws_iam_access_key.externaldns_v2["nonprod"]
   to   = module.cluster_nonprod.aws_iam_access_key.externaldns_v2["nonprod"]
 }
@@ -471,6 +476,11 @@ moved {
 moved {
   from = module.tenant.module.captain_cluster.aws_iam_access_key.externaldns_v2["sandbox"]
   to   = module.cluster_sandbox.aws_iam_access_key.externaldns_v2["sandbox"]
+}
+
+moved {
+  from = module.tenant.module.captain_cluster.aws_iam_access_key.externaldns_v2["another-nonprod-env"]
+  to   = module.cluster_another-nonprod-env.aws_iam_access_key.externaldns_v2["another-nonprod-env"]
 }
 
 moved {
@@ -514,6 +524,11 @@ moved {
 }
 
 moved {
+  from = module.tenant.module.captain_cluster.aws_iam_access_key.loki_s3_v2["another-nonprod-env"]
+  to   = module.cluster_another-nonprod-env.aws_iam_access_key.loki_s3_v2["another-nonprod-env"]
+}
+
+moved {
   from = module.tenant.module.captain_cluster.aws_iam_access_key.tls_cert_backup_s3_v2["nonprod"]
   to   = module.cluster_nonprod.aws_iam_access_key.tls_cert_backup_s3_v2["nonprod"]
 }
@@ -551,6 +566,11 @@ moved {
 moved {
   from = module.tenant.module.captain_cluster.aws_iam_access_key.tls_cert_backup_s3_v2["sandbox"]
   to   = module.cluster_sandbox.aws_iam_access_key.tls_cert_backup_s3_v2["sandbox"]
+}
+
+moved {
+  from = module.tenant.module.captain_cluster.aws_iam_access_key.tls_cert_backup_s3_v2["another-nonprod-env"]
+  to   = module.cluster_another-nonprod-env.aws_iam_access_key.tls_cert_backup_s3_v2["another-nonprod-env"]
 }
 
 moved {
@@ -594,6 +614,11 @@ moved {
 }
 
 moved {
+  from = module.tenant.module.captain_cluster.aws_iam_access_key.tls_cert_restore_s3_v2["another-nonprod-env"]
+  to   = module.cluster_another-nonprod-env.aws_iam_access_key.tls_cert_restore_s3_v2["another-nonprod-env"]
+}
+
+moved {
   from = module.tenant.module.captain_cluster.aws_iam_access_key.vault_init_s3_v2["nonprod"]
   to   = module.cluster_nonprod.aws_iam_access_key.vault_init_s3_v2["nonprod"]
 }
@@ -631,6 +656,11 @@ moved {
 moved {
   from = module.tenant.module.captain_cluster.aws_iam_access_key.vault_init_s3_v2["sandbox"]
   to   = module.cluster_sandbox.aws_iam_access_key.vault_init_s3_v2["sandbox"]
+}
+
+moved {
+  from = module.tenant.module.captain_cluster.aws_iam_access_key.vault_init_s3_v2["another-nonprod-env"]
+  to   = module.cluster_another-nonprod-env.aws_iam_access_key.vault_init_s3_v2["another-nonprod-env"]
 }
 
 moved {
@@ -674,6 +704,11 @@ moved {
 }
 
 moved {
+  from = module.tenant.module.captain_cluster.aws_iam_access_key.vault_s3_backup_v2["another-nonprod-env"]
+  to   = module.cluster_another-nonprod-env.aws_iam_access_key.vault_s3_backup_v2["another-nonprod-env"]
+}
+
+moved {
   from = module.tenant.module.captain_cluster.aws_iam_policy.loki_s3_v2["nonprod"]
   to   = module.cluster_nonprod.aws_iam_policy.loki_s3_v2["nonprod"]
 }
@@ -711,6 +746,11 @@ moved {
 moved {
   from = module.tenant.module.captain_cluster.aws_iam_policy.loki_s3_v2["sandbox"]
   to   = module.cluster_sandbox.aws_iam_policy.loki_s3_v2["sandbox"]
+}
+
+moved {
+  from = module.tenant.module.captain_cluster.aws_iam_policy.loki_s3_v2["another-nonprod-env"]
+  to   = module.cluster_another-nonprod-env.aws_iam_policy.loki_s3_v2["another-nonprod-env"]
 }
 
 moved {
@@ -754,6 +794,11 @@ moved {
 }
 
 moved {
+  from = module.tenant.module.captain_cluster.aws_iam_policy.route53_v2["another-nonprod-env"]
+  to   = module.cluster_another-nonprod-env.aws_iam_policy.route53_v2["another-nonprod-env"]
+}
+
+moved {
   from = module.tenant.module.captain_cluster.aws_iam_policy.tls_cert_backup_s3_v2["nonprod"]
   to   = module.cluster_nonprod.aws_iam_policy.tls_cert_backup_s3_v2["nonprod"]
 }
@@ -791,6 +836,11 @@ moved {
 moved {
   from = module.tenant.module.captain_cluster.aws_iam_policy.tls_cert_backup_s3_v2["sandbox"]
   to   = module.cluster_sandbox.aws_iam_policy.tls_cert_backup_s3_v2["sandbox"]
+}
+
+moved {
+  from = module.tenant.module.captain_cluster.aws_iam_policy.tls_cert_backup_s3_v2["another-nonprod-env"]
+  to   = module.cluster_another-nonprod-env.aws_iam_policy.tls_cert_backup_s3_v2["another-nonprod-env"]
 }
 
 moved {
@@ -834,6 +884,11 @@ moved {
 }
 
 moved {
+  from = module.tenant.module.captain_cluster.aws_iam_policy.tls_cert_restore_s3_v2["another-nonprod-env"]
+  to   = module.cluster_another-nonprod-env.aws_iam_policy.tls_cert_restore_s3_v2["another-nonprod-env"]
+}
+
+moved {
   from = module.tenant.module.captain_cluster.aws_iam_policy.vault_init_s3_v2["nonprod"]
   to   = module.cluster_nonprod.aws_iam_policy.vault_init_s3_v2["nonprod"]
 }
@@ -871,6 +926,11 @@ moved {
 moved {
   from = module.tenant.module.captain_cluster.aws_iam_policy.vault_init_s3_v2["sandbox"]
   to   = module.cluster_sandbox.aws_iam_policy.vault_init_s3_v2["sandbox"]
+}
+
+moved {
+  from = module.tenant.module.captain_cluster.aws_iam_policy.vault_init_s3_v2["another-nonprod-env"]
+  to   = module.cluster_another-nonprod-env.aws_iam_policy.vault_init_s3_v2["another-nonprod-env"]
 }
 
 moved {
@@ -914,6 +974,11 @@ moved {
 }
 
 moved {
+  from = module.tenant.module.captain_cluster.aws_iam_policy.vault_s3_backup_v2["another-nonprod-env"]
+  to   = module.cluster_another-nonprod-env.aws_iam_policy.vault_s3_backup_v2["another-nonprod-env"]
+}
+
+moved {
   from = module.tenant.module.captain_cluster.aws_iam_user.certmanager_v2["nonprod"]
   to   = module.cluster_nonprod.aws_iam_user.certmanager_v2["nonprod"]
 }
@@ -951,6 +1016,11 @@ moved {
 moved {
   from = module.tenant.module.captain_cluster.aws_iam_user.certmanager_v2["sandbox"]
   to   = module.cluster_sandbox.aws_iam_user.certmanager_v2["sandbox"]
+}
+
+moved {
+  from = module.tenant.module.captain_cluster.aws_iam_user.certmanager_v2["another-nonprod-env"]
+  to   = module.cluster_another-nonprod-env.aws_iam_user.certmanager_v2["another-nonprod-env"]
 }
 
 moved {
@@ -994,6 +1064,11 @@ moved {
 }
 
 moved {
+  from = module.tenant.module.captain_cluster.aws_iam_user.externaldns_v2["another-nonprod-env"]
+  to   = module.cluster_another-nonprod-env.aws_iam_user.externaldns_v2["another-nonprod-env"]
+}
+
+moved {
   from = module.tenant.module.captain_cluster.aws_iam_user.loki_s3_v2["nonprod"]
   to   = module.cluster_nonprod.aws_iam_user.loki_s3_v2["nonprod"]
 }
@@ -1031,6 +1106,11 @@ moved {
 moved {
   from = module.tenant.module.captain_cluster.aws_iam_user.loki_s3_v2["sandbox"]
   to   = module.cluster_sandbox.aws_iam_user.loki_s3_v2["sandbox"]
+}
+
+moved {
+  from = module.tenant.module.captain_cluster.aws_iam_user.loki_s3_v2["another-nonprod-env"]
+  to   = module.cluster_another-nonprod-env.aws_iam_user.loki_s3_v2["another-nonprod-env"]
 }
 
 moved {
@@ -1074,6 +1154,11 @@ moved {
 }
 
 moved {
+  from = module.tenant.module.captain_cluster.aws_iam_user_policy_attachment.certmanager_v2["another-nonprod-env"]
+  to   = module.cluster_another-nonprod-env.aws_iam_user_policy_attachment.certmanager_v2["another-nonprod-env"]
+}
+
+moved {
   from = module.tenant.module.captain_cluster.aws_iam_user_policy_attachment.externaldns_v2["nonprod"]
   to   = module.cluster_nonprod.aws_iam_user_policy_attachment.externaldns_v2["nonprod"]
 }
@@ -1111,6 +1196,11 @@ moved {
 moved {
   from = module.tenant.module.captain_cluster.aws_iam_user_policy_attachment.externaldns_v2["sandbox"]
   to   = module.cluster_sandbox.aws_iam_user_policy_attachment.externaldns_v2["sandbox"]
+}
+
+moved {
+  from = module.tenant.module.captain_cluster.aws_iam_user_policy_attachment.externaldns_v2["another-nonprod-env"]
+  to   = module.cluster_another-nonprod-env.aws_iam_user_policy_attachment.externaldns_v2["another-nonprod-env"]
 }
 
 moved {
@@ -1154,6 +1244,11 @@ moved {
 }
 
 moved {
+  from = module.tenant.module.captain_cluster.aws_iam_user_policy_attachment.loki_s3_v2["another-nonprod-env"]
+  to   = module.cluster_another-nonprod-env.aws_iam_user_policy_attachment.loki_s3_v2["another-nonprod-env"]
+}
+
+moved {
   from = module.tenant.module.captain_cluster.aws_iam_user_policy_attachment.tls_cert_backup_s3_v2["nonprod"]
   to   = module.cluster_nonprod.aws_iam_user_policy_attachment.tls_cert_backup_s3_v2["nonprod"]
 }
@@ -1191,6 +1286,11 @@ moved {
 moved {
   from = module.tenant.module.captain_cluster.aws_iam_user_policy_attachment.tls_cert_backup_s3_v2["sandbox"]
   to   = module.cluster_sandbox.aws_iam_user_policy_attachment.tls_cert_backup_s3_v2["sandbox"]
+}
+
+moved {
+  from = module.tenant.module.captain_cluster.aws_iam_user_policy_attachment.tls_cert_backup_s3_v2["another-nonprod-env"]
+  to   = module.cluster_another-nonprod-env.aws_iam_user_policy_attachment.tls_cert_backup_s3_v2["another-nonprod-env"]
 }
 
 moved {
@@ -1234,6 +1334,11 @@ moved {
 }
 
 moved {
+  from = module.tenant.module.captain_cluster.aws_iam_user_policy_attachment.tls_cert_restore_s3_v2["another-nonprod-env"]
+  to   = module.cluster_another-nonprod-env.aws_iam_user_policy_attachment.tls_cert_restore_s3_v2["another-nonprod-env"]
+}
+
+moved {
   from = module.tenant.module.captain_cluster.aws_iam_user_policy_attachment.vault_init_s3_v2["nonprod"]
   to   = module.cluster_nonprod.aws_iam_user_policy_attachment.vault_init_s3_v2["nonprod"]
 }
@@ -1271,6 +1376,11 @@ moved {
 moved {
   from = module.tenant.module.captain_cluster.aws_iam_user_policy_attachment.vault_init_s3_v2["sandbox"]
   to   = module.cluster_sandbox.aws_iam_user_policy_attachment.vault_init_s3_v2["sandbox"]
+}
+
+moved {
+  from = module.tenant.module.captain_cluster.aws_iam_user_policy_attachment.vault_init_s3_v2["another-nonprod-env"]
+  to   = module.cluster_another-nonprod-env.aws_iam_user_policy_attachment.vault_init_s3_v2["another-nonprod-env"]
 }
 
 moved {
@@ -1314,6 +1424,11 @@ moved {
 }
 
 moved {
+  from = module.tenant.module.captain_cluster.aws_iam_user_policy_attachment.vault_s3_backup_v2["another-nonprod-env"]
+  to   = module.cluster_another-nonprod-env.aws_iam_user_policy_attachment.vault_s3_backup_v2["another-nonprod-env"]
+}
+
+moved {
   from = module.tenant.module.captain_cluster.aws_iam_user.tls_cert_backup_s3_v2["nonprod"]
   to   = module.cluster_nonprod.aws_iam_user.tls_cert_backup_s3_v2["nonprod"]
 }
@@ -1351,6 +1466,11 @@ moved {
 moved {
   from = module.tenant.module.captain_cluster.aws_iam_user.tls_cert_backup_s3_v2["sandbox"]
   to   = module.cluster_sandbox.aws_iam_user.tls_cert_backup_s3_v2["sandbox"]
+}
+
+moved {
+  from = module.tenant.module.captain_cluster.aws_iam_user.tls_cert_backup_s3_v2["another-nonprod-env"]
+  to   = module.cluster_another-nonprod-env.aws_iam_user.tls_cert_backup_s3_v2["another-nonprod-env"]
 }
 
 moved {
@@ -1394,6 +1514,11 @@ moved {
 }
 
 moved {
+  from = module.tenant.module.captain_cluster.aws_iam_user.tls_cert_restore_s3_v2["another-nonprod-env"]
+  to   = module.cluster_another-nonprod-env.aws_iam_user.tls_cert_restore_s3_v2["another-nonprod-env"]
+}
+
+moved {
   from = module.tenant.module.captain_cluster.aws_iam_user.vault_init_s3_v2["nonprod"]
   to   = module.cluster_nonprod.aws_iam_user.vault_init_s3_v2["nonprod"]
 }
@@ -1431,6 +1556,11 @@ moved {
 moved {
   from = module.tenant.module.captain_cluster.aws_iam_user.vault_init_s3_v2["sandbox"]
   to   = module.cluster_sandbox.aws_iam_user.vault_init_s3_v2["sandbox"]
+}
+
+moved {
+  from = module.tenant.module.captain_cluster.aws_iam_user.vault_init_s3_v2["another-nonprod-env"]
+  to   = module.cluster_another-nonprod-env.aws_iam_user.vault_init_s3_v2["another-nonprod-env"]
 }
 
 moved {
@@ -1474,6 +1604,11 @@ moved {
 }
 
 moved {
+  from = module.tenant.module.captain_cluster.aws_iam_user.vault_s3_backup_v2["another-nonprod-env"]
+  to   = module.cluster_another-nonprod-env.aws_iam_user.vault_s3_backup_v2["another-nonprod-env"]
+}
+
+moved {
   from = module.tenant.module.captain_cluster.aws_route53_hosted_zone_dnssec.cluster_zones["nonprod"]
   to   = module.cluster_nonprod.aws_route53_hosted_zone_dnssec.cluster_zones["nonprod"]
 }
@@ -1511,6 +1646,11 @@ moved {
 moved {
   from = module.tenant.module.captain_cluster.aws_route53_hosted_zone_dnssec.cluster_zones["sandbox"]
   to   = module.cluster_sandbox.aws_route53_hosted_zone_dnssec.cluster_zones["sandbox"]
+}
+
+moved {
+  from = module.tenant.module.captain_cluster.aws_route53_hosted_zone_dnssec.cluster_zones["another-nonprod-env"]
+  to   = module.cluster_another-nonprod-env.aws_route53_hosted_zone_dnssec.cluster_zones["another-nonprod-env"]
 }
 
 moved {
@@ -1554,6 +1694,11 @@ moved {
 }
 
 moved {
+  from = module.tenant.module.captain_cluster.aws_route53_key_signing_key.cluster_zones["another-nonprod-env"]
+  to   = module.cluster_another-nonprod-env.aws_route53_key_signing_key.cluster_zones["another-nonprod-env"]
+}
+
+moved {
   from = module.tenant.module.captain_cluster.aws_route53_record.cluster_zone_dnssec_records["nonprod"]
   to   = module.cluster_nonprod.aws_route53_record.cluster_zone_dnssec_records["nonprod"]
 }
@@ -1591,6 +1736,11 @@ moved {
 moved {
   from = module.tenant.module.captain_cluster.aws_route53_record.cluster_zone_dnssec_records["sandbox"]
   to   = module.cluster_sandbox.aws_route53_record.cluster_zone_dnssec_records["sandbox"]
+}
+
+moved {
+  from = module.tenant.module.captain_cluster.aws_route53_record.cluster_zone_dnssec_records["another-nonprod-env"]
+  to   = module.cluster_another-nonprod-env.aws_route53_record.cluster_zone_dnssec_records["another-nonprod-env"]
 }
 
 moved {
@@ -1634,6 +1784,11 @@ moved {
 }
 
 moved {
+  from = module.tenant.module.captain_cluster.aws_route53_record.cluster_zone_ns_records["another-nonprod-env"]
+  to   = module.cluster_another-nonprod-env.aws_route53_record.cluster_zone_ns_records["another-nonprod-env"]
+}
+
+moved {
   from = module.tenant.module.captain_cluster.aws_route53_record.wildcard_for_apps["nonprod"]
   to   = module.cluster_nonprod.aws_route53_record.wildcard_for_apps["nonprod"]
 }
@@ -1671,6 +1826,11 @@ moved {
 moved {
   from = module.tenant.module.captain_cluster.aws_route53_record.wildcard_for_apps["sandbox"]
   to   = module.cluster_sandbox.aws_route53_record.wildcard_for_apps["sandbox"]
+}
+
+moved {
+  from = module.tenant.module.captain_cluster.aws_route53_record.wildcard_for_apps["another-nonprod-env"]
+  to   = module.cluster_another-nonprod-env.aws_route53_record.wildcard_for_apps["another-nonprod-env"]
 }
 
 moved {
@@ -1714,6 +1874,11 @@ moved {
 }
 
 moved {
+  from = module.tenant.module.captain_cluster.aws_route53_zone.clusters["another-nonprod-env"]
+  to   = module.cluster_another-nonprod-env.aws_route53_zone.clusters["another-nonprod-env"]
+}
+
+moved {
   from = module.tenant.module.captain_cluster.module.argocd_helm_values["nonprod"]
   to   = module.cluster_nonprod.module.argocd_helm_values["nonprod"]
 }
@@ -1751,6 +1916,11 @@ moved {
 moved {
   from = module.tenant.module.captain_cluster.module.argocd_helm_values["sandbox"]
   to   = module.cluster_sandbox.module.argocd_helm_values["sandbox"]
+}
+
+moved {
+  from = module.tenant.module.captain_cluster.module.argocd_helm_values["another-nonprod-env"]
+  to   = module.cluster_another-nonprod-env.module.argocd_helm_values["another-nonprod-env"]
 }
 
 moved {
@@ -1794,6 +1964,11 @@ moved {
 }
 
 moved {
+  from = module.tenant.module.captain_cluster.module.captain_repository["another-nonprod-env"]
+  to   = module.cluster_another-nonprod-env.module.captain_repository["another-nonprod-env"]
+}
+
+moved {
   from = module.tenant.module.captain_cluster.module.captain_repository_files["nonprod"]
   to   = module.cluster_nonprod.module.captain_repository_files["nonprod"]
 }
@@ -1831,6 +2006,11 @@ moved {
 moved {
   from = module.tenant.module.captain_cluster.module.captain_repository_files["sandbox"]
   to   = module.cluster_sandbox.module.captain_repository_files["sandbox"]
+}
+
+moved {
+  from = module.tenant.module.captain_cluster.module.captain_repository_files["another-nonprod-env"]
+  to   = module.cluster_another-nonprod-env.module.captain_repository_files["another-nonprod-env"]
 }
 
 moved {
@@ -1874,6 +2054,11 @@ moved {
 }
 
 moved {
+  from = module.tenant.module.captain_cluster.module.generate_gluekube_creds["another-nonprod-env"]
+  to   = module.cluster_another-nonprod-env.module.generate_gluekube_creds["another-nonprod-env"]
+}
+
+moved {
   from = module.tenant.module.captain_cluster.module.glueops_platform_helm_values["nonprod"]
   to   = module.cluster_nonprod.module.glueops_platform_helm_values["nonprod"]
 }
@@ -1911,6 +2096,11 @@ moved {
 moved {
   from = module.tenant.module.captain_cluster.module.glueops_platform_helm_values["sandbox"]
   to   = module.cluster_sandbox.module.glueops_platform_helm_values["sandbox"]
+}
+
+moved {
+  from = module.tenant.module.captain_cluster.module.glueops_platform_helm_values["another-nonprod-env"]
+  to   = module.cluster_another-nonprod-env.module.glueops_platform_helm_values["another-nonprod-env"]
 }
 
 moved {
@@ -1954,6 +2144,11 @@ moved {
 }
 
 moved {
+  from = module.tenant.module.captain_cluster.module.glueops_platform_versions["another-nonprod-env"]
+  to   = module.cluster_another-nonprod-env.module.glueops_platform_versions["another-nonprod-env"]
+}
+
+moved {
   from = module.tenant.module.captain_cluster.module.loki_s3["nonprod"]
   to   = module.cluster_nonprod.module.loki_s3["nonprod"]
 }
@@ -1991,6 +2186,11 @@ moved {
 moved {
   from = module.tenant.module.captain_cluster.module.loki_s3["sandbox"]
   to   = module.cluster_sandbox.module.loki_s3["sandbox"]
+}
+
+moved {
+  from = module.tenant.module.captain_cluster.module.loki_s3["another-nonprod-env"]
+  to   = module.cluster_another-nonprod-env.module.loki_s3["another-nonprod-env"]
 }
 
 moved {
@@ -2034,6 +2234,11 @@ moved {
 }
 
 moved {
+  from = module.tenant.module.captain_cluster.module.tenant_cluster_versions["another-nonprod-env"]
+  to   = module.cluster_another-nonprod-env.module.tenant_cluster_versions["another-nonprod-env"]
+}
+
+moved {
   from = module.tenant.module.captain_cluster.module.tenant_readmes["nonprod"]
   to   = module.cluster_nonprod.module.tenant_readmes["nonprod"]
 }
@@ -2071,6 +2276,11 @@ moved {
 moved {
   from = module.tenant.module.captain_cluster.module.tenant_readmes["sandbox"]
   to   = module.cluster_sandbox.module.tenant_readmes["sandbox"]
+}
+
+moved {
+  from = module.tenant.module.captain_cluster.module.tenant_readmes["another-nonprod-env"]
+  to   = module.cluster_another-nonprod-env.module.tenant_readmes["another-nonprod-env"]
 }
 
 moved {
@@ -2114,6 +2324,11 @@ moved {
 }
 
 moved {
+  from = module.tenant.module.captain_cluster.random_password.dex_argocd_client_secret["another-nonprod-env"]
+  to   = module.cluster_another-nonprod-env.random_password.dex_argocd_client_secret["another-nonprod-env"]
+}
+
+moved {
   from = module.tenant.module.captain_cluster.random_password.dex_grafana_client_secret["nonprod"]
   to   = module.cluster_nonprod.random_password.dex_grafana_client_secret["nonprod"]
 }
@@ -2151,6 +2366,11 @@ moved {
 moved {
   from = module.tenant.module.captain_cluster.random_password.dex_grafana_client_secret["sandbox"]
   to   = module.cluster_sandbox.random_password.dex_grafana_client_secret["sandbox"]
+}
+
+moved {
+  from = module.tenant.module.captain_cluster.random_password.dex_grafana_client_secret["another-nonprod-env"]
+  to   = module.cluster_another-nonprod-env.random_password.dex_grafana_client_secret["another-nonprod-env"]
 }
 
 moved {
@@ -2194,6 +2414,11 @@ moved {
 }
 
 moved {
+  from = module.tenant.module.captain_cluster.random_password.dex_oauth2_client_secret["another-nonprod-env"]
+  to   = module.cluster_another-nonprod-env.random_password.dex_oauth2_client_secret["another-nonprod-env"]
+}
+
+moved {
   from = module.tenant.module.captain_cluster.random_password.dex_oauth2_cookie_secret["nonprod"]
   to   = module.cluster_nonprod.random_password.dex_oauth2_cookie_secret["nonprod"]
 }
@@ -2231,6 +2456,11 @@ moved {
 moved {
   from = module.tenant.module.captain_cluster.random_password.dex_oauth2_cookie_secret["sandbox"]
   to   = module.cluster_sandbox.random_password.dex_oauth2_cookie_secret["sandbox"]
+}
+
+moved {
+  from = module.tenant.module.captain_cluster.random_password.dex_oauth2_cookie_secret["another-nonprod-env"]
+  to   = module.cluster_another-nonprod-env.random_password.dex_oauth2_cookie_secret["another-nonprod-env"]
 }
 
 moved {
@@ -2274,6 +2504,11 @@ moved {
 }
 
 moved {
+  from = module.tenant.module.captain_cluster.random_password.dex_vault_client_secret["another-nonprod-env"]
+  to   = module.cluster_another-nonprod-env.random_password.dex_vault_client_secret["another-nonprod-env"]
+}
+
+moved {
   from = module.tenant.module.captain_cluster.random_password.grafana_admin_secret["nonprod"]
   to   = module.cluster_nonprod.random_password.grafana_admin_secret["nonprod"]
 }
@@ -2311,6 +2546,11 @@ moved {
 moved {
   from = module.tenant.module.captain_cluster.random_password.grafana_admin_secret["sandbox"]
   to   = module.cluster_sandbox.random_password.grafana_admin_secret["sandbox"]
+}
+
+moved {
+  from = module.tenant.module.captain_cluster.random_password.grafana_admin_secret["another-nonprod-env"]
+  to   = module.cluster_another-nonprod-env.random_password.grafana_admin_secret["another-nonprod-env"]
 }
 
 moved {
@@ -2354,6 +2594,11 @@ moved {
 }
 
 moved {
+  from = module.tenant.module.captain_cluster.random_uuid.certmanager_v2_aws_iam_user["another-nonprod-env"]
+  to   = module.cluster_another-nonprod-env.random_uuid.certmanager_v2_aws_iam_user["another-nonprod-env"]
+}
+
+moved {
   from = module.tenant.module.captain_cluster.random_uuid.externaldns_v2_aws_iam_user["nonprod"]
   to   = module.cluster_nonprod.random_uuid.externaldns_v2_aws_iam_user["nonprod"]
 }
@@ -2391,6 +2636,11 @@ moved {
 moved {
   from = module.tenant.module.captain_cluster.random_uuid.externaldns_v2_aws_iam_user["sandbox"]
   to   = module.cluster_sandbox.random_uuid.externaldns_v2_aws_iam_user["sandbox"]
+}
+
+moved {
+  from = module.tenant.module.captain_cluster.random_uuid.externaldns_v2_aws_iam_user["another-nonprod-env"]
+  to   = module.cluster_another-nonprod-env.random_uuid.externaldns_v2_aws_iam_user["another-nonprod-env"]
 }
 
 moved {
@@ -2434,6 +2684,11 @@ moved {
 }
 
 moved {
+  from = module.tenant.module.captain_cluster.random_uuid.loki_v2_aws_iam_policy["another-nonprod-env"]
+  to   = module.cluster_another-nonprod-env.random_uuid.loki_v2_aws_iam_policy["another-nonprod-env"]
+}
+
+moved {
   from = module.tenant.module.captain_cluster.random_uuid.loki_v2_aws_iam_user["nonprod"]
   to   = module.cluster_nonprod.random_uuid.loki_v2_aws_iam_user["nonprod"]
 }
@@ -2471,6 +2726,11 @@ moved {
 moved {
   from = module.tenant.module.captain_cluster.random_uuid.loki_v2_aws_iam_user["sandbox"]
   to   = module.cluster_sandbox.random_uuid.loki_v2_aws_iam_user["sandbox"]
+}
+
+moved {
+  from = module.tenant.module.captain_cluster.random_uuid.loki_v2_aws_iam_user["another-nonprod-env"]
+  to   = module.cluster_another-nonprod-env.random_uuid.loki_v2_aws_iam_user["another-nonprod-env"]
 }
 
 moved {
@@ -2514,6 +2774,11 @@ moved {
 }
 
 moved {
+  from = module.tenant.module.captain_cluster.random_uuid.route53_v2_aws_iam_policy["another-nonprod-env"]
+  to   = module.cluster_another-nonprod-env.random_uuid.route53_v2_aws_iam_policy["another-nonprod-env"]
+}
+
+moved {
   from = module.tenant.module.captain_cluster.random_uuid.tls_cert_backup_s3_v2_aws_iam_policy["nonprod"]
   to   = module.cluster_nonprod.random_uuid.tls_cert_backup_s3_v2_aws_iam_policy["nonprod"]
 }
@@ -2551,6 +2816,11 @@ moved {
 moved {
   from = module.tenant.module.captain_cluster.random_uuid.tls_cert_backup_s3_v2_aws_iam_policy["sandbox"]
   to   = module.cluster_sandbox.random_uuid.tls_cert_backup_s3_v2_aws_iam_policy["sandbox"]
+}
+
+moved {
+  from = module.tenant.module.captain_cluster.random_uuid.tls_cert_backup_s3_v2_aws_iam_policy["another-nonprod-env"]
+  to   = module.cluster_another-nonprod-env.random_uuid.tls_cert_backup_s3_v2_aws_iam_policy["another-nonprod-env"]
 }
 
 moved {
@@ -2594,6 +2864,11 @@ moved {
 }
 
 moved {
+  from = module.tenant.module.captain_cluster.random_uuid.tls_cert_backup_s3_v2_aws_iam_user["another-nonprod-env"]
+  to   = module.cluster_another-nonprod-env.random_uuid.tls_cert_backup_s3_v2_aws_iam_user["another-nonprod-env"]
+}
+
+moved {
   from = module.tenant.module.captain_cluster.random_uuid.tls_cert_restore_s3_v2_aws_iam_policy["nonprod"]
   to   = module.cluster_nonprod.random_uuid.tls_cert_restore_s3_v2_aws_iam_policy["nonprod"]
 }
@@ -2631,6 +2906,11 @@ moved {
 moved {
   from = module.tenant.module.captain_cluster.random_uuid.tls_cert_restore_s3_v2_aws_iam_policy["sandbox"]
   to   = module.cluster_sandbox.random_uuid.tls_cert_restore_s3_v2_aws_iam_policy["sandbox"]
+}
+
+moved {
+  from = module.tenant.module.captain_cluster.random_uuid.tls_cert_restore_s3_v2_aws_iam_policy["another-nonprod-env"]
+  to   = module.cluster_another-nonprod-env.random_uuid.tls_cert_restore_s3_v2_aws_iam_policy["another-nonprod-env"]
 }
 
 moved {
@@ -2674,6 +2954,11 @@ moved {
 }
 
 moved {
+  from = module.tenant.module.captain_cluster.random_uuid.tls_cert_restore_s3_v2_aws_iam_user["another-nonprod-env"]
+  to   = module.cluster_another-nonprod-env.random_uuid.tls_cert_restore_s3_v2_aws_iam_user["another-nonprod-env"]
+}
+
+moved {
   from = module.tenant.module.captain_cluster.random_uuid.vault_init_s3_v2_aws_iam_policy["nonprod"]
   to   = module.cluster_nonprod.random_uuid.vault_init_s3_v2_aws_iam_policy["nonprod"]
 }
@@ -2711,6 +2996,11 @@ moved {
 moved {
   from = module.tenant.module.captain_cluster.random_uuid.vault_init_s3_v2_aws_iam_policy["sandbox"]
   to   = module.cluster_sandbox.random_uuid.vault_init_s3_v2_aws_iam_policy["sandbox"]
+}
+
+moved {
+  from = module.tenant.module.captain_cluster.random_uuid.vault_init_s3_v2_aws_iam_policy["another-nonprod-env"]
+  to   = module.cluster_another-nonprod-env.random_uuid.vault_init_s3_v2_aws_iam_policy["another-nonprod-env"]
 }
 
 moved {
@@ -2754,6 +3044,11 @@ moved {
 }
 
 moved {
+  from = module.tenant.module.captain_cluster.random_uuid.vault_init_s3_v2_aws_iam_user["another-nonprod-env"]
+  to   = module.cluster_another-nonprod-env.random_uuid.vault_init_s3_v2_aws_iam_user["another-nonprod-env"]
+}
+
+moved {
   from = module.tenant.module.captain_cluster.random_uuid.vault_s3_backup_v2_aws_iam_policy["nonprod"]
   to   = module.cluster_nonprod.random_uuid.vault_s3_backup_v2_aws_iam_policy["nonprod"]
 }
@@ -2794,6 +3089,11 @@ moved {
 }
 
 moved {
+  from = module.tenant.module.captain_cluster.random_uuid.vault_s3_backup_v2_aws_iam_policy["another-nonprod-env"]
+  to   = module.cluster_another-nonprod-env.random_uuid.vault_s3_backup_v2_aws_iam_policy["another-nonprod-env"]
+}
+
+moved {
   from = module.tenant.module.captain_cluster.random_uuid.vault_s3_backup_v2_aws_iam_user["nonprod"]
   to   = module.cluster_nonprod.random_uuid.vault_s3_backup_v2_aws_iam_user["nonprod"]
 }
@@ -2831,4 +3131,9 @@ moved {
 moved {
   from = module.tenant.module.captain_cluster.random_uuid.vault_s3_backup_v2_aws_iam_user["sandbox"]
   to   = module.cluster_sandbox.random_uuid.vault_s3_backup_v2_aws_iam_user["sandbox"]
+}
+
+moved {
+  from = module.tenant.module.captain_cluster.random_uuid.vault_s3_backup_v2_aws_iam_user["another-nonprod-env"]
+  to   = module.cluster_another-nonprod-env.random_uuid.vault_s3_backup_v2_aws_iam_user["another-nonprod-env"]
 }
