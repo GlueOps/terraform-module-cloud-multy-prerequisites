@@ -1,8 +1,8 @@
 # Migrating a tenant to per-cluster module calls
 
-One PR per tenant, **no scripts, no state access**. Works whether or not the
-tenant has already picked up the backwards-compatible wrapper (the moved
-blocks are chained and no-op wherever they don't apply).
+One PR per tenant, **no state access, no coordination with the wrapper
+rollout**: the generated moved blocks are chained and no-op wherever they
+don't apply, so the same PR plans clean from any starting state.
 
 ## Conventions (required)
 
@@ -74,8 +74,8 @@ blocks are chained and no-op wherever they don't apply).
 
 4. **Gate:** the PR's CI plan must show ONLY "has moved" lines and
    `Plan: 0 to add, 0 to change, 0 to destroy.` Anything else means a
-   convention was violated (unlisted environment name, mislabeled cluster
-   block, wrapper call not deleted) — fix before merging.
+   convention was violated (mislabeled cluster block, stale moved file,
+   wrapper call not deleted) — fix before merging.
 5. Merge (auto-applies). Confirm the captain repos received no new commits.
 6. Follow-up PR: delete `moved-migration.tf`.
 
