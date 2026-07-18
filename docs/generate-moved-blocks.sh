@@ -21,13 +21,40 @@
 #   - every cluster block passes cluster_environments = [<that one environment>]
 #     so all for_each keys keep their environment name
 #
+# With --chained as the first argument, the output additionally includes the
+# wrapper-adoption hop (this repo's moved.tf re-anchored under module.tenant.),
+# and tofu follows the chain: the SAME migration PR then plans clean whether or
+# not the tenant ever applied the wrapper refactor. Use this to migrate in one
+# PR without sequencing against the wrapper rollout. Verified from both
+# starting states (raw pre-wrapper and wrapper-form): moves only, 0/0/0.
+#
 # The migration PR's CI plan must show ONLY "has moved" lines and
 # "Plan: 0 to add, 0 to change, 0 to destroy." Delete moved-migration.tf in a
 # follow-up PR once the migration has applied.
 set -euo pipefail
 
 MODULE_DIR="$(cd "$(dirname "$0")/../modules/captain-cluster" && pwd)"
-[ $# -ge 1 ] || { echo "usage: $0 <environment_name>..." >&2; exit 1; }
+REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+
+chained=false
+if [ "${1:-}" = "--chained" ]; then
+  chained=true
+  shift
+fi
+[ $# -ge 1 ] || { echo "usage: $0 [--chained] <environment_name>..." >&2; exit 1; }
+
+if $chained; then
+  # hop 1: raw pre-wrapper -> wrapper-form. No-ops when state is already
+  # wrapper-form. Mirrors moved.tf exactly, re-anchored under module.tenant.
+  grep -E '^\s*(from|to)\s*=' "$REPO_ROOT/moved.tf" \
+    | sed 's/^ *//' \
+    | paste - - \
+    | while IFS=$'\t' read -r fromline toline; do
+        fromaddr=${fromline#from = }
+        toaddr=${toline#to   = }
+        printf 'moved {\n  from = module.tenant.%s\n  to   = module.tenant.%s\n}\n\n' "$fromaddr" "$toaddr"
+      done
+fi
 
 printf 'moved {\n  from = module.tenant.module.tenant_base\n  to   = module.tenant_base\n}\n'
 
