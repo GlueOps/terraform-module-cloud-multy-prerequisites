@@ -1,16 +1,16 @@
 # Migrating a tenant to per-cluster module calls
 
-One PR per tenant, **no state access, no coordination with the wrapper
-rollout**: the generated moved blocks are chained and no-op wherever they
-don't apply, so the same PR plans clean from any starting state.
+One PR per tenant, **no state access**: the generated moved blocks are
+chained and no-op wherever they don't apply, so the same PR plans clean
+regardless of which module version the tenant last applied.
 
 ## Conventions (required)
 
 1. One `module "cluster_<environment_name>"` block per environment — the label
    must be exactly `cluster_` + the environment name.
 2. Each cluster block passes `cluster_environments = [ <that one environment
-   object> ]` (the same object it had inside the old wrapper call, verbatim).
-3. The old wrapper call `module "tenant"` is deleted entirely in the same PR.
+   object> ]` (the same object it had inside the old module "tenant" call, verbatim).
+3. The old `module "tenant"` call is deleted entirely in the same PR.
 
 ## Steps
 
@@ -24,8 +24,8 @@ don't apply, so the same PR plans clean from any starting state.
    bash /tmp/multy/docs/generate-moved-blocks.sh > moved-migration.tf   # run in the tenant repo
    ```
 
-   The output is chained: the same file plans clean whether or not this
-   tenant ever applied the wrapper refactor.
+   The output is chained: the same file plans clean regardless of which
+   module version this tenant last applied.
 2. Add `providers.tf` to the tenant repo — the five aliased AWS providers,
    autoglue, and github providers per the template below (everything the
    module stack previously configured internally or read from CI env).
@@ -75,7 +75,7 @@ don't apply, so the same PR plans clean from any starting state.
 4. **Gate:** the PR's CI plan must show ONLY "has moved" lines and
    `Plan: 0 to add, 0 to change, 0 to destroy.` Anything else means a
    convention was violated (mislabeled cluster block, stale moved file,
-   wrapper call not deleted) — fix before merging.
+   old module "tenant" call not deleted) — fix before merging.
 5. Merge (auto-applies). Confirm the captain repos received no new commits.
 6. Follow-up PR: delete `moved-migration.tf`.
 
