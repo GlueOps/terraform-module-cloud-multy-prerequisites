@@ -2,7 +2,7 @@ terraform {
   required_providers {
     aws = {
       source                = "hashicorp/aws"
-      configuration_aliases = [aws.clientaccount, aws.management-tenant-dns, aws.primaryregion, aws.replicaregion]
+      configuration_aliases = [aws.clientaccount, aws.management-tenant-dns, aws.primaryregion, aws.replicaregion, aws.dnssec-us-east-1]
     }
     random = {
       source = "hashicorp/random"

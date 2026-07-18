@@ -45,6 +45,7 @@ blocks are chained and no-op wherever they don't apply).
        aws.management-tenant-dns = aws.management-tenant-dns
        aws.primaryregion         = aws.primaryregion
        aws.replicaregion         = aws.replicaregion
+       aws.dnssec-us-east-1      = aws.dnssec-us-east-1
      }
      tenant_key                   = "<tenant_key>"
      tenant_account_id            = "<aws account id>"
@@ -115,6 +116,11 @@ provider "aws" {
 provider "aws" {
   alias  = "replicaregion"
   region = "<backup_region>"
+  assume_role { role_arn = "arn:aws:iam::<tenant_account_id>:role/OrganizationAccountAccessRole" }
+}
+provider "aws" {
+  alias  = "dnssec-us-east-1"
+  region = "us-east-1" # Route53 DNSSEC requires its KMS key in us-east-1
   assume_role { role_arn = "arn:aws:iam::<tenant_account_id>:role/OrganizationAccountAccessRole" }
 }
 provider "autoglue" {

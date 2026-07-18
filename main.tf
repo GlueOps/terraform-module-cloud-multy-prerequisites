@@ -20,6 +20,7 @@ module "tenant_base" {
     aws.management-tenant-dns = aws.management-tenant-dns
     aws.primaryregion         = aws.primaryregion
     aws.replicaregion         = aws.replicaregion
+    aws.dnssec-us-east-1      = aws.dnssec-us-east-1
   }
   tenant_key                   = var.tenant_key
   tenant_account_id            = var.tenant_account_id

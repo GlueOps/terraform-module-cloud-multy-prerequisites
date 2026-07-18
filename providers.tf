@@ -48,6 +48,14 @@ provider "aws" {
   }
 }
 
+provider "aws" {
+  alias  = "dnssec-us-east-1"
+  region = "us-east-1" # Route53 DNSSEC requires its KMS key in us-east-1
+  assume_role {
+    role_arn = "arn:aws:iam::${var.tenant_account_id}:role/OrganizationAccountAccessRole"
+  }
+}
+
 
 provider "autoglue" {
   base_url   = var.autoglue_credentials.base_url

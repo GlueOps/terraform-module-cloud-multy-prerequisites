@@ -21,8 +21,10 @@ resource "aws_route53_record" "delegation_to_parent_tenant_zone" {
 
 
 module "dnssec_key" {
-  source         = "git::https://github.com/GlueOps/terraform-module-cloud-aws-dnssec-kms-key.git?ref=v0.3.0"
-  aws_account_id = var.tenant_account_id
+  source = "git::https://github.com/GlueOps/terraform-module-cloud-aws-dnssec-kms-key.git?ref=v0.4.0"
+  providers = {
+    aws.primary = aws.dnssec-us-east-1
+  }
 }
 
 resource "aws_route53_key_signing_key" "parent_tenant_zone" {
