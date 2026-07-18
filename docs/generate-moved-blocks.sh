@@ -9,7 +9,7 @@
 #   bash /path/to/this-repo/docs/generate-moved-blocks.sh > moved-migration.tf
 #
 # Environment names are derived from the module "cluster_<env>" labels in
-# ./tenant.tf (pass them explicitly as arguments to override).
+# the root .tf files (pass them explicitly as arguments to override).
 #
 # No state access needed: the full address set is derived from the module
 # sources — shared resource/module names from modules/tenant-base, and
@@ -63,14 +63,14 @@ inventory() {
 }
 
 if [ $# -eq 0 ]; then
-  # derive environment names from the tenant.tf in the current directory
-  [ -f tenant.tf ] || { echo "no tenant.tf in current directory; pass environment names explicitly" >&2; exit 1; }
-  if grep -qE "^module \"$OLD_LABEL\"" tenant.tf; then
-    echo "tenant.tf still declares module \"$OLD_LABEL\" — delete the old call first" >&2
+  # derive environment names from the root .tf files in the current directory
+  ls ./*.tf > /dev/null 2>&1 || { echo "no .tf files in current directory; pass environment names explicitly" >&2; exit 1; }
+  if grep -qE "^module \"$OLD_LABEL\"" ./*.tf; then
+    echo "a root .tf file still declares module \"$OLD_LABEL\" — delete the old call first" >&2
     exit 1
   fi
-  envs=$(grep -oE '^module "cluster_[A-Za-z0-9_-]+"' tenant.tf | sed -E 's/^module "cluster_([A-Za-z0-9_-]+)"$/\1/' | sort -u)
-  [ -n "$envs" ] || { echo 'no module "cluster_<env>" blocks found in tenant.tf' >&2; exit 1; }
+  envs=$(grep -hoE '^module "cluster_[A-Za-z0-9_-]+"' ./*.tf | sed -E 's/^module "cluster_([A-Za-z0-9_-]+)"$/\1/' | sort -u)
+  [ -n "$envs" ] || { echo 'no module "cluster_<env>" blocks found in root .tf files' >&2; exit 1; }
   # shellcheck disable=SC2086
   set -- $envs
 fi

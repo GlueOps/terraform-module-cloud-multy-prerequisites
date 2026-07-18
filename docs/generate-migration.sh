@@ -6,7 +6,8 @@
 # the ref the tenant should pin:
 #   bash /path/to/this-repo/docs/generate-migration.sh vX.Y.Z
 #
-# Reads the existing (old-format) ./tenant.tf: tenant-scoped arguments move
+# Finds the legacy module call by SOURCE in any root .tf file (file and
+# module names do not matter): tenant-scoped arguments move
 # onto module "tenant_base", every cluster_environments element becomes its
 # own module "cluster_<environment_name>" block, autoglue credentials are
 # hoisted into locals for reuse by providers.tf, and opsgenie_emails (unused)
@@ -19,22 +20,26 @@ set -euo pipefail
 [ $# -eq 1 ] || { echo "usage: $0 <ref-to-pin (e.g. v0.85.0)>" >&2; exit 1; }
 REF=$1
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-[ -f tenant.tf ] || { echo "no tenant.tf in current directory" >&2; exit 1; }
+ls ./*.tf > /dev/null 2>&1 || { echo "no .tf files in current directory" >&2; exit 1; }
 
 OLD_LABEL=$(REF="$REF" python3 - <<'PYEOF'
 import os, re, sys
 
+import glob
+
 ref = os.environ['REF']
-src = open('tenant.tf').read()
 
 MODULE_REPO = 'terraform-module-cloud-multy-prerequisites'
 
-def block_end(start_of_body):
+if os.path.exists('providers.tf'):
+    sys.exit('providers.tf already exists — merge the MIGRATION.md template into it manually, then use generate-moved-blocks.sh directly')
+
+def block_end(text, start_of_body):
     # index just past the matching close brace, heredoc-aware
     i = start_of_body
     depth = 1
     heredoc = None
-    for line in src[i:].splitlines(keepends=True):
+    for line in text[i:].splitlines(keepends=True):
         stripped = line.strip()
         if heredoc:
             if stripped == heredoc:
@@ -51,19 +56,23 @@ def block_end(start_of_body):
     sys.exit('unbalanced module block')
 
 # the legacy call is identified by its SOURCE (this repo's root, not //modules/),
-# never by its label — tenants may have named it anything
+# never by its label or file name — tenants may have named both anything
 legacy = []
-for m in re.finditer(r'^module "([A-Za-z0-9_-]+)" \{\n', src, re.M):
-    end = block_end(m.end())
-    body = src[m.end():end - 2]
-    sm = re.search(r'^\s*source\s*=\s*"([^"]+)"', body, re.M)
-    if sm and MODULE_REPO in sm.group(1) and '//modules/' not in sm.group(1):
-        legacy.append((m.group(1), m.start(), m.end(), end))
+for f in sorted(glob.glob('*.tf')):
+    text = open(f).read()
+    for m in re.finditer(r'^module "([A-Za-z0-9_-]+)" \{\n', text, re.M):
+        end = block_end(text, m.end())
+        body = text[m.end():end - 2]
+        sm = re.search(r'^\s*source\s*=\s*"([^"]+)"', body, re.M)
+        if sm and MODULE_REPO in sm.group(1) and '//modules/' not in sm.group(1):
+            legacy.append((f, m.group(1), m.start(), m.end(), end))
 if not legacy:
-    sys.exit(f'no module call sourcing the {MODULE_REPO} root found in tenant.tf (already migrated?)')
+    sys.exit(f'no module call sourcing the {MODULE_REPO} root found in any root .tf file (already migrated?)')
 if len(legacy) > 1:
-    sys.exit(f'multiple module calls source the {MODULE_REPO} root ({[l[0] for l in legacy]}) — handle manually')
-old_label, start, body_start, i = legacy[0]
+    sys.exit(f'multiple module calls source the {MODULE_REPO} root ({[(l[0], l[1]) for l in legacy]}) — handle manually')
+legacy_file, old_label, start, body_start, i = legacy[0]
+src = open(legacy_file).read()
+print(f'legacy call: module "{old_label}" in {legacy_file}', file=sys.stderr)
 
 block = src[body_start:i - 2]  # body without the closing "}\n"
 preamble, postamble = src[:start], src[i:]
@@ -176,7 +185,7 @@ for n, e in zip(names, envs):
     out += '  tenant_secrets = module.tenant_base.captain_cluster_secrets\n'
     out += '  cluster_environments = [\n    {\n' + e + '\n    }\n  ]\n}\n'
 out += postamble
-open('tenant.tf', 'w').write(out)
+open(legacy_file, 'w').write(out)
 
 def unquote_or_expr(v):
     v = v.split('#')[0].strip()
@@ -347,11 +356,13 @@ if pruned_names:
     print(f'note: pruned unreferenced locals: {", ".join(sorted(set(pruned_names)))}', file=sys.stderr)
 
 print(f'environments: {", ".join(names)}', file=sys.stderr)
-print(old_label)
+print(f'{old_label}\t{legacy_file}')
 PYEOF
 
 )
 [ -n "$OLD_LABEL" ] || { echo "conversion failed" >&2; exit 1; }
+LEGACY_FILE=${OLD_LABEL#*	}
+OLD_LABEL=${OLD_LABEL%%	*}
 OLD_MODULE_LABEL="$OLD_LABEL" bash "$SCRIPT_DIR/generate-moved-blocks.sh" > moved-migration.tf
-if command -v tofu > /dev/null 2>&1; then tofu fmt tenant.tf providers.tf moved-migration.tf > /dev/null; fi
+if command -v tofu > /dev/null 2>&1; then tofu fmt "$LEGACY_FILE" providers.tf moved-migration.tf > /dev/null; fi
 echo "wrote tenant.tf, providers.tf, moved-migration.tf" >&2
