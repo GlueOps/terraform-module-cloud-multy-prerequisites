@@ -14,8 +14,8 @@ regardless of which module version the tenant last applied.
 
 ## Steps
 
-**One-command path:** in the tenant repo on a fresh branch, with this repo
-checked out at the ref to pin:
+**One-command path:** clone the tenant repo, create a fresh branch, then with
+this repo checked out at the ref to pin:
 
 ```bash
 git clone --depth 1 --branch vX.Y.Z \
@@ -89,12 +89,17 @@ The manual steps below are equivalent:
    # independent version knob from now on
    ```
 
-4. **Gate:** the PR's CI plan must show ONLY "has moved" lines and
-   `Plan: 0 to add, 0 to change, 0 to destroy.` Anything else means a
-   convention was violated (mislabeled cluster block, stale moved file,
-   old module "tenant" call not deleted) — fix before merging.
-5. Merge (auto-applies). Confirm the captain repos received no new commits.
-6. Follow-up PR: delete `moved-migration.tf`.
+4. Commit everything and open the PR.
+5. **Gate:** the PR's CI plan must show ONLY "has moved" lines plus exactly
+   `Plan: 0 to add, 0 to change, 0 to destroy.` — note this is NOT a literal
+   "No changes" plan; the moved lines ARE the migration. Anything else
+   (creates, destroys, changes, provider errors) means something is wrong
+   (mislabeled cluster block, stale moved file, old module "tenant" call not
+   deleted) — fix before merging.
+6. Merge (auto-applies the state moves). **Post-apply check:** the tenant's
+   captain repos received zero new commits (generated files byte-identical).
+7. **Follow-up PR:** delete `moved-migration.tf`. Its plan is the true no-op
+   (`No changes.`) — merge it and the tenant carries no migration residue.
 
 ## providers.tf template
 
