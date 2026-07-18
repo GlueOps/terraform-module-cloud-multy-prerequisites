@@ -6,21 +6,30 @@ blocks are chained and no-op wherever they don't apply).
 
 ## Conventions (required)
 
-1. Environment names must come from the conventional list baked into
-   `moved-migration.tf`: `nonprod`, `prod`, `dev`, `test`, `qa`, `staging`,
-   `uat`, `sandbox`. Using another name? Add it to the list in this repo first
-   (regenerate the file per its header) — the plan gate below will catch any
-   environment the file doesn't cover.
-2. One `module "cluster_<environment_name>"` block per environment — the label
+1. One `module "cluster_<environment_name>"` block per environment — the label
    must be exactly `cluster_` + the environment name.
-3. Each cluster block passes `cluster_environments = [ <that one environment
+2. Each cluster block passes `cluster_environments = [ <that one environment
    object> ]` (the same object it had inside the old wrapper call, verbatim).
-4. The old wrapper call `module "tenant"` is deleted entirely in the same PR.
+3. The old wrapper call `module "tenant"` is deleted entirely in the same PR.
 
 ## Steps
 
-1. Copy `docs/migration/moved-migration.tf` (from the module ref you are
-   pinning) into the tenant repo root, verbatim.
+1. Get the moved blocks, either way:
+
+   **Any environment names** — after rewriting `tenant.tf` (step 3), generate
+   from it; environment names are derived from your `cluster_<env>` labels:
+
+   ```bash
+   git clone --depth 1 --branch vX.Y.Z \
+     https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites /tmp/multy
+   bash /tmp/multy/docs/generate-moved-blocks.sh > moved-migration.tf   # run in the tenant repo
+   ```
+
+   **Conventional names only, zero commands** — copy
+   `docs/migration/moved-migration.tf` (from the module ref you are pinning)
+   into the tenant repo root, verbatim. It covers: `nonprod`, `prod`, `dev`,
+   `test`, `qa`, `staging`, `uat`, `sandbox`. Other names need the generated
+   variant above (or a PR extending the list per the file's header).
 2. Add `providers.tf` to the tenant repo — the same four aliased AWS providers
    and autoglue provider the module configured internally (see the template
    below).

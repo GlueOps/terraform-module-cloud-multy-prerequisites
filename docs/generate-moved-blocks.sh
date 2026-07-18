@@ -41,7 +41,22 @@ if [ "${1:-}" = "--chained" ]; then
   chained=true
   shift
 fi
-[ $# -ge 1 ] || { echo "usage: $0 [--chained] <environment_name>..." >&2; exit 1; }
+
+if [ $# -eq 0 ]; then
+  # auto mode: run from the tenant repo directory after rewriting tenant.tf —
+  # environment names are derived from the module "cluster_<env>" labels, and
+  # chained output is used so the result works from any starting state.
+  [ -f tenant.tf ] || { echo "auto mode: no tenant.tf in current directory; pass environment names explicitly" >&2; exit 1; }
+  if grep -qE '^module "tenant"' tenant.tf; then
+    echo 'auto mode: tenant.tf still declares module "tenant" — delete the wrapper call first' >&2
+    exit 1
+  fi
+  envs=$(grep -oE '^module "cluster_[A-Za-z0-9_-]+"' tenant.tf | sed -E 's/^module "cluster_([A-Za-z0-9_-]+)"$/\1/' | sort -u)
+  [ -n "$envs" ] || { echo 'auto mode: no module "cluster_<env>" blocks found in tenant.tf' >&2; exit 1; }
+  chained=true
+  # shellcheck disable=SC2086
+  set -- $envs
+fi
 
 if $chained; then
   # hop 1: raw pre-wrapper -> wrapper-form. No-ops when state is already
