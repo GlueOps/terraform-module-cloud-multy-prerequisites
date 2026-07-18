@@ -126,9 +126,7 @@ provider "autoglue" {
 }
 ```
 
-## Rolling back
+## Rolling back a release
 
-- A bad release on one cluster: revert that cluster block's `?ref=` pin. No
-  state movement.
-- Abandoning the structure: `docs/generate-rollback-moved-blocks.sh`
-  (`split` / `wrapper` modes).
+A bad release on one cluster: revert that cluster block's `?ref=` pin. No
+state movement. (The migration itself is forward-only.)
