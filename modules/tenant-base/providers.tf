@@ -1,4 +1,5 @@
 terraform {
+  required_version = ">= 1.3"
   required_providers {
     aws = {
       source                = "hashicorp/aws"
@@ -8,7 +9,8 @@ terraform {
       source = "hashicorp/random"
     }
     autoglue = {
-      source = "registry.terraform.io/GlueOps/autoglue"
+      source  = "registry.terraform.io/GlueOps/autoglue"
+      version = "0.10.12"
     }
   }
 }

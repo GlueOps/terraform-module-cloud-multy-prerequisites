@@ -4,7 +4,8 @@
 # direct per-cluster module calls (module "tenant_base" + one
 # module "cluster_<environment_name>" block per cluster environment).
 #
-# Usage, from a checkout of this repo at the ref the tenant last applied:
+# Usage, from a checkout of this repo at the ref the tenant is migrating TO
+# (the same ref the new tenant_base/cluster_* blocks pin):
 #   bash docs/generate-moved-blocks.sh nonprod prod > moved-migration.tf
 #
 # No state access needed: every resource and module call in

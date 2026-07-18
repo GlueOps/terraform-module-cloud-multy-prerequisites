@@ -69,8 +69,6 @@ resource "autoglue_credential" "route53" {
 
   schema_version = "1"
 
-
-  # Whatever your provider expects for the AWS/Route53 scope:
   scope = {
     service = "route53"
   }

@@ -8,7 +8,7 @@
 #
 # Mode "split" — reverse a tenant's per-cluster migration:
 #   module "tenant_base" + module "cluster_<env>" blocks -> single wrapper call.
-#   Usage, from a checkout of this repo at the ref the tenant last applied:
+#   Usage, from a checkout of this repo at the ref the cluster blocks currently pin:
 #     bash docs/generate-rollback-moved-blocks.sh split nonprod prod > moved-rollback.tf
 #   In the same PR: delete ALL tenant_base/cluster_* module blocks and restore
 #   the wrapper call named module "tenant" (root of this repo, post-split ref).

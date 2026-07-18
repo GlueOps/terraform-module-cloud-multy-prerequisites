@@ -30,9 +30,9 @@ blocks are chained and no-op wherever they don't apply).
    into the tenant repo root, verbatim. It covers: `nonprod`, `prod`, `dev`,
    `test`, `qa`, `staging`, `uat`, `sandbox`, `another-nonprod-env`. Other names need the generated
    variant above (or a PR extending the list per the file's header).
-2. Add `providers.tf` to the tenant repo — the same four aliased AWS providers
-   and autoglue provider the module configured internally (see the template
-   below).
+2. Add `providers.tf` to the tenant repo — the five aliased AWS providers,
+   autoglue, and github providers per the template below (everything the
+   module stack previously configured internally or read from CI env).
 3. Rewrite `tenant.tf`:
 
    ```hcl

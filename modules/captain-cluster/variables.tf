@@ -43,7 +43,7 @@ variable "tenant_secrets" {
 
 
 variable "cluster_environments" {
-  description = "The cluster environments and their respective github app ids"
+  description = "Full definition of each cluster environment: name, GitHub OAuth/App credentials for dex and the tenant org, ingress/traefik/nginx toggles, storage sizing, vault policy mappings, argocd RBAC, and optional gluekube provider/waggle credentials. Migrated tenants pass a single-element list per module instantiation."
   type = list(object({
     environment_name                        = string
     host_network_enabled                    = bool
@@ -79,10 +79,7 @@ variable "cluster_environments" {
 }
 
 locals {
-  environment_map = { for env in var.cluster_environments : env.environment_name => env }
-}
-
-locals {
+  environment_map      = { for env in var.cluster_environments : env.environment_name => env }
   cluster_environments = toset(keys(local.environment_map))
 }
 

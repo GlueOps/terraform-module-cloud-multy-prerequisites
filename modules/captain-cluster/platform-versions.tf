@@ -1,3 +1,6 @@
+# GlueOps platform component version pins (NOT terraform/provider requirements —
+# those live in providers.tf). These are the values a cluster upgrades to when
+# its ?ref= pin moves to the release carrying this file.
 locals {
   argocd_app_version        = "v3.2.12"
   codespace_version         = "v0.146.1"
