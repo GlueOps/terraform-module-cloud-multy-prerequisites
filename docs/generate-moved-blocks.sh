@@ -25,8 +25,10 @@
 # both state forms: moves only, 0/0/0.
 #
 # Assumptions:
-#   - the old call is named module "tenant" and is DELETED in the same PR
-#     (OpenTofu rejects moved blocks whose "from" is still declared in config)
+#   - the old call is named module "tenant" (set OLD_MODULE_LABEL if the tenant
+#     named it something else; generate-migration.sh detects and passes it
+#     automatically) and is DELETED in the same PR (OpenTofu rejects moved
+#     blocks whose "from" is still declared in config)
 #   - the new per-cluster blocks are named module "cluster_<environment_name>"
 #   - every cluster block passes cluster_environments = [<that one environment>]
 #     so all for_each keys keep their environment name
@@ -35,6 +37,10 @@
 # "Plan: 0 to add, 0 to change, 0 to destroy." Delete moved-migration.tf in a
 # follow-up PR once the migration has applied.
 set -euo pipefail
+
+# label of the legacy module call in the tenant repo (state addresses derive
+# from it). Overridable because tenants may have named the call anything.
+OLD_LABEL="${OLD_MODULE_LABEL:-tenant}"
 
 REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 
@@ -59,8 +65,8 @@ inventory() {
 if [ $# -eq 0 ]; then
   # derive environment names from the tenant.tf in the current directory
   [ -f tenant.tf ] || { echo "no tenant.tf in current directory; pass environment names explicitly" >&2; exit 1; }
-  if grep -qE '^module "tenant"' tenant.tf; then
-    echo 'tenant.tf still declares module "tenant" — delete the old call first' >&2
+  if grep -qE "^module \"$OLD_LABEL\"" tenant.tf; then
+    echo "tenant.tf still declares module \"$OLD_LABEL\" — delete the old call first" >&2
     exit 1
   fi
   envs=$(grep -oE '^module "cluster_[A-Za-z0-9_-]+"' tenant.tf | sed -E 's/^module "cluster_([A-Za-z0-9_-]+)"$/\1/' | sort -u)
@@ -72,17 +78,17 @@ fi
 # hop 1: legacy root-level addresses -> tenant-base/captain-cluster shape.
 # Pure prefix rewrites; no-ops for state already past this hop.
 inventory "$REPO_ROOT/modules/tenant-base" | while IFS= read -r name; do
-  printf 'moved {\n  from = module.tenant.%s\n  to   = module.tenant.module.tenant_base.%s\n}\n\n' "$name" "$name"
+  printf 'moved {\n  from = module.%s.%s\n  to   = module.%s.module.tenant_base.%s\n}\n\n' "$OLD_LABEL" "$name" "$OLD_LABEL" "$name"
 done
 inventory "$REPO_ROOT/modules/captain-cluster" | while IFS= read -r name; do
-  printf 'moved {\n  from = module.tenant.%s\n  to   = module.tenant.module.captain_cluster.%s\n}\n\n' "$name" "$name"
+  printf 'moved {\n  from = module.%s.%s\n  to   = module.%s.module.captain_cluster.%s\n}\n\n' "$OLD_LABEL" "$name" "$OLD_LABEL" "$name"
 done
 
 # hop 2: tenant-base/captain-cluster shape -> the new per-cluster blocks
-printf 'moved {\n  from = module.tenant.module.tenant_base\n  to   = module.tenant_base\n}\n'
+printf 'moved {\n  from = module.%s.module.tenant_base\n  to   = module.tenant_base\n}\n' "$OLD_LABEL"
 
 inventory "$REPO_ROOT/modules/captain-cluster" | while IFS= read -r name; do
   for env in "$@"; do
-    printf '\nmoved {\n  from = module.tenant.module.captain_cluster.%s["%s"]\n  to   = module.cluster_%s.%s["%s"]\n}\n' "$name" "$env" "$env" "$name" "$env"
+    printf '\nmoved {\n  from = module.%s.module.captain_cluster.%s["%s"]\n  to   = module.cluster_%s.%s["%s"]\n}\n' "$OLD_LABEL" "$name" "$env" "$env" "$name" "$env"
   done
 done

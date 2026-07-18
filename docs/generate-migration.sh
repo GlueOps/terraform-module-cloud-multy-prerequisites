@@ -21,38 +21,51 @@ REF=$1
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 [ -f tenant.tf ] || { echo "no tenant.tf in current directory" >&2; exit 1; }
 
-REF="$REF" python3 - <<'PYEOF'
+OLD_LABEL=$(REF="$REF" python3 - <<'PYEOF'
 import os, re, sys
 
 ref = os.environ['REF']
 src = open('tenant.tf').read()
 
-m = re.search(r'^module "tenant" \{\n', src, re.M)
-if not m:
-    sys.exit('tenant.tf has no module "tenant" block (already migrated?)')
+MODULE_REPO = 'terraform-module-cloud-multy-prerequisites'
 
-# find the matching closing brace at column 0, skipping heredocs
-start = m.start()
-i = m.end()
-depth = 1
-heredoc = None
-for line in src[i:].splitlines(keepends=True):
-    stripped = line.strip()
-    if heredoc:
-        if stripped == heredoc:
-            heredoc = None
-    else:
-        hd = re.search(r'<<-?([A-Z][A-Z0-9_]*)\s*$', line)
-        if hd:
-            heredoc = hd.group(1)
+def block_end(start_of_body):
+    # index just past the matching close brace, heredoc-aware
+    i = start_of_body
+    depth = 1
+    heredoc = None
+    for line in src[i:].splitlines(keepends=True):
+        stripped = line.strip()
+        if heredoc:
+            if stripped == heredoc:
+                heredoc = None
         else:
-            depth += line.count('{') - line.count('}')
-    i += len(line)
-    if depth == 0:
-        break
-else:
-    sys.exit('unbalanced module "tenant" block')
-block = src[m.end():i - 2]  # body without the closing "}\n"
+            hd = re.search(r'<<-?([A-Z][A-Z0-9_]*)\s*$', line)
+            if hd:
+                heredoc = hd.group(1)
+            else:
+                depth += line.count('{') - line.count('}')
+        i += len(line)
+        if depth == 0:
+            return i
+    sys.exit('unbalanced module block')
+
+# the legacy call is identified by its SOURCE (this repo's root, not //modules/),
+# never by its label — tenants may have named it anything
+legacy = []
+for m in re.finditer(r'^module "([A-Za-z0-9_-]+)" \{\n', src, re.M):
+    end = block_end(m.end())
+    body = src[m.end():end - 2]
+    sm = re.search(r'^\s*source\s*=\s*"([^"]+)"', body, re.M)
+    if sm and MODULE_REPO in sm.group(1) and '//modules/' not in sm.group(1):
+        legacy.append((m.group(1), m.start(), m.end(), end))
+if not legacy:
+    sys.exit(f'no module call sourcing the {MODULE_REPO} root found in tenant.tf (already migrated?)')
+if len(legacy) > 1:
+    sys.exit(f'multiple module calls source the {MODULE_REPO} root ({[l[0] for l in legacy]}) — handle manually')
+old_label, start, body_start, i = legacy[0]
+
+block = src[body_start:i - 2]  # body without the closing "}\n"
 preamble, postamble = src[:start], src[i:]
 
 # parse top-level attributes of the module body (value may span lines)
@@ -64,7 +77,7 @@ while j < len(lines):
     am = re.match(r'^  ([a-z0-9_]+)\s*=\s*(.*)$', line, re.S)
     if not am:
         if line.strip():
-            sys.exit(f'unrecognized line in module "tenant": {line.strip()[:80]}')
+            sys.exit(f'unrecognized line in module "{old_label}": {line.strip()[:80]}')
         j += 1
         continue
     key, val = am.group(1), am.group(2)
@@ -95,7 +108,7 @@ SPECIAL = ['source', 'autoglue_credentials', 'cluster_environments',
            'management_tenant_dns_aws_account_id', 'opsgenie_emails']
 unknown = [k for k in attrs if k not in CARRY + SPECIAL]
 if unknown:
-    sys.exit(f'unrecognized module "tenant" arguments (handle manually): {unknown}')
+    sys.exit(f'unrecognized module "{old_label}" arguments (handle manually): {unknown}')
 missing = [k for k in CARRY + ['autoglue_credentials', 'cluster_environments'] if k not in attrs]
 if missing:
     sys.exit(f'missing expected arguments: {missing}')
@@ -263,8 +276,11 @@ open('providers.tf', 'w').write(providers)
 if 'opsgenie_emails' in attrs:
     print('note: dropped opsgenie_emails (unused)', file=sys.stderr)
 print(f'environments: {", ".join(names)}', file=sys.stderr)
+print(old_label)
 PYEOF
 
-bash "$SCRIPT_DIR/generate-moved-blocks.sh" > moved-migration.tf
+)
+[ -n "$OLD_LABEL" ] || { echo "conversion failed" >&2; exit 1; }
+OLD_MODULE_LABEL="$OLD_LABEL" bash "$SCRIPT_DIR/generate-moved-blocks.sh" > moved-migration.tf
 if command -v tofu > /dev/null 2>&1; then tofu fmt tenant.tf providers.tf moved-migration.tf > /dev/null; fi
 echo "wrote tenant.tf, providers.tf, moved-migration.tf" >&2
