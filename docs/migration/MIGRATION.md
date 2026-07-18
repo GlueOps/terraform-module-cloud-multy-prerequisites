@@ -20,7 +20,7 @@ checked out at the ref to pin:
 ```bash
 git clone --depth 1 --branch vX.Y.Z \
   https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites /tmp/multy
-bash /tmp/multy/docs/generate-migration.sh vX.Y.Z
+bash /tmp/multy/docs/generate-migration.sh vX.Y.Z   # no arg: prompts for the ref, defaults to main
 ```
 
 This rewrites `tenant.tf` (tenant facts once on `tenant_base`, one
