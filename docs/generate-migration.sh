@@ -4,7 +4,9 @@
 #
 # Usage, in the tenant repo, on a fresh branch, with this repo checked out at
 # the ref the tenant should pin:
-#   bash /path/to/this-repo/docs/generate-migration.sh vX.Y.Z
+#   bash /path/to/this-repo/docs/generate-migration.sh [vX.Y.Z]
+# With no argument you are prompted for the ref to pin; an empty answer (or a
+# non-interactive run without an argument) defaults to main.
 #
 # Finds the legacy module call by SOURCE in any root .tf file (file and
 # module names do not matter): tenant-scoped arguments move
@@ -18,8 +20,15 @@
 # "Plan: 0 to add, 0 to change, 0 to destroy."
 set -euo pipefail
 
-[ $# -eq 1 ] || { echo "usage: $0 <ref-to-pin (e.g. v0.85.0)>" >&2; exit 1; }
-REF=$1
+[ $# -le 1 ] || { echo "usage: $0 [ref-to-pin (e.g. v0.85.0)]" >&2; exit 1; }
+REF="${1:-}"
+if [ -z "$REF" ]; then
+  if [ -t 0 ]; then
+    read -r -p "Module ref to pin (e.g. v0.85.0) [main]: " REF
+  fi
+  REF="${REF:-main}"
+fi
+echo "pinning ref: $REF" >&2
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 ls ./*.tf > /dev/null 2>&1 || { echo "no .tf files in current directory" >&2; exit 1; }
 
