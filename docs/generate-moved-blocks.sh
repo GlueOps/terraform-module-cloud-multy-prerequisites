@@ -49,6 +49,7 @@ REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 inventory() {
   awk '
     inheredoc { if ($0 ~ ("^[[:space:]]*" tag "$")) inheredoc = 0; next }
+    /^[[:space:]]*(#|\/\/)/ { next }
     /<</ {
       tmp = $0
       sub(/.*<<-?/, "", tmp)

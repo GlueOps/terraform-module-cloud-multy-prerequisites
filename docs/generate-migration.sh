@@ -11,7 +11,8 @@
 # onto module "tenant_base", every cluster_environments element becomes its
 # own module "cluster_<environment_name>" block, autoglue credentials are
 # hoisted into locals for reuse by providers.tf, and opsgenie_emails (unused)
-# is dropped. Fails loudly on any argument it does not recognize.
+# is dropped. Comments inside the legacy module call are NOT preserved.
+# Fails loudly on any argument it does not recognize.
 #
 # Review the result, then gate on the PR plan: ONLY "has moved" lines and
 # "Plan: 0 to add, 0 to change, 0 to destroy."
@@ -31,6 +32,59 @@ ref = os.environ['REF']
 
 MODULE_REPO = 'terraform-module-cloud-multy-prerequisites'
 
+def strip_line_comment(line):
+    # drop a trailing # or // comment, respecting double-quoted strings
+    # (so https:// URLs and # inside values survive); preserves the line ending
+    ending = ''
+    body = line
+    if body.endswith('\n'):
+        body, ending = body[:-1], '\n'
+    out = []
+    in_str = False
+    i = 0
+    while i < len(body):
+        ch = body[i]
+        if in_str:
+            if ch == '\\' and i + 1 < len(body):
+                out.append(body[i:i + 2])
+                i += 2
+                continue
+            if ch == '"':
+                in_str = False
+            out.append(ch)
+            i += 1
+            continue
+        if ch == '"':
+            in_str = True
+            out.append(ch)
+            i += 1
+            continue
+        if ch == '#' or body[i:i + 2] == '//':
+            break
+        out.append(ch)
+        i += 1
+    return ''.join(out).rstrip() + ending
+
+def strip_comments(text):
+    # comment-free version of a config fragment; heredoc bodies untouched.
+    # Comments are NOT preserved through conversion (by design).
+    out = []
+    heredoc = None
+    for line in text.splitlines(keepends=True):
+        if heredoc:
+            out.append(line)
+            if line.strip() == heredoc:
+                heredoc = None
+            continue
+        s = strip_line_comment(line)
+        if s.strip() == '' and line.strip() != '':
+            continue  # the line was only a comment — drop it entirely
+        hd = re.search(r'<<-?([A-Z][A-Z0-9_]*)\s*$', s)
+        if hd:
+            heredoc = hd.group(1)
+        out.append(s)
+    return ''.join(out)
+
 if os.path.exists('providers.tf'):
     sys.exit('providers.tf already exists — merge the MIGRATION.md template into it manually, then use generate-moved-blocks.sh directly')
 
@@ -45,11 +99,12 @@ def block_end(text, start_of_body):
             if stripped == heredoc:
                 heredoc = None
         else:
-            hd = re.search(r'<<-?([A-Z][A-Z0-9_]*)\s*$', line)
+            s = strip_line_comment(line)
+            hd = re.search(r'<<-?([A-Z][A-Z0-9_]*)\s*$', s)
             if hd:
                 heredoc = hd.group(1)
             else:
-                depth += line.count('{') - line.count('}')
+                depth += s.count('{') - s.count('}')
         i += len(line)
         if depth == 0:
             return i
@@ -74,7 +129,9 @@ legacy_file, old_label, start, body_start, i = legacy[0]
 src = open(legacy_file).read()
 print(f'legacy call: module "{old_label}" in {legacy_file}', file=sys.stderr)
 
-block = src[body_start:i - 2]  # body without the closing "}\n"
+# body without the closing "}\n", comments dropped: everything parsed (and
+# re-emitted) from here on is comment-free
+block = strip_comments(src[body_start:i - 2])
 preamble, postamble = src[:start], src[i:]
 
 # parse top-level attributes of the module body (value may span lines)
@@ -303,19 +360,21 @@ def locals_attrs(text, body_start):
         if heredoc:
             if stripped == heredoc:
                 heredoc = None
-        elif stripped.startswith('#') or stripped.startswith('//'):
-            pass  # comment lines must not affect brace depth
-        elif cur_name is None and stripped == '}' and depth == 0:
-            return out, i  # end of locals block
         else:
-            am = re.match(r'^  ([a-z0-9_]+)\s*=', line) if depth == 0 else None
+            # structural decisions on the comment-free line; offsets (i) always
+            # advance by the ORIGINAL line length
+            s = strip_line_comment(line)
+            ss = s.strip()
+            if cur_name is None and ss == '}' and depth == 0:
+                return out, i  # end of locals block
+            am = re.match(r'^  ([a-z0-9_]+)\s*=', s) if depth == 0 else None
             if am and cur_name is None:
                 cur_name, cur_start = am.group(1), i
-            hd = re.search(r'<<-?([A-Z][A-Z0-9_]*)\s*$', line)
+            hd = re.search(r'<<-?([A-Z][A-Z0-9_]*)\s*$', s)
             if hd:
                 heredoc = hd.group(1)
             else:
-                depth += line.count('{') + line.count('[') - line.count('}') - line.count(']')
+                depth += s.count('{') + s.count('[') - s.count('}') - s.count(']')
         i += len(line)
         if cur_name is not None and depth == 0 and heredoc is None:
             out.append((cur_name, cur_start, i))
