@@ -14,10 +14,9 @@ blocks are chained and no-op wherever they don't apply).
 
 ## Steps
 
-1. Get the moved blocks, either way:
-
-   **Any environment names** — after rewriting `tenant.tf` (step 3), generate
-   from it; environment names are derived from your `cluster_<env>` labels:
+1. Generate the moved blocks — after rewriting `tenant.tf` (step 3), from a
+   checkout of this repo at the ref the new module blocks pin. Environment
+   names are derived from your `cluster_<env>` labels; any names work:
 
    ```bash
    git clone --depth 1 --branch vX.Y.Z \
@@ -25,11 +24,8 @@ blocks are chained and no-op wherever they don't apply).
    bash /tmp/multy/docs/generate-moved-blocks.sh > moved-migration.tf   # run in the tenant repo
    ```
 
-   **Conventional names only, zero commands** — copy
-   `docs/migration/moved-migration.tf` (from the module ref you are pinning)
-   into the tenant repo root, verbatim. It covers: `nonprod`, `prod`, `dev`,
-   `test`, `qa`, `staging`, `uat`, `sandbox`, `another-nonprod-env`. Other names need the generated
-   variant above (or a PR extending the list per the file's header).
+   The output is chained: the same file plans clean whether or not this
+   tenant ever applied the wrapper refactor.
 2. Add `providers.tf` to the tenant repo — the five aliased AWS providers,
    autoglue, and github providers per the template below (everything the
    module stack previously configured internally or read from CI env).
