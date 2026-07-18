@@ -14,6 +14,22 @@ regardless of which module version the tenant last applied.
 
 ## Steps
 
+**One-command path:** in the tenant repo on a fresh branch, with this repo
+checked out at the ref to pin:
+
+```bash
+git clone --depth 1 --branch vX.Y.Z \
+  https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites /tmp/multy
+bash /tmp/multy/docs/generate-migration.sh vX.Y.Z
+```
+
+This rewrites `tenant.tf` (tenant facts once on `tenant_base`, one
+`cluster_<env>` block per environment carried over verbatim), writes
+`providers.tf`, and writes `moved-migration.tf`. It fails loudly on anything
+it does not recognize. Review the diff, then go to the gate (step 4).
+
+The manual steps below are equivalent:
+
 1. Generate the moved blocks — after rewriting `tenant.tf` (step 3), from a
    checkout of this repo at the ref the new module blocks pin. Environment
    names are derived from your `cluster_<env>` labels; any names work:
