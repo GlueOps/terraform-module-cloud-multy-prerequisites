@@ -303,9 +303,9 @@ def locals_attrs(text, body_start):
         if heredoc:
             if stripped == heredoc:
                 heredoc = None
+        elif stripped.startswith('#') or stripped.startswith('//'):
+            pass  # comment lines must not affect brace depth
         elif cur_name is None and stripped == '}' and depth == 0:
-            if False:
-                pass
             return out, i  # end of locals block
         else:
             am = re.match(r'^  ([a-z0-9_]+)\s*=', line) if depth == 0 else None
