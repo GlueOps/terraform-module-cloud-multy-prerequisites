@@ -90,7 +90,12 @@ terraform {
     aws      = { source = "hashicorp/aws" }
     random   = { source = "hashicorp/random" }
     autoglue = { source = "registry.terraform.io/GlueOps/autoglue", version = "0.10.12" }
+    github   = { source = "integrations/github" }
   }
+}
+# token comes from the GITHUB_TOKEN env var in CI; set it here to go fully inline
+provider "github" {
+  owner = local.github_owner
 }
 provider "aws" {
   alias  = "clientaccount"
