@@ -1,0 +1,29 @@
+name: Scan buddy profile
+
+# The dragon-dev-buddy profile is committed so the team shares one security
+# profile. It is meant to hold prose, never credentials. The pre-commit hook in
+# .githooks/ catches this locally, but only for people who enabled it — this job
+# is the backstop that runs for everyone.
+
+on:
+  - pull_request
+
+permissions:
+  contents: read
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
+
+      - name: Scan .dragon-buddy JSON for credential-shaped values
+        shell: bash
+        run: |
+          shopt -s nullglob
+          files=(.dragon-buddy/*.json)
+          if [ ${#files[@]} -eq 0 ]; then
+            echo "No buddy profile JSON present, nothing to scan."
+            exit 0
+          fi
+          ./.dragon-buddy/scan-config.sh "${files[@]}"
