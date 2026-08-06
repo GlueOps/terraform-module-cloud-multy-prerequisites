@@ -1,0 +1,69 @@
+{
+  "_comment": "Written by dragon-dev-buddy:buddy-setup to .dragon-buddy/config.json. Re-run that skill when the project, stack or threat profile changes. Safe to commit EXCEPT the engagement block if it names a client.",
+  "version": 1,
+  "project": {
+    "name": "terraform-module-cloud-multy-prerequisites",
+    "what_it_is": "Terraform module that stands up per-tenant cloud prerequisites for the GlueOps platform: Route53 parent and per-cluster zones with DNSSEC, S3 backup and Loki log buckets with cross-region replication, scoped IAM users and access keys for platform components, and a generated tenant 'captain' GitHub repo carrying the rendered Helm values.",
+    "repo": "git@github.com:GlueOps/terraform-module-cloud-multy-prerequisites.git",
+    "primary_language": "HCL",
+    "stack": [
+      "Terraform module, no application runtime",
+      "hashicorp/aws (4 aliases, all assuming OrganizationAccountAccessRole cross-account)",
+      "cloudflare/cloudflare",
+      "hashicorp/random",
+      "GlueOps/autoglue 0.10.12",
+      "8 local submodules under modules/*/<semver>/",
+      "remote GlueOps modules pinned by git tag"
+    ],
+    "runtime": "Terraform CLI, run by platform engineers and by the consuming tenant repo",
+    "deploy_target": "AWS multi-account (Route53, KMS, S3, IAM), GitHub (tenant repo creation), autoglue SaaS control plane"
+  },
+  "security": {
+    "exposure": "public",
+    "data_sensitivity": "credentials",
+    "compliance": [],
+    "auth_model": "AWS cross-account STS assume-role into OrganizationAccountAccessRole; long-lived IAM users with static access keys minted for in-cluster workloads (cert-manager, external-dns, loki, vault init/backup, tls-cert backup/restore, route53-autoglue); GitHub App and OAuth App credentials passed in as module inputs.",
+    "trust_boundaries": [
+      "Management DNS account -> tenant account: NS and DS delegation records are written into a hosted zone in a different AWS account via assume-role.",
+      "Terraform state -> everywhere: IAM secret access keys minted here land in state and are rendered into the tenant captain repo's Helm values.",
+      "Platform -> autoglue/waggle SaaS: provider configured with an org key and org secret against an external base_url outside the AWS trust domain.",
+      "Public internet -> cluster ingress: wildcard *.apps.<cluster>.<tenant> CNAME published in a public Route53 zone."
+    ],
+    "known_risk_areas": [
+      "Secret-bearing input variables are not marked sensitive = true in variables.tf (autoglue_org_secret, github_oauth_app_client_secret, github_tenant_app_b64enc_private_key, waggle_api_key), so they can surface in plan output and CI logs.",
+      "Static long-lived IAM access keys with no rotation path, in preference to IRSA/OIDC."
+    ]
+  },
+  "engagement": {
+    "_comment": "Only used by skills that produce exploit code or client-facing reports. Leave empty for ordinary internal work on your own code.",
+    "authorized_scope": [],
+    "out_of_scope": [],
+    "authorization_ref": "",
+    "contact": ""
+  },
+  "practice": {
+    "test_command": null,
+    "lint_command": "terraform fmt -check -recursive",
+    "build_command": "terraform validate",
+    "sca_tool": "renovate",
+    "sast_tool": "none",
+    "secret_scanner": "github-secret-scanning, gitguardian",
+    "ci": "GitHub Actions (release-please, terraform-docs, scan-buddy-profile)"
+  },
+  "buddy": {
+    "enabled": true,
+    "server": "buddy",
+    "advise_before_work": true,
+    "observe_after_every_skill": true,
+    "skill_prefix": "dragon-dev-buddy"
+  },
+  "output": {
+    "_comment": "Deliberately not the docs/security default: docs/ is tracked here and README.md is generated from docs/.header.md, so reports would be committed. .dragon-buddy/reports/ is gitignored.",
+    "reports_dir": ".dragon-buddy/reports",
+    "format": "markdown"
+  },
+  "skill_level": "platform engineer, fluent in Terraform and AWS multi-account",
+  "voice": {
+    "avoid": []
+  }
+}

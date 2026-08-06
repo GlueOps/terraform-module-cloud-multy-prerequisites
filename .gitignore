@@ -1,0 +1,27 @@
+# Terraform working directories and provider cache
+**/.terraform/*
+.terraform.tfstate.lock.info
+
+# State files — these carry the IAM secret access keys this module mints
+*.tfstate
+*.tfstate.*
+
+# Plan output — a saved plan contains the same secrets as state
+*.tfplan
+*.tfplan.*
+
+# Variable files — these carry the GitHub App private key, OAuth client secret
+# and autoglue org secret this module takes as input
+*.tfvars
+*.tfvars.json
+
+# Crash logs
+crash.log
+crash.*.log
+
+# Terraform CLI config, which may hold registry credentials
+.terraformrc
+terraform.rc
+
+# Dragon Dev Buddy: the profile in config.json is shared, audit reports are not
+.dragon-buddy/reports/
