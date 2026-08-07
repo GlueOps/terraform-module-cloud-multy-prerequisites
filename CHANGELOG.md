@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.87.0](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/compare/v0.86.0...v0.87.0) (2026-08-07)
+
+
+### Features
+
+* update aws eks module ([#690](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/issues/690)) ([315da52](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/commit/315da52900f89bcbe3a1f7ba5c94edfb0e8c8150))
+* update aws versions ([#689](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/issues/689)) ([dcfd429](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/commit/dcfd429c0be0b5bfd59e8aeee2dc3b888eb5e800))
+* update glueops/codespaces to v0.155.1 #minor ([#685](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/issues/685)) ([9253416](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/commit/92534166fb22cec81b2ec1b057cd03dac25d7e19))
+
 ## [0.86.0](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/compare/v0.85.0...v0.86.0) (2026-08-03)
 
 
