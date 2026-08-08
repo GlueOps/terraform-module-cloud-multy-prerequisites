@@ -118,7 +118,19 @@ if [ $# -eq 0 ]; then
     }
     /^\}/ { pending = "" }
   ' ./*.tf | sort -u)
-  [ -n "$envs" ] || { echo 'no module "cluster_<env>" blocks sourcing //modules/captain-cluster found in root .tf files' >&2; exit 1; }
+  # zero cluster blocks is legitimate ONLY for a tenant with no clusters, which
+  # still has a tenant_base block. Without one we are not looking at a migrated
+  # tenant repo at all (wrong directory, or tenant.tf not rewritten yet).
+  if [ -z "$envs" ]; then
+    if grep -qE '^[[:space:]]*source[[:space:]]*=.*//modules/tenant-base' ./*.tf; then
+      echo 'no cluster blocks found alongside the tenant_base block — treating this as a' >&2
+      echo 'zero-cluster tenant: emitting shared moves only, no per-environment moves.' >&2
+      echo 'If this tenant DOES have clusters, its cluster_<env> blocks are missing — stop.' >&2
+    else
+      echo 'no module "cluster_<env>" blocks sourcing //modules/captain-cluster found in root .tf files' >&2
+      exit 1
+    fi
+  fi
   # shellcheck disable=SC2086
   set -- $envs
 fi
