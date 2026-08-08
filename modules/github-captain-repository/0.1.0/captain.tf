@@ -1,10 +1,9 @@
 
 
 resource "github_repository" "captain_repo" {
-  name                 = var.repository_name
-  visibility           = "private"
-  auto_init            = true
-  vulnerability_alerts = true
+  name       = var.repository_name
+  visibility = "private"
+  auto_init  = true
 }
 
 resource "github_repository_deploy_key" "captain_repo_deploy_key" {

@@ -18,6 +18,7 @@ output "captain_cluster_inputs" {
     tls_cert_backup_s3_key_prefix                              = module.common_s3_v2.tls_cert_backup_s3_key_prefix
     vault_backup_s3_key_prefix                                 = module.common_s3_v2.vault_backup_s3_key_prefix
     autoglue_credential_route53_id                             = autoglue_credential.route53.id
+    covered_environment_names                                  = var.environment_names
   }
 }
 

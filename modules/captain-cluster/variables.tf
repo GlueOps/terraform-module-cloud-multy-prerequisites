@@ -19,6 +19,9 @@ variable "tenant" {
     tls_cert_backup_s3_key_prefix                              = string
     vault_backup_s3_key_prefix                                 = string
     autoglue_credential_route53_id                             = string
+    # null when the tenant-base ref predates this attribute (supported skew);
+    # the covered-environments guard in dns.tf skips itself in that case
+    covered_environment_names = optional(list(string), null)
   })
   nullable = false
 }
@@ -76,6 +79,11 @@ variable "cluster_environments" {
     }), null)
   }))
   nullable = false
+
+  validation {
+    condition     = length(var.cluster_environments) == 1
+    error_message = "captain-cluster manages exactly one cluster environment — instantiate the module once per cluster (module \"cluster_<env>\") with a single-element list. Per-cluster version pinning depends on this."
+  }
 }
 
 locals {
