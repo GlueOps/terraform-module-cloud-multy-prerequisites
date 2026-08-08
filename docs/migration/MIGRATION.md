@@ -1,8 +1,22 @@
 # Migrating a tenant to per-cluster module calls
 
 One PR per tenant, **no state access**: the generated moved blocks are
-chained and no-op wherever they don't apply, so the same PR plans clean
-regardless of which module version the tenant last applied.
+chained and no-op wherever they don't apply, so the same moved blocks
+resolve clean regardless of which module version the tenant last applied.
+That version-independence covers state **addresses** only — generated-file
+*content* is version-dependent, which is why the prerequisite below exists.
+
+## Prerequisite: be on the latest pre-split release first
+
+The gate demands a moves-only plan. The migration PR can only produce one
+if the tenant's last **applied** release is the latest pre-split tag
+(**v0.87.0** at time of writing). A tenant behind that will see in-place
+updates on generated captain-repo files (version-pin drift absorbed into
+the migration plan) — a correctly formed migration, blocked at the gate.
+
+If the tenant is behind: first bump the OLD `module "tenant"` call's
+`?ref=` to the latest pre-split tag, merge/apply that as a normal release
+PR, then start the migration.
 
 ## Conventions (required)
 
@@ -41,8 +55,9 @@ The manual steps below are equivalent:
    bash /tmp/multy/docs/generate-moved-blocks.sh > moved-migration.tf   # run in the tenant repo
    ```
 
-   The output is chained: the same file plans clean regardless of which
-   module version this tenant last applied.
+   The output is chained: the same file's moves resolve clean regardless of
+   which module version this tenant last applied (addresses are
+   version-independent; generated-file content is not — see Prerequisite).
 2. Add `providers.tf` to the tenant repo — the five aliased AWS providers,
    autoglue, and github providers per the template below (everything the
    module stack previously configured internally or read from CI env).
@@ -95,7 +110,10 @@ The manual steps below are equivalent:
    "No changes" plan; the moved lines ARE the migration. Anything else
    (creates, destroys, changes, provider errors) means something is wrong
    (mislabeled cluster block, stale moved file, old module "tenant" call not
-   deleted) — fix before merging.
+   deleted) — fix before merging. In-place **changes on generated
+   captain-repo files** specifically mean the tenant's last apply predates
+   the latest pre-split release: close this PR's plan cycle, apply that
+   release with the OLD tenant.tf first (see Prerequisite), then re-plan.
 6. Merge (auto-applies the state moves). **Post-apply check:** the tenant's
    captain repos received zero new commits (generated files byte-identical).
 7. **Follow-up PR:** delete `moved-migration.tf`. Its plan is the true no-op
