@@ -1,5 +1,48 @@
 # Changelog
 
+## [0.87.0](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/compare/v0.86.0...v0.87.0) (2026-08-07)
+
+
+### Features
+
+* update aws eks module ([#690](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/issues/690)) ([315da52](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/commit/315da52900f89bcbe3a1f7ba5c94edfb0e8c8150))
+* update aws versions ([#689](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/issues/689)) ([dcfd429](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/commit/dcfd429c0be0b5bfd59e8aeee2dc3b888eb5e800))
+* update glueops/codespaces to v0.155.1 #minor ([#685](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/issues/685)) ([9253416](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/commit/92534166fb22cec81b2ec1b057cd03dac25d7e19))
+
+## [0.86.0](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/compare/v0.85.0...v0.86.0) (2026-08-03)
+
+
+### Features
+
+* update glueops/platform-helm-chart-platform to v0.77.0 #minor ([#687](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/issues/687)) ([aa35cf7](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/commit/aa35cf77070ca8a3e58563a902ccb0a9003a1f8b))
+
+
+### Miscellaneous Chores
+
+* add Apache-2.0 LICENSE ([#683](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/issues/683)) ([1951b86](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/commit/1951b86e30f513dab84d6f71e88583a68ac658de))
+
+## [0.85.0](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/compare/v0.84.5...v0.85.0) (2026-07-25)
+
+
+### Features
+
+* update github.com/glueops/platform-helm-chart-platform to v0.76.0 #minor ([#672](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/issues/672)) ([8d409c5](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/commit/8d409c5d72fbae628ee45dbccd65b350eef9fc9a))
+* update glueops/platform-helm-chart-platform to v0.76.0 #minor ([#673](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/issues/673)) ([66e6e5e](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/commit/66e6e5e11f64c94981fe9c8b4e63779926fd55e2))
+
+## [0.84.5](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/compare/v0.84.4...v0.84.5) (2026-07-23)
+
+
+### Miscellaneous Chores
+
+* **patch:** update glueops/platform-helm-chart-platform to v0.75.4 #patch ([#670](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/issues/670)) ([692edb3](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/commit/692edb3277ac2f22e14f7e496ac29600109d8be5))
+
+## [0.84.4](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/compare/v0.84.3...v0.84.4) (2026-07-23)
+
+
+### Miscellaneous Chores
+
+* **patch:** update glueops/platform-helm-chart-platform to v0.75.3 #patch ([#668](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/issues/668)) ([9eb1683](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/commit/9eb16831fcbe8a3a80cd729a4b8188a810ba6bee))
+
 ## [0.84.3](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/compare/v0.84.2...v0.84.3) (2026-07-10)
 
 
