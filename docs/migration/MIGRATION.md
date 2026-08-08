@@ -123,6 +123,11 @@ The manual steps below are equivalent:
    `dnssec-us-east-1` provider is not assuming `OrganizationAccountAccessRole`
    in the tenant account (the pre-split module hardcoded that role) — fix the
    provider block per the template below; do not apply the diff.
+   A **"Resource precondition failed" error naming an environment** means that
+   cluster block's `environment_name` is not in `environment_names` on the
+   tenant_base block — the error text names the remedy for each case (real
+   cluster: add it to the list; typo: fix the name, don't add the typo;
+   decommission: delete the cluster's module block before shrinking the list).
 6. Merge (auto-applies the state moves). **Post-apply check:** the tenant's
    captain repos received zero new commits (generated files byte-identical).
 7. **Follow-up PR:** delete `moved-migration.tf`. Its plan is the true no-op

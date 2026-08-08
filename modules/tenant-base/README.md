@@ -7,6 +7,23 @@ once per tenant; its `captain_cluster_inputs` / `captain_cluster_secrets`
 outputs feed every `captain-cluster` instantiation. See
 [docs/migration/MIGRATION.md](../../docs/migration/MIGRATION.md).
 
+## Providers the caller must pass
+
+| Provider | Used for |
+|----------|----------|
+| `aws.clientaccount` | parent zone + DNSSEC KSK, autoglue IAM user (tenant account) |
+| `aws.management-tenant-dns` | DS/NS delegation records written into the management zone |
+| `aws.primaryregion` / `aws.replicaregion` | the shared backup S3 bucket pair |
+| `aws.dnssec-us-east-1` | the DNSSEC KMS key — must be configured for us-east-1 |
+| `autoglue` (default) | the tenant's autoglue Route53 credential |
+| `random` (default) | name uuids |
+
+`environment_names` must list every cluster environment of the tenant — each
+`captain-cluster` instantiation asserts its environment is present (the shared
+backup bucket's lifecycle/retention rules derive from this list). A stale extra
+name left in the list is harmless (extra lifecycle rules) but should be removed
+once its cluster is gone.
+
 ## Requirements
 
 | Name | Version |

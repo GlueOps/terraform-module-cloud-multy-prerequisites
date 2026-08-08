@@ -53,4 +53,7 @@ resource "aws_route53_record" "enable_dnssec_for_parent_tenant_zone" {
   type     = "DS"
   ttl      = local.record_ttl
   records  = [aws_route53_key_signing_key.parent_tenant_zone.ds_record]
+  # publish the DS only after signing is enabled (and, inverted on destroy,
+  # remove the DS before signing is disabled) — mirrors the cluster zones
+  depends_on = [aws_route53_hosted_zone_dnssec.parent_tenant_zone]
 }

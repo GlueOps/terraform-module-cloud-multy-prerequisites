@@ -46,6 +46,15 @@ variable "environment_names" {
   description = "The environment names of every cluster environment in this tenant. Used to derive the cluster zone names for the shared backup bucket lifecycle rules."
   type        = list(string)
   nullable    = false
+
+  validation {
+    condition     = length(distinct(var.environment_names)) == length(var.environment_names)
+    error_message = "environment_names contains duplicate entries."
+  }
+  validation {
+    condition     = alltrue([for n in var.environment_names : can(regex("^[A-Za-z0-9_-]+$", n))])
+    error_message = "every environment name must match [A-Za-z0-9_-]+ — names become cluster_<name> module labels, state keys, and DNS labels."
+  }
 }
 
 variable "primary_region" {
