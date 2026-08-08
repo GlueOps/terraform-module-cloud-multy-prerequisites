@@ -309,10 +309,16 @@ for line in list_body.splitlines(keepends=True):
         cur += line
 if depth != 0 or heredoc:
     sys.exit('cluster_environments: unbalanced environment object')
-if not envs:
+# A genuinely empty list is a valid tenant with no clusters yet (or whose
+# clusters were decommissioned): it migrates to a tenant_base block alone.
+# An empty result from a NON-empty body means the layout was not understood —
+# never treat that as "no clusters", or a tenant that HAS clusters would be
+# rewritten without their module blocks and plan as a mass destroy.
+if not envs and list_body.strip():
     sys.exit('no cluster_environments objects found')
 
-# invariant: every environment object was captured individually
+# invariant: every environment object was captured individually (this also
+# catches a mis-parse that produced zero objects from a body that has some)
 expected = len(re.findall(r'\benvironment_name\s*=', strip_comments(list_body)))
 if expected != len(envs):
     sys.exit(f'cluster_environments: found {expected} environment_name entries but split '
@@ -573,7 +579,12 @@ for f2 in sorted(glob.glob('*.tf')):
 if pruned_names:
     print(f'note: pruned unreferenced locals: {", ".join(sorted(set(pruned_names)))}', file=sys.stderr)
 
-print(f'environments: {", ".join(names)}', file=sys.stderr)
+if names:
+    print(f'environments: {", ".join(names)}', file=sys.stderr)
+else:
+    print('environments: NONE — the legacy call passed cluster_environments = [], so no '
+          'cluster_<env> blocks were written and environment_names is empty. If this tenant '
+          'DOES have clusters, stop: do not commit this.', file=sys.stderr)
 print(old_label + '\t' + legacy_file + '\t' + ' '.join(names))
 PYEOF
 )

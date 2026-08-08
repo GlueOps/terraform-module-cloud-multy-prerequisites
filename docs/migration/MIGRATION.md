@@ -26,6 +26,19 @@ PR, then start the migration.
    object> ]` (the same object it had inside the old module "tenant" call, verbatim).
 3. The old `module "tenant"` call is deleted entirely in the same PR.
 
+## Tenants with no clusters
+
+A tenant whose legacy call passed `cluster_environments = []` migrates to a
+`tenant_base` block alone: no `cluster_<env>` blocks, `environment_names = []`,
+and moved blocks covering only the shared resources. Both generators handle
+this and say so on stderr.
+
+Read that message: if a tenant that *does* have clusters ever reports "no
+clusters", stop — the converter failed to understand its
+`cluster_environments` layout, and committing the result would plan as a
+destroy of every cluster resource. (The converter refuses outright on every
+unparseable layout it knows of; this is the backstop for one it does not.)
+
 ## Steps
 
 **One-command path:** clone the tenant repo, create a fresh branch, then with
