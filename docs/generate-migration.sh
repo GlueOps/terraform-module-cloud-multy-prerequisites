@@ -5,9 +5,12 @@
 #
 # Usage, in the tenant repo, on a fresh branch, with this repo checked out at
 # the ref the tenant should pin:
-#   bash /path/to/this-repo/docs/generate-migration.sh [vX.Y.Z]
-# With no argument you are prompted for the ref to pin; an empty answer (or a
-# non-interactive run without an argument) defaults to main.
+#   bash /path/to/this-repo/docs/generate-migration.sh vX.Y.Z
+# The ref is required (with a TTY you are prompted if it is omitted). "main"
+# is refused — a floating pin silently defeats per-cluster versioning and the
+# migration gate cannot catch it (set ALLOW_REF_MAIN=1 to override
+# deliberately). The checkout supplying the moved-block inventory must match
+# the pinned ref (set ALLOW_REF_MISMATCH=1 to override deliberately).
 #
 # Finds the legacy module call by SOURCE in any root .tf file (file and
 # module names do not matter): tenant-scoped arguments move
@@ -22,16 +25,34 @@
 # "Plan: 0 to add, 0 to change, 0 to destroy."
 set -euo pipefail
 
-[ $# -le 1 ] || { echo "usage: $0 [ref-to-pin (e.g. v0.85.0)]" >&2; exit 1; }
+[ $# -le 1 ] || { echo "usage: $0 <ref-to-pin (the designated wave tag, e.g. v0.88.0)>" >&2; exit 1; }
 REF="${1:-}"
-if [ -z "$REF" ]; then
-  if [ -t 0 ]; then
-    read -r -p "Module ref to pin (e.g. v0.85.0) [main]: " REF || true
-  fi
-  REF="${REF:-main}"
+if [ -z "$REF" ] && [ -t 0 ]; then
+  read -r -p "Module ref to pin (the designated wave tag, e.g. v0.88.0): " REF || true
+fi
+[ -n "$REF" ] || { echo "a ref to pin is required (the designated wave tag, e.g. v0.88.0)" >&2; exit 1; }
+if [ "$REF" = "main" ] && [ "${ALLOW_REF_MAIN:-}" != "1" ]; then
+  echo "refusing to pin ?ref=main: a floating pin silently defeats per-cluster versioning" >&2
+  echo "and the migration gate cannot catch it. Pass the designated wave tag (e.g. v0.88.0)," >&2
+  echo "or set ALLOW_REF_MAIN=1 to override deliberately." >&2
+  exit 1
 fi
 echo "pinning ref: $REF" >&2
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+
+# the moved-block inventory is derived from THIS checkout, while $REF is what
+# tenants will actually apply — a mismatch generates moves for the wrong
+# module shape. describe works for tag clones (git clone --branch vX.Y.Z);
+# the branch-name fallback covers branch pins (e.g. piloting a PR branch).
+CHECKOUT_AT="$(git -C "$SCRIPT_DIR" describe --tags --exact-match 2> /dev/null \
+  || git -C "$SCRIPT_DIR" rev-parse --abbrev-ref HEAD 2> /dev/null || echo unknown)"
+if [ "$CHECKOUT_AT" != "$REF" ] && [ "${ALLOW_REF_MISMATCH:-}" != "1" ]; then
+  echo "this checkout is at '$CHECKOUT_AT' but the ref being pinned is '$REF' — the moved" >&2
+  echo "blocks would be generated from a different module shape than tenants apply." >&2
+  echo "Re-clone at the pinned ref (git clone --depth 1 --branch $REF …), or set" >&2
+  echo "ALLOW_REF_MISMATCH=1 if you know the two match." >&2
+  exit 1
+fi
 ls ./*.tf > /dev/null 2>&1 || { echo "no .tf files in current directory" >&2; exit 1; }
 
 PYOUT=$(REF="$REF" python3 - <<'PYEOF'
@@ -218,13 +239,17 @@ while j < len(lines):
 
 CARRY = ['tenant_key', 'tenant_account_id', 'management_tenant_dns_zoneid',
          'this_is_development', 'primary_region', 'backup_region', 'github_owner']
+# arguments a legacy call may legitimately omit: the pre-split root and
+# tenant-base share the same default, so omitting stays equivalence-preserving
+OPTIONAL = ['this_is_development']
 SPECIAL = ['source', 'autoglue_credentials', 'cluster_environments',
            'management_tenant_dns_aws_account_id', 'opsgenie_emails']
 unknown = [k for k in attrs if k not in CARRY + SPECIAL]
 if unknown:
     sys.exit(f'unrecognized module "{old_label}" arguments (handle manually): {unknown}')
 missing = [k for k in CARRY + ['autoglue_credentials', 'cluster_environments',
-                               'management_tenant_dns_aws_account_id'] if k not in attrs]
+                               'management_tenant_dns_aws_account_id']
+           if k not in attrs and k not in OPTIONAL]
 if missing:
     sys.exit(f'missing expected arguments: {missing}')
 
@@ -306,9 +331,11 @@ if len(set(names)) != len(names):
     sys.exit(f'duplicate environment_name values: {sorted(n for n in set(names) if names.count(n) > 1)}')
 
 # ------------------------------------------------------- pre-write validation
-# generated labels must not collide with anything that stays in the repo
+# generated labels must not collide with anything that stays in the repo —
+# in the legacy call's file OR any other root .tf file
 gen_labels = ['tenant_base'] + [f'cluster_{n}' for n in names]
-rest_cfg = preamble + postamble
+rest_cfg = preamble + postamble + ''.join(
+    open(f2).read() for f2 in sorted(glob.glob('*.tf')) if f2 != legacy_file)
 for lbl in gen_labels:
     if old_label == lbl or re.search(rf'^module\s+"{re.escape(lbl)}"', rest_cfg, re.M):
         sys.exit(f'a module named "{lbl}" already exists (or is the legacy call label) — resolve the collision first')
@@ -402,7 +429,8 @@ if hoist:
 out += f'module "tenant_base" {{\n  source = "{SRC}//modules/tenant-base?ref={ref}"\n'
 out += '  providers = {\n    aws.clientaccount         = aws.clientaccount\n    aws.management-tenant-dns = aws.management-tenant-dns\n    aws.primaryregion         = aws.primaryregion\n    aws.replicaregion         = aws.replicaregion\n    aws.dnssec-us-east-1      = aws.dnssec-us-east-1\n  }\n'
 for k in CARRY:
-    out += f'  {k} = {attrs[k]}\n'
+    if k in attrs:  # omitted OPTIONAL args keep relying on the shared default
+        out += f'  {k} = {attrs[k]}\n'
 out += f'  autoglue_credentials = {ag_ref}\n'
 out += '  environment_names    = [' + ', '.join(f'"{n}"' for n in names) + ']\n'
 out += '}\n'
@@ -423,8 +451,10 @@ providers = f'''terraform {{
       source = "hashicorp/random"
     }}
     autoglue = {{
-      source  = "registry.terraform.io/GlueOps/autoglue"
-      version = "0.10.12"
+      # no version constraint here on purpose: tenant-base pins the exact
+      # autoglue version, and a duplicate exact pin here would force a
+      # fleet-wide lockstep providers.tf edit on every future bump
+      source = "registry.terraform.io/GlueOps/autoglue"
     }}
     github = {{
       source = "integrations/github"
@@ -487,6 +517,16 @@ provider "autoglue" {{
 
 # --------------------------------------------------------------- write phase
 # (all validation is done — nothing below here should fail on tenant input)
+
+# snapshot which locals are referenced BEFORE the rewrite: only locals the
+# migration itself orphans may be pruned. A local that was already dead in
+# the tenant repo stays untouched — deleting it would widen the migration
+# diff with unrelated changes.
+referenced_before = set()
+for f2 in sorted(glob.glob('*.tf')):
+    for m2 in re.finditer(r'\blocal\.([A-Za-z0-9_-]+)\b', open(f2).read()):
+        referenced_before.add(m2.group(1))
+
 open(legacy_file, 'w').write(out)
 open('providers.tf', 'w').write(providers)
 if 'opsgenie_emails' in attrs:
@@ -497,6 +537,7 @@ if 'opsgenie_emails' in attrs:
 # can orphan another it referenced.
 pruned_any = True
 pruned_names = []
+skipped_dead = set()
 while pruned_any:
     pruned_any = False
     files = sorted(glob.glob('*.tf'))
@@ -509,7 +550,10 @@ while pruned_any:
             attrs_spans, _ = locals_attrs(text, m2.end())
             for name, s_, e_ in attrs_spans:
                 if not re.search(r'\blocal\.' + re.escape(name) + r'\b', everything):
-                    edits.append((s_, e_, name))
+                    if name in referenced_before:
+                        edits.append((s_, e_, name))
+                    else:
+                        skipped_dead.add(name)
         if edits:
             for s_, e_, name in sorted(edits, reverse=True):
                 text = text[:s_] + text[e_:]
@@ -518,6 +562,9 @@ while pruned_any:
             text = re.sub(r'^locals\s*\{[ \t]*\n\s*\}\n', '', text, flags=re.M)
             open(f2, 'w').write(text)
             pruned_any = True
+if skipped_dead:
+    print('note: locals unreferenced but pre-dating the migration (left in place): '
+          + ', '.join(sorted(skipped_dead)), file=sys.stderr)
 
 for f2 in sorted(glob.glob('*.tf')):
     if open(f2).read().strip() == '':

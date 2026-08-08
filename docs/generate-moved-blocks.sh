@@ -7,6 +7,9 @@
 # Usage, in the tenant repo AFTER rewriting tenant.tf, with this repo checked
 # out at the ref the new tenant_base/cluster_* blocks pin:
 #   bash /path/to/this-repo/docs/generate-moved-blocks.sh > moved-migration.tf
+# The checkout/pin match is enforced: the script aborts when the ?ref= pins in
+# the tenant's .tf files do not match what this checkout is at (set
+# ALLOW_REF_MISMATCH=1 to override deliberately).
 #
 # Environment names are derived from the module "cluster_<env>" labels in
 # the root .tf files (pass them explicitly as arguments to override).
@@ -47,6 +50,26 @@ OLD_LABEL="${OLD_MODULE_LABEL:-tenant}"
 
 REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 
+# the moved-block inventory is derived from THIS checkout, while the tenant's
+# new module blocks apply whatever their ?ref= pins name — a mismatch
+# generates moves for the wrong module shape. describe works for tag clones
+# (git clone --branch vX.Y.Z); the branch-name fallback covers branch pins.
+if ls ./*.tf > /dev/null 2>&1 && [ "${ALLOW_REF_MISMATCH:-}" != "1" ]; then
+  checkout_at="$(git -C "$REPO_ROOT" describe --tags --exact-match 2> /dev/null \
+    || git -C "$REPO_ROOT" rev-parse --abbrev-ref HEAD 2> /dev/null || echo unknown)"
+  pinned_refs="$(grep -hoE 'terraform-module-cloud-multy-prerequisites[^"]*[?&]ref=[^"&]+' ./*.tf 2> /dev/null \
+    | sed -E 's/.*[?&]ref=//' | sort -u)"
+  for r in $pinned_refs; do
+    if [ "$r" != "$checkout_at" ]; then
+      echo "tenant .tf files pin ?ref=$r but this checkout is at '$checkout_at' — the moved" >&2
+      echo "blocks would describe a different module shape than tenants apply. Re-clone at" >&2
+      echo "the pinned ref (git clone --depth 1 --branch $r …), or set ALLOW_REF_MISMATCH=1" >&2
+      echo "if you know the two match." >&2
+      exit 1
+    fi
+  done
+fi
+
 # every resource/module name declared in a module dir, skipping heredoc bodies
 # (generated-file templates contain blocks that are text, not declarations)
 inventory() {
@@ -80,9 +103,12 @@ if [ $# -eq 0 ]; then
   envs=$(awk '
     FNR == 1 { pending = "" }
     /^module "cluster_[A-Za-z0-9_-]+"[[:space:]]*\{/ {
-      lbl = $2
-      gsub(/"/, "", lbl)
-      sub(/^cluster_/, "", lbl)
+      # extract the label from the quoted string itself — never from a
+      # whitespace-delimited field, which a brace hugging the closing quote
+      # (module "cluster_x"{) would corrupt into an invalid address
+      lbl = $0
+      sub(/^module "cluster_/, "", lbl)
+      sub(/".*$/, "", lbl)
       pending = lbl
       next
     }

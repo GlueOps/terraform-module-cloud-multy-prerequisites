@@ -58,6 +58,11 @@ The manual steps below are equivalent:
    The output is chained: the same file's moves resolve clean regardless of
    which module version this tenant last applied (addresses are
    version-independent; generated-file content is not — see Prerequisite).
+
+   If the legacy call is not named `module "tenant"`, run the script with
+   `OLD_MODULE_LABEL=<that label>` — otherwise every generated `from` address
+   no-ops and the plan shows a full destroy/create instead of moves.
+   (`generate-migration.sh` detects the label automatically.)
 2. Add `providers.tf` to the tenant repo — the five aliased AWS providers,
    autoglue, and github providers per the template below (everything the
    module stack previously configured internally or read from CI env).
@@ -114,6 +119,10 @@ The manual steps below are equivalent:
    captain-repo files** specifically mean the tenant's last apply predates
    the latest pre-split release: close this PR's plan cycle, apply that
    release with the OLD tenant.tf first (see Prerequisite), then re-plan.
+   An in-place **change on the DNSSEC KMS key policy** means the
+   `dnssec-us-east-1` provider is not assuming `OrganizationAccountAccessRole`
+   in the tenant account (the pre-split module hardcoded that role) — fix the
+   provider block per the template below; do not apply the diff.
 6. Merge (auto-applies the state moves). **Post-apply check:** the tenant's
    captain repos received zero new commits (generated files byte-identical).
 7. **Follow-up PR:** delete `moved-migration.tf`. Its plan is the true no-op
@@ -126,7 +135,10 @@ terraform {
   required_providers {
     aws      = { source = "hashicorp/aws" }
     random   = { source = "hashicorp/random" }
-    autoglue = { source = "registry.terraform.io/GlueOps/autoglue", version = "0.10.12" }
+    # no version constraint on autoglue on purpose: tenant-base pins the exact
+    # version, and a duplicate exact pin here would force a fleet-wide lockstep
+    # providers.tf edit on every future autoglue bump
+    autoglue = { source = "registry.terraform.io/GlueOps/autoglue" }
     github   = { source = "integrations/github" }
   }
 }
