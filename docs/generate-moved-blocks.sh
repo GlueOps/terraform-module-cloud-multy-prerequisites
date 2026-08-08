@@ -20,9 +20,12 @@
 #
 # The output is chained (hop 1 relocates legacy root-level addresses into the
 # tenant-base/captain-cluster shape, hop 2 splits them out to the new module
-# blocks), and tofu follows the chain — so the plan is clean regardless of
-# which module version the tenant last applied. Verified empirically from
-# both state forms: moves only, 0/0/0.
+# blocks), and tofu follows the chain — so the moves resolve cleanly
+# regardless of which module version the tenant last applied. Verified
+# empirically from both state forms: moves only, 0/0/0. Address-independence
+# does NOT cover generated-file content: a tenant whose last applied release
+# predates the latest pre-split tag also sees in-place changes at the gate —
+# apply that tag first (see docs/migration/MIGRATION.md, Prerequisite).
 #
 # Assumptions:
 #   - the old call is named module "tenant" (set OLD_MODULE_LABEL if the tenant
