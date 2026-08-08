@@ -4,6 +4,14 @@ resource "github_repository" "captain_repo" {
   name       = var.repository_name
   visibility = "private"
   auto_init  = true
+  # Deprecated in github provider >= 6.x in favour of the
+  # github_repository_vulnerability_alerts resource, but it must stay declared:
+  # the attribute only became Optional+Computed late in 6.x, so on the older
+  # versions pinned in tenants' (unpinned, heterogeneous) lockfiles, dropping it
+  # plans as "vulnerability_alerts = true -> null" — an update-in-place on every
+  # captain repo. Swap to the resource only alongside a fleet-wide provider
+  # floor, and never during a migration wave.
+  vulnerability_alerts = true
 }
 
 resource "github_repository_deploy_key" "captain_repo_deploy_key" {
