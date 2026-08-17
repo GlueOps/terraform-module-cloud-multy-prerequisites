@@ -1,0 +1,29 @@
+resource "aws_iam_user" "vault_s3_backup_v2" {
+  provider = aws.clientaccount
+  for_each = aws_route53_zone.clusters
+  name     = random_uuid.vault_s3_backup_v2_aws_iam_user[each.key].result
+  tags = {
+    Name = "vault-s3-${aws_route53_zone.clusters[each.key].name}"
+  }
+}
+
+resource "aws_iam_user_policy_attachment" "vault_s3_backup_v2" {
+  provider   = aws.clientaccount
+  for_each   = aws_iam_user.vault_s3_backup_v2
+  user       = each.value.name
+  policy_arn = aws_iam_policy.vault_s3_backup_v2[each.key].arn
+  depends_on = [aws_iam_user.vault_s3_backup_v2]
+}
+
+resource "aws_iam_access_key" "vault_s3_backup_v2" {
+  for_each   = aws_iam_user.vault_s3_backup_v2
+  provider   = aws.clientaccount
+  user       = each.value.name
+  depends_on = [aws_iam_user.vault_s3_backup_v2]
+}
+
+
+
+resource "random_uuid" "vault_s3_backup_v2_aws_iam_user" {
+  for_each = aws_route53_zone.clusters
+}
