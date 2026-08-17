@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.88.0](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/compare/v0.87.0...v0.88.0) (2026-08-17)
+
+
+### ⚠ BREAKING CHANGES
+
+* tenants still on the wrapper that pass opsgenie_emails must delete that one argument (it has had no effect for a long time); the per-cluster modules never accepted it.
+
+### Features
+
+* split root module into tenant-base and captain-cluster modules ([#662](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/issues/662)) ([a08bda1](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/commit/a08bda1099eaeee8714ee016e9ea6a9665cb854e))
+
 ## [0.87.0](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/compare/v0.86.0...v0.87.0) (2026-08-07)
 
 
