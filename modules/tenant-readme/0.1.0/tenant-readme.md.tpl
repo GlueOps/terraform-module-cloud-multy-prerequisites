@@ -35,7 +35,7 @@ shipped in the CDE. It reads every version it installs from `VERSIONS/glueops.ya
 so the steps below never take a version argument.
 
 * Your CDE must run codespace version `placeholder_codespace_version` (the `codespace_version` pinned in
-  `VERSIONS/glueops.yaml`); `captain_utils` checks the image version on start and refuses to continue on a mismatch.
+  `VERSIONS/glueops.yaml`); `captain_utils` checks the image version on start and asks you to confirm before continuing on a mismatch.
 * Run `captain_utils` from the root of your clone of this repository, choose `production`, then pick the
   menu items below in this exact order. Each item shows a diff and asks for confirmation before it changes anything.
 
