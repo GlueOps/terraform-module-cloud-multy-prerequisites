@@ -6,7 +6,7 @@ locals {
   codespace_version         = "v0.155.1"
   argocd_helm_chart_version = "9.3.7"
   glueops_platform_version  = "v0.77.0" # this also needs to be updated in the module.glueops_platform_helm_values // generate-helm-values.tf
-  tools_version             = "v0.36.0"
+  platform_crds_version     = "v1.0.0"  # pin of GlueOps/platform-crds (the layer-0 CRD bundle), applied by captain_utils `crds` before argocd and before the platform chart
   calico_helm_chart_version = "v3.31.4"
   calico_ctl_version        = "v3.31.4"
   tigera_operator_version   = "v1.40.7"
