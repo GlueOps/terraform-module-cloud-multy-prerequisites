@@ -37,7 +37,8 @@ so the steps below never take a version argument.
 * Your CDE must run codespace version `placeholder_codespace_version` (the `codespace_version` pinned in
   `VERSIONS/glueops.yaml`); `captain_utils` checks the image version on start and asks you to confirm before continuing on a mismatch.
 * Run `captain_utils` from the root of your clone of this repository, choose `production`, then pick the
-  menu items below in this exact order. Each item shows a diff and asks for confirmation before it changes anything.
+  menu items below in this exact order. Each item shows what it is about to change and asks for confirmation when
+  there are changes (the `crds` step applies without a prompt when nothing changed, to record ownership of the CRDs).
 
 1. Apply the platform CRDs: `captain_utils` -> `production` -> `crds`
     * Applies the GlueOps/platform-crds bundle at the `platform_crds_version` pinned in `VERSIONS/glueops.yaml`
@@ -45,13 +46,14 @@ so the steps below never take a version argument.
     * Review the diff (on a fresh cluster every CRD is new), then confirm.
 
 2. Deploy ArgoCD: `captain_utils` -> `production` -> `argocd`
-    * Runs `helm diff` and, after confirmation, `helm upgrade --install` of the ArgoCD chart with the
-      `argocd_helm_chart_version` / `argocd_app_version` pinned in `VERSIONS/glueops.yaml` using `argocd.yaml`.
+    * Runs `helm diff` and, after confirmation, `helm upgrade --install` of the ArgoCD chart at the
+      `argocd_helm_chart_version` pinned in `VERSIONS/glueops.yaml`, using `argocd.yaml` (which carries the
+      `argocd_app_version` image tag).
     * Ensure all ArgoCD services are available and running before proceeding to the next step.
 
 3. Re-apply the platform CRDs: `captain_utils` -> `production` -> `crds`
-    * Recreates anything the ArgoCD Helm release removed. This normally reports no changes; confirm the
-      (empty) diff so the ownership of every CRD is asserted.
+    * Recreates anything the ArgoCD Helm release removed. This normally reports "No CRD content changes …
+      applying to record ownership" and finishes without a prompt.
 
 4. Deploy the GlueOps Platform: `captain_utils` -> `production` -> `glueops-platform`
     * Runs `helm diff` and, after confirmation, `helm upgrade --install` of the GlueOps platform chart

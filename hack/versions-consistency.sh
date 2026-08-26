@@ -151,9 +151,26 @@ else
   compare "vpa (recommender image tag)" "$(pin vpa)" "$vpa_tag"
   # argo-cd CRDs are in the bundle too; argocd itself is installed by captain_utils at local.argocd_app_version
   compare "argo-cd" "$(pin argo-cd)" "$argocd_app_version"
+  # every pin the bundle carries must have a comparison rule above (an unknown pin means a new CRD source the
+  # platform chart may not deploy, or a rule that still needs writing)
+  known_pins="kube-prometheus-stack cert-manager external-secrets keda traefik metacontroller fluent-operator external-dns vpa argo-cd"
+  while IFS= read -r key; do
+    [ -n "$key" ] || continue
+    case " $known_pins " in *" $key "*) ;; *) fail "(b) bundle pin glueops.dev/pin.$key has no comparison rule in hack/versions-consistency.sh — add one (and add $key to known_pins)";; esac
+  done < <(yq -r '.annotations // {} | keys | .[] | select(test("^glueops\\.dev/pin\\.")) | sub("^glueops\\.dev/pin\\."; "")' "$WORKDIR/crds-chart.yaml")
 fi
 
 # ---------------------------------------------------------------------------
+# (d) the pinned codespace ships a captain_utils with the `crds` menu item that the generated tenant README documents
+codespace_version=$(tf_local codespace_version)
+cu_url="https://raw.githubusercontent.com/GlueOps/codespaces/${codespace_version}/.devcontainer/tools/captain_utils.sh"
+if curl -fsSL "$cu_url" -o "$WORKDIR/captain_utils.sh"; then
+  if grep -q 'handle_crds' "$WORKDIR/captain_utils.sh"; then ok "(d) codespace $codespace_version ships the captain_utils crds menu item"
+  else fail "(d) codespace $codespace_version has no crds menu item; bump codespace_version to a release containing GlueOps/codespaces#566"; fi
+else
+  fail "(d) cannot fetch $cu_url"
+fi
+
 if [ "${#failures[@]}" -gt 0 ]; then
   echo
   echo "${#failures[@]} consistency check(s) failed:" >&2
