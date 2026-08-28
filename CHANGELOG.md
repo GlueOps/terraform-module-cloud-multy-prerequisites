@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.89.0](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/compare/v0.88.0...v0.89.0) (2026-08-28)
+
+
+### ⚠ BREAKING CHANGES
+
+* pin the platform-crds bundle version and route the tenant README through captain_utils ([#708](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/issues/708))
+
+### Features
+
+* pin the platform-crds bundle version and route the tenant README through captain_utils ([#708](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/issues/708)) ([0906b95](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/commit/0906b95673d8d4f33a2ec052939cd661da5af75d))
+
 ## [0.88.0](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/compare/v0.87.0...v0.88.0) (2026-08-17)
 
 
