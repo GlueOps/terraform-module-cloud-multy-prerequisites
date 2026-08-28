@@ -30,26 +30,38 @@ gh repo clone placeholder_github_owner/placeholder_repo_name
 
 ## Deploying GlueOps the Platform
 
-1. Deploy ArgoCD
-    * The below command installs ArgoCD CRDs, ArgoCD Helm Chart, and watches services until they are available
-    
-    ```sh
-    source <(curl -s https://raw.githubusercontent.com/GlueOps/development-only-utilities/placeholder_tools_version/tools/glueops-platform/deploy-argocd) && \
-        deploy-argocd -c placeholder_argocd_crd_version -h placeholder_argocd_helm_chart_version
-    ```
+All platform components are installed from this repository with `captain_utils`, the menu-driven tool
+shipped in the CDE. It reads every version it installs from `VERSIONS/glueops.yaml` in this repository,
+so the steps below never take a version argument.
 
-    * Ensure all services are available and running before proceeding to the next step
+* Your CDE must run codespace version `placeholder_codespace_version` (the `codespace_version` pinned in
+  `VERSIONS/glueops.yaml`); `captain_utils` checks the image version on start and asks you to confirm before continuing on a mismatch.
+* Run `captain_utils` from the root of your clone of this repository, choose `production`, then pick the
+  menu items below in this exact order. Each item shows what it is about to change and asks for confirmation when
+  there are changes (the `crds` step applies without a prompt when nothing changed, to record ownership of the CRDs).
 
-2. Deploy the GlueOps Platform
-    * Install the GlueOps platform using
+1. Apply the platform CRDs: `captain_utils` -> `production` -> `crds`
+    * Applies the GlueOps/platform-crds bundle at the `platform_crds_version` pinned in `VERSIONS/glueops.yaml`
+      (every CRD the platform needs, including ArgoCD's own) with `kubectl apply --server-side`.
+    * Review the diff (on a fresh cluster every CRD is new), then confirm.
 
-    ```sh
-    source <(curl -s https://raw.githubusercontent.com/GlueOps/development-only-utilities/placeholder_tools_version/tools/glueops-platform/deploy-glueops-platform) && \
-        deploy-glueops-platform -v placeholder_glueops_platform_version
-    ```
+2. Deploy ArgoCD: `captain_utils` -> `production` -> `argocd`
+    * Runs `helm diff` and, after confirmation, `helm upgrade --install` of the ArgoCD chart at the
+      `argocd_helm_chart_version` pinned in `VERSIONS/glueops.yaml`, using `argocd.yaml` (which carries the
+      `argocd_app_version` image tag).
+    * Ensure all ArgoCD services are available and running before proceeding to the next step.
 
+3. Re-apply the platform CRDs: `captain_utils` -> `production` -> `crds`
+    * Recreates anything the ArgoCD Helm release removed. This normally reports "No CRD content changes …
+      applying to record ownership" and finishes without a prompt.
+
+4. Deploy the GlueOps Platform: `captain_utils` -> `production` -> `glueops-platform`
+    * Runs `helm diff` and, after confirmation, `helm upgrade --install` of the GlueOps platform chart
+      `placeholder_glueops_platform_version` (the `glueops_platform_helm_chart_version` pinned in
+      `VERSIONS/glueops.yaml`) using `platform.yaml`.
     * [Configure Vault](https://github.com/GlueOps/terraform-module-kubernetes-hashicorp-vault-configuration)
-3. Access Cluster services
+
+5. Access Cluster services
     * [Cluster Info](https://cluster-info.placeholder_repo_name): https://cluster-info.placeholder_repo_name
     * [ArgoCD](https://argocd.placeholder_repo_name): https://argocd.placeholder_repo_name
     * [Valult](https://vault.placeholder_repo_name): https://vault.placeholder_repo_name

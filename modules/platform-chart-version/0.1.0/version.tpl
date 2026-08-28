@@ -15,3 +15,5 @@ versions:
     version: tigera_operator_version_placeholder
   - name: terraform_module_version
     version: terraform_module_version_placeholder
+  - name: platform_crds_version
+    version: platform_crds_version_placeholder

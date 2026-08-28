@@ -41,6 +41,12 @@ variable "codespace_version" {
   nullable    = false
 }
 
+variable "platform_crds_version" {
+  description = "GlueOps/platform-crds release (layer-0 CRD bundle applied by captain_utils `crds`)"
+  type        = string
+  nullable    = false
+}
+
 variable "terraform_module_version" {
   description = "terraform-module-cloud-aws-kubernetes-cluster version"
   type        = string
@@ -52,7 +58,7 @@ data "local_file" "version" {
 }
 
 output "platform_versions" {
-  value = replace(replace(replace(replace(replace(replace(replace(replace(
+  value = replace(replace(replace(replace(replace(replace(replace(replace(replace(
     data.local_file.version.content,
     "glueops_platform_helm_chart_version_placeholder", "${var.glueops_platform_version}"),
     "argocd_helm_chart_version_placeholder", "${var.argocd_helm_chart_version}"),
@@ -61,5 +67,6 @@ output "platform_versions" {
     "calico_helm_chart_version_placeholder", "${var.calico_helm_chart_version}"),
     "calico_ctl_version_placeholder", "${var.calico_ctl_version}"),
     "terraform_module_version_placeholder", "${var.terraform_module_version}"),
-  "tigera_operator_version_placeholder", "${var.tigera_operator_version}")
+    "tigera_operator_version_placeholder", "${var.tigera_operator_version}"),
+  "platform_crds_version_placeholder", "${var.platform_crds_version}")
 }

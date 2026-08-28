@@ -1,0 +1,109 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "description": "Repo-local managers for the platform version pins. The org preset's managers are anchored on the pre-split root files (variables.tf, generate-helm-values.tf) and no longer match anything here since the v0.88.0 split into modules/. separateMinorPatch/separateMultipleMinor are disabled so each pin gets one PR targeting the highest available version instead of one PR per intermediate minor/patch.",
+  "separateMinorPatch": false,
+  "separateMultipleMinor": false,
+  "customManagers": [
+    {
+      "customType": "regex",
+      "matchStrings": [
+        "codespace_version.* = \"v?(?<currentValue>\\d+\\.\\d+\\.\\d+)\\s*"
+      ],
+      "depNameTemplate": "glueops/codespaces",
+      "datasourceTemplate": "github-tags",
+      "managerFilePatterns": [
+        "/^modules/captain-cluster/platform-versions\\.tf$/"
+      ]
+    },
+    {
+      "customType": "regex",
+      "matchStrings": [
+        "glueops_platform_version.* = \"v?(?<currentValue>\\d+\\.\\d+\\.\\d+)\""
+      ],
+      "depNameTemplate": "glueops/platform-helm-chart-platform",
+      "datasourceTemplate": "github-tags",
+      "managerFilePatterns": [
+        "/^modules/captain-cluster/platform-versions\\.tf$/"
+      ]
+    },
+    {
+      "customType": "regex",
+      "matchStrings": [
+        "argocd_helm_chart_version.* = \"v?(?<currentValue>\\d+\\.\\d+\\.\\d+)\\s*"
+      ],
+      "depNameTemplate": "argo-cd",
+      "datasourceTemplate": "helm",
+      "registryUrlTemplate": "https://argoproj.github.io/argo-helm",
+      "managerFilePatterns": [
+        "/^modules/captain-cluster/platform-versions\\.tf$/"
+      ]
+    },
+    {
+      "customType": "regex",
+      "matchStrings": [
+        "argocd_app_version.* = \"v?(?<currentValue>\\d+\\.\\d+\\.\\d+)\\s*"
+      ],
+      "depNameTemplate": "argoproj/argo-cd",
+      "datasourceTemplate": "github-tags",
+      "managerFilePatterns": [
+        "/^modules/captain-cluster/platform-versions\\.tf$/"
+      ]
+    },
+    {
+      "customType": "regex",
+      "matchStrings": [
+        "platform_crds_version.* = \"v?(?<currentValue>\\d+\\.\\d+\\.\\d+)\\s*"
+      ],
+      "depNameTemplate": "glueops/platform-crds",
+      "datasourceTemplate": "github-tags",
+      "managerFilePatterns": [
+        "/^modules/captain-cluster/platform-versions\\.tf$/"
+      ]
+    },
+    {
+      "customType": "regex",
+      "matchStrings": [
+        "calico_helm_chart_version.* = \"v?(?<currentValue>\\d+\\.\\d+\\.\\d+)\\s*",
+        "calico_ctl_version.* = \"v?(?<currentValue>\\d+\\.\\d+\\.\\d+)\\s*"
+      ],
+      "depNameTemplate": "projectcalico/calico",
+      "datasourceTemplate": "github-tags",
+      "managerFilePatterns": [
+        "/^modules/captain-cluster/platform-versions\\.tf$/"
+      ]
+    },
+    {
+      "customType": "regex",
+      "matchStrings": [
+        "tigera_operator_version.* = \"v?(?<currentValue>\\d+\\.\\d+\\.\\d+)\\s*"
+      ],
+      "depNameTemplate": "tigera/operator",
+      "datasourceTemplate": "github-tags",
+      "managerFilePatterns": [
+        "/^modules/captain-cluster/platform-versions\\.tf$/"
+      ]
+    },
+    {
+      "customType": "regex",
+      "matchStrings": [
+        "platform-helm-chart-platform.git\\?ref=v?(?<currentValue>\\d+\\.\\d+\\.\\d+)\\s*"
+      ],
+      "depNameTemplate": "glueops/platform-helm-chart-platform",
+      "datasourceTemplate": "github-tags",
+      "managerFilePatterns": [
+        "/^modules/captain-cluster/generate-helm-values\\.tf$/"
+      ]
+    },
+    {
+      "customType": "regex",
+      "matchStrings": [
+        "docs-argocd.git\\?ref=v?(?<currentValue>\\d+\\.\\d+\\.\\d+)\\s*"
+      ],
+      "depNameTemplate": "glueops/docs-argocd",
+      "datasourceTemplate": "github-tags",
+      "managerFilePatterns": [
+        "/^modules/captain-cluster/generate-helm-values\\.tf$/"
+      ]
+    }
+  ]
+}
