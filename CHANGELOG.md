@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.90.0](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/compare/v0.89.0...v0.90.0) (2026-08-28)
+
+
+### Features
+
+* update glueops/codespaces to v0.160.0 #minor ([#716](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/issues/716)) ([5ff0a44](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/commit/5ff0a4489ee63e35fd095a01def40ddaa9638e2f))
+
 ## [0.89.0](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/compare/v0.88.0...v0.89.0) (2026-08-28)
 
 
