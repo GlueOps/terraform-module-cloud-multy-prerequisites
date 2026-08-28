@@ -3,7 +3,7 @@
 # its ?ref= pin moves to the release carrying this file.
 locals {
   argocd_app_version        = "v3.2.12"
-  codespace_version         = "v0.159.1"
+  codespace_version         = "v0.160.0"
   argocd_helm_chart_version = "9.3.7"
   glueops_platform_version  = "v0.78.0" # keep in sync with the ?ref= of module.glueops_platform_helm_values in generate-helm-values.tf
   platform_crds_version     = "v0.1.4"  # pin of GlueOps/platform-crds (the layer-0 CRD bundle), applied by captain_utils `crds` before argocd and before the platform chart.
