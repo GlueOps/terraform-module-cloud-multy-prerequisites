@@ -47,7 +47,7 @@ covered-environments guard treats it as a missing entry.
 | <a name="module_captain_repository"></a> [captain\_repository](#module\_captain\_repository) | ../github-captain-repository/0.1.0 | n/a |
 | <a name="module_captain_repository_files"></a> [captain\_repository\_files](#module\_captain\_repository\_files) | ../github-captain-repository-files/0.1.0 | n/a |
 | <a name="module_generate_gluekube_creds"></a> [generate\_gluekube\_creds](#module\_generate\_gluekube\_creds) | ../gluekube/0.1.0 | n/a |
-| <a name="module_glueops_platform_helm_values"></a> [glueops\_platform\_helm\_values](#module\_glueops\_platform\_helm\_values) | git::https://github.com/GlueOps/platform-helm-chart-platform.git | feat/crds-from-platform-crds-bundle |
+| <a name="module_glueops_platform_helm_values"></a> [glueops\_platform\_helm\_values](#module\_glueops\_platform\_helm\_values) | git::https://github.com/GlueOps/platform-helm-chart-platform.git | v0.78.0 |
 | <a name="module_glueops_platform_versions"></a> [glueops\_platform\_versions](#module\_glueops\_platform\_versions) | ../platform-chart-version/0.1.0 | n/a |
 | <a name="module_loki_s3"></a> [loki\_s3](#module\_loki\_s3) | ../multy-s3-bucket/0.1.0 | n/a |
 | <a name="module_tenant_cluster_versions"></a> [tenant\_cluster\_versions](#module\_tenant\_cluster\_versions) | ../kubernetes-versions/0.1.0 | n/a |
