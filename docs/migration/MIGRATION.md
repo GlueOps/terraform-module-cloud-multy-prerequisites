@@ -20,6 +20,12 @@ PR, then start the migration.
 
 ## Conventions (required)
 
+> The wave tag you migrate to must predate the release that adds the monitoring-stack object storage inputs
+> (`loki_storage`, `thanos_storage`, `tempo_storage` on every cluster block — required, no default). The migration
+> carries each `cluster_environments` object over verbatim, so a tenant migrating straight onto that release fails with
+> `attribute "loki_storage" is required`; and even with them added, the moves-only gate cannot pass because
+> `platform.yaml` changes. Migrate first, then take the monitoring stack as a normal upgrade PR.
+
 1. One `module "cluster_<environment_name>"` block per environment — the label
    must be exactly `cluster_` + the environment name.
 2. Each cluster block passes `cluster_environments = [ <that one environment

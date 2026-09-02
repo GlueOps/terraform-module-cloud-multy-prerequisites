@@ -78,6 +78,8 @@ variable "cluster_environments" {
     #                   type: s3, config: {bucket, endpoint, access_key, secret_key}
     #   tempo_storage:  https://grafana.com/docs/tempo/latest/configuration/#storage
     #                   backend: s3, s3: {bucket, endpoint, access_key, secret_key, insecure}
+    # The strings go through yamldecode (YAML 1.2): quote any scalar that could read as a number or boolean
+    # (a bucket "0123" becomes 123, "1e5" becomes 100000, "no" becomes false).
     loki_storage         = string
     thanos_storage       = string
     tempo_storage        = string
@@ -94,6 +96,22 @@ variable "cluster_environments" {
   validation {
     condition     = length(var.cluster_environments) == 1
     error_message = "captain-cluster manages exactly one cluster environment — instantiate the module once per cluster (module \"cluster_<env>\") with a single-element list. Per-cluster version pinning depends on this."
+  }
+
+  # The three storage strings must be non-empty YAML mappings: a list, a bare scalar, an empty string or invalid YAML
+  # would otherwise either fail deep inside the platform chart module with a message that names no field, or be
+  # accepted silently and land as `storage: [...]` in platform.yaml. The messages never echo the value (it holds keys).
+  validation {
+    condition     = alltrue([for e in var.cluster_environments : try(length(keys(yamldecode(e.loki_storage))) > 0, false)])
+    error_message = "cluster_environments[*].loki_storage must be a non-empty YAML mapping (bucketNames / type / s3); it is empty, not valid YAML, or a list/scalar."
+  }
+  validation {
+    condition     = alltrue([for e in var.cluster_environments : try(length(keys(yamldecode(e.thanos_storage))) > 0, false)])
+    error_message = "cluster_environments[*].thanos_storage must be a non-empty YAML mapping (type / config); it is empty, not valid YAML, or a list/scalar."
+  }
+  validation {
+    condition     = alltrue([for e in var.cluster_environments : try(length(keys(yamldecode(e.tempo_storage))) > 0, false)])
+    error_message = "cluster_environments[*].tempo_storage must be a non-empty YAML mapping (backend / s3); it is empty, not valid YAML, or a list/scalar."
   }
 }
 
