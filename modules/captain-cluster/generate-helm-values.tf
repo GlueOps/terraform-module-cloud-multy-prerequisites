@@ -48,7 +48,7 @@ locals {
 
 module "glueops_platform_helm_values" {
   for_each                                   = local.environment_map
-  source                                     = "git::https://github.com/GlueOps/platform-helm-chart-platform.git?ref=feat/otel-20260902" # TODO(before merge): the release cut from platform-helm-chart-platform#1486
+  source                                     = "git::https://github.com/GlueOps/platform-helm-chart-platform.git?ref=feat/otel-extention-backend-app" # carries feat/otel-20260902 (merged in) PLUS the argocd-extension-backend Application. TODO(before merge): the release cut from platform-helm-chart-platform#1461
   captain_repo_b64encoded_private_deploy_key = base64encode(module.captain_repository[each.value.environment_name].private_deploy_key)
   captain_repo_ssh_clone_url                 = module.captain_repository[each.value.environment_name].ssh_clone_url
   this_is_development                        = var.tenant.this_is_development
@@ -102,7 +102,7 @@ module "glueops_platform_helm_values" {
 
 module "argocd_helm_values" {
   for_each             = local.environment_map
-  source               = "git::https://github.com/GlueOps/docs-argocd.git?ref=v0.20.0"
+  source               = "git::https://github.com/GlueOps/docs-argocd.git?ref=feature/global-otel-backend" # v0.20.0 + the OTEL UI extension frontend (server.extensions installer, extension.config, RBAC). TODO(before merge): the release cut once feature/global-otel-backend lands on main
   tenant_key           = var.tenant.tenant_key
   cluster_environment  = each.value.environment_name
   client_secret        = random_password.dex_argocd_client_secret[each.value.environment_name].result

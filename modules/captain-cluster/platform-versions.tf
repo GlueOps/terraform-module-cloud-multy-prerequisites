@@ -5,8 +5,8 @@ locals {
   argocd_app_version        = "v3.2.12"
   codespace_version         = "v0.160.0"
   argocd_helm_chart_version = "9.3.7"
-  glueops_platform_version  = "feat/otel-20260902" # keep in sync with the ?ref= of module.glueops_platform_helm_values in generate-helm-values.tf. TODO(before merge): the release cut from platform-helm-chart-platform#1486
-  platform_crds_version     = "v0.1.4"             # pin of GlueOps/platform-crds (the layer-0 CRD bundle), applied by captain_utils `crds` before argocd and before the platform chart.
+  glueops_platform_version  = "feat/otel-extention-backend-app" # keep in sync with the ?ref= of module.glueops_platform_helm_values in generate-helm-values.tf. TODO(before merge): the release cut from platform-helm-chart-platform#1461
+  platform_crds_version     = "v0.1.4"                          # pin of GlueOps/platform-crds (the layer-0 CRD bundle), applied by captain_utils `crds` before argocd and before the platform chart.
   # TODO(before merge): platform_crds_version must be the release cut from platform-crds#68 (kube-prometheus-stack 86.1.0 +
   # opentelemetry-operator CRDs) — the monitoring stack in the platform chart above cannot start without them.
   # >= v0.1.3 ships CRDs for conditionally-deployed components in profile subcharts, selected from the cluster's
