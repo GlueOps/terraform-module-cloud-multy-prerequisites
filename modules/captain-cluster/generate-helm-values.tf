@@ -48,7 +48,7 @@ locals {
 
 module "glueops_platform_helm_values" {
   for_each                                   = local.environment_map
-  source                                     = "git::https://github.com/GlueOps/platform-helm-chart-platform.git?ref=v0.79.0"
+  source                                     = "git::https://github.com/GlueOps/platform-helm-chart-platform.git?ref=feat/otel-20260902" # TODO(before merge): the release cut from platform-helm-chart-platform#1486
   captain_repo_b64encoded_private_deploy_key = base64encode(module.captain_repository[each.value.environment_name].private_deploy_key)
   captain_repo_ssh_clone_url                 = module.captain_repository[each.value.environment_name].ssh_clone_url
   this_is_development                        = var.tenant.this_is_development
@@ -61,8 +61,9 @@ module "glueops_platform_helm_values" {
   dex_oauth2_cookie_secret                   = random_password.dex_oauth2_cookie_secret[each.value.environment_name].result
   vault_aws_access_key                       = aws_iam_access_key.vault_s3_backup_v2[each.value.environment_name].id
   vault_aws_secret_key                       = aws_iam_access_key.vault_s3_backup_v2[each.value.environment_name].secret
-  loki_aws_access_key                        = aws_iam_access_key.loki_s3_v2[each.value.environment_name].id
-  loki_aws_secret_key                        = aws_iam_access_key.loki_s3_v2[each.value.environment_name].secret
+  loki_storage                               = each.value.loki_storage
+  thanos_storage                             = each.value.thanos_storage
+  tempo_storage                              = each.value.tempo_storage
   certmanager_aws_access_key                 = aws_iam_access_key.certmanager_v2[each.value.environment_name].id
   certmanager_aws_secret_key                 = aws_iam_access_key.certmanager_v2[each.value.environment_name].secret
   externaldns_aws_access_key                 = aws_iam_access_key.externaldns_v2[each.value.environment_name].id
@@ -81,7 +82,6 @@ module "glueops_platform_helm_values" {
   traefik_enable_internal_lb                 = each.value.traefik_enable_internal_lb
   traefik_enable_public_lb                   = each.value.traefik_enable_public_lb
   nginx_enable_public_lb                     = each.value.nginx_enable_public_lb
-  prometheus_volume_claim_storage_request    = each.value.prometheus_volume_claim_storage_request
   vault_data_storage                         = each.value.vault_data_storage
   nginx_controller_replica_count             = each.value.nginx_controller_replica_count
   traefik_internal_lb_deployment_replicas    = each.value.traefik_internal_lb_deployment_replicas
