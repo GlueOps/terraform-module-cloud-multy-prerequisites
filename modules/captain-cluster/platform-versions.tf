@@ -2,7 +2,7 @@
 # those live in providers.tf). These are the values a cluster upgrades to when
 # its ?ref= pin moves to the release carrying this file.
 locals {
-  argocd_app_version        = "v3.2.12"
+  argocd_app_version        = "v3.5.0"
   codespace_version         = "v0.161.1"
   argocd_helm_chart_version = "9.3.7"
   glueops_platform_version  = "v0.79.0" # keep in sync with the ?ref= of module.glueops_platform_helm_values in generate-helm-values.tf
