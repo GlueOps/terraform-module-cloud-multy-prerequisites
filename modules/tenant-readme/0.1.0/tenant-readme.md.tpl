@@ -53,9 +53,12 @@ so the steps below never take a version argument.
     * **Upgrading an existing cluster? Run step 4 first.** `argocd.yaml` routes through Traefik
       middlewares that the platform chart creates, so on an upgrade this step can land before they
       exist. Traefik drops a router whose middleware is missing, which makes
-      `argocd.placeholder_repo_name` answer 404 -- the browser UI as well as the CLI -- until step 4
-      completes. Nothing is exposed by this (the route is removed, so no unauthenticated request
-      reaches ArgoCD) and it clears as soon as the platform chart lands, but the outage is avoidable.
+      `argocd.placeholder_repo_name` answer 404 -- the browser UI as well as the CLI -- until ArgoCD
+      has synced the platform chart's `glueops-core-traefik-crds-and-middleware` Application. Step 4
+      only creates that Application; the middlewares arrive with its sync-waves, so the outage
+      outlasts the `helm upgrade` itself. Nothing is exposed by this (the route is removed, so no
+      unauthenticated request reaches ArgoCD) and it clears once that Application syncs, but the
+      outage is avoidable.
       On a **fresh** cluster keep the order below: nothing is serving yet, and ArgoCD has to exist
       before the platform chart's Applications can sync.
 
