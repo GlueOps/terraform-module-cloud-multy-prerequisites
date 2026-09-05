@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.92.2](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/compare/v0.92.1...v0.92.2) (2026-09-05)
+
+
+### Bug Fixes
+
+* generate the vault configuration against v0.15.2 ([#732](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/issues/732)) ([191e92e](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/commit/191e92eaeddd5432bf9b5c4154e268aca98df2b1))
+
 ## [0.92.1](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/compare/v0.92.0...v0.92.1) (2026-09-05)
 
 
