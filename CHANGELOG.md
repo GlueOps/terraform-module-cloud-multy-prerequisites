@@ -1,5 +1,41 @@
 # Changelog
 
+## [0.92.2](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/compare/v0.92.1...v0.92.2) (2026-09-05)
+
+
+### Bug Fixes
+
+* generate the vault configuration against v0.15.2 ([#732](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/issues/732)) ([191e92e](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/commit/191e92eaeddd5432bf9b5c4154e268aca98df2b1))
+
+## [0.92.1](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/compare/v0.92.0...v0.92.1) (2026-09-05)
+
+
+### Bug Fixes
+
+* generate the vault configuration against v0.15.1 ([#730](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/issues/730)) ([68ae97a](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/commit/68ae97a7531fd83d8eaa611b6c2e1d9a4bce48b3))
+
+## [0.92.0](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/compare/v0.91.0...v0.92.0) (2026-09-05)
+
+
+### Features
+
+* generate the vault configuration against v0.15.0 ([#728](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/issues/728)) ([154aaaf](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/commit/154aaaf7368c6dca85ba48d810ac2d728330b5b7))
+
+## [0.91.0](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/compare/v0.90.0...v0.91.0) (2026-09-05)
+
+
+### Features
+
+* update github.com/glueops/docs-argocd to v0.21.0 #minor ([#722](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/issues/722)) ([cfaf36a](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/commit/cfaf36a014624041acf06f91066700512115c534))
+* update glueops/codespaces to v0.161.1 #minor ([#718](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/issues/718)) ([53f59a4](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/commit/53f59a4ad298a02342d19221eb521d0e807dc135))
+* update glueops/docs-argocd to v0.21.0 #minor ([#724](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/issues/724)) ([af137c8](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/commit/af137c8f7238e6b2716b460a2085dfd64b279b5b))
+* update glueops/platform-helm-chart-platform to v0.79.0 #minor ([#725](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/issues/725)) ([8b59cba](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/commit/8b59cbaedab21b67a135704c44a9f9de17214fd8))
+
+
+### Documentation
+
+* warn about the argocd/platform upgrade order and point at toolbox ([#720](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/issues/720)) ([e6e8067](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/commit/e6e8067d321a71fd5bd5094c234b633b4ea66d17))
+
 ## [0.90.0](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/compare/v0.89.0...v0.90.0) (2026-08-28)
 
 
