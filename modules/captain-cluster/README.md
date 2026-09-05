@@ -43,7 +43,7 @@ covered-environments guard treats it as a missing entry.
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_argocd_helm_values"></a> [argocd\_helm\_values](#module\_argocd\_helm\_values) | git::https://github.com/GlueOps/docs-argocd.git | v0.20.0 |
+| <a name="module_argocd_helm_values"></a> [argocd\_helm\_values](#module\_argocd\_helm\_values) | git::https://github.com/GlueOps/docs-argocd.git | v0.21.0 |
 | <a name="module_captain_repository"></a> [captain\_repository](#module\_captain\_repository) | ../github-captain-repository/0.1.0 | n/a |
 | <a name="module_captain_repository_files"></a> [captain\_repository\_files](#module\_captain\_repository\_files) | ../github-captain-repository-files/0.1.0 | n/a |
 | <a name="module_generate_gluekube_creds"></a> [generate\_gluekube\_creds](#module\_generate\_gluekube\_creds) | ../gluekube/0.1.0 | n/a |
