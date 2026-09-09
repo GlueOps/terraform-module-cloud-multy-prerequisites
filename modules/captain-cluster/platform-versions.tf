@@ -5,8 +5,8 @@ locals {
   argocd_app_version        = "v3.2.12"
   codespace_version         = "v0.160.0"
   argocd_helm_chart_version = "9.3.7"
-  glueops_platform_version  = "feat/otel-extention-backend-app" # keep in sync with the ?ref= of module.glueops_platform_helm_values in generate-helm-values.tf. TODO(before merge): the release cut from platform-helm-chart-platform#1461
-  platform_crds_version     = "feat/otel-20260902"              # pin of GlueOps/platform-crds (the layer-0 CRD bundle), applied by captain_utils `crds` before argocd and before the platform chart.
+  glueops_platform_version  = "feat/otel-integration-venus" # keep in sync with the ?ref= of module.glueops_platform_helm_values in generate-helm-values.tf. TODO(before merge): the release cut from platform-helm-chart-platform#1461
+  platform_crds_version     = "feat/otel-20260902"          # pin of GlueOps/platform-crds (the layer-0 CRD bundle), applied by captain_utils `crds` before argocd and before the platform chart.
   # DELIBERATELY not a release tag. captain_utils only enables the bundle when this matches ^v?[0-9]+\.[0-9]+\.[0-9]+$;
   # anything else keeps the legacy path (ArgoCD's CRDs from the argocd step, the rest already on the cluster). v0.1.4
   # IS release-shaped and would therefore enable the bundle — applying a set that drops the opentelemetry-operator CRDs

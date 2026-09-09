@@ -48,7 +48,7 @@ locals {
 
 module "glueops_platform_helm_values" {
   for_each                                   = local.environment_map
-  source                                     = "git::https://github.com/GlueOps/platform-helm-chart-platform.git?ref=feat/otel-extention-backend-app" # carries feat/otel-20260902 (merged in) PLUS the argocd-extension-backend Application. TODO(before merge): the release cut from platform-helm-chart-platform#1461
+  source                                     = "git::https://github.com/GlueOps/platform-helm-chart-platform.git?ref=feat/otel-integration-venus" # INTEGRATION BRANCH, test only: feat/otel-20260902 (the monitoring migration) + the argocd-extension-backend Application from platform-helm-chart-platform#1461, which now targets main on its own and no longer carries the migration. TODO(before merge): the release cut once BOTH #1486 and #1461 have landed on main
   captain_repo_b64encoded_private_deploy_key = base64encode(module.captain_repository[each.value.environment_name].private_deploy_key)
   captain_repo_ssh_clone_url                 = module.captain_repository[each.value.environment_name].ssh_clone_url
   this_is_development                        = var.tenant.this_is_development
