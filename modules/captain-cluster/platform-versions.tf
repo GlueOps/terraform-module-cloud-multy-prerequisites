@@ -5,8 +5,25 @@ locals {
   argocd_app_version        = "v3.2.12"
   codespace_version         = "v0.160.0"
   argocd_helm_chart_version = "9.3.7"
-  glueops_platform_version  = "feat/otel-integration-venus" # keep in sync with the ?ref= of module.glueops_platform_helm_values in generate-helm-values.tf. TODO(before merge): the release cut from platform-helm-chart-platform#1461
-  platform_crds_version     = "feat/otel-20260902"          # pin of GlueOps/platform-crds (the layer-0 CRD bundle), applied by captain_utils `crds` before argocd and before the platform chart.
+  # MUST be a released chart version in https://helm.gpkg.io/platform. captain_utils
+  # installs the platform chart ONLY from that repo -- `helm upgrade --install
+  # glueops-platform glueops-platform/glueops-platform --version "$version"` -- so a
+  # git branch name is passed to helm as a semver constraint and fails with
+  # "improper constraint". The ?ref= in generate-helm-values.tf is a different thing:
+  # that is a terraform module source and renders platform.yaml, not the chart.
+  #
+  # WARNING for venus: no RELEASED chart carries the OTel monitoring migration yet
+  # (platform-helm-chart-platform#1486 is still open), so applying this version to a
+  # cluster already running that stack removes application-monitoring.yaml. That
+  # Application is helm-managed and carries resources-finalizer.argocd.argoproj.io,
+  # so the delete cascades through its 11 child Applications and the 10 PVCs in
+  # glueops-core-monitoring. Until #1486 and #1461 are released, venus is fed the
+  # feat/otel-integration-venus branch through captain_utils' `custom` option
+  # (glueops-platform -> custom -> local checkout), which is the supported path for
+  # an unreleased chart. `helm history glueops-platform -n glueops-core` is then the
+  # only record of what is actually running -- this pin will not describe it.
+  glueops_platform_version = "v0.79.2"            # keep in sync with the ?ref= of module.glueops_platform_helm_values in generate-helm-values.tf. TODO(before merge): the release cut once BOTH #1486 and #1461 have landed on main
+  platform_crds_version    = "feat/otel-20260902" # pin of GlueOps/platform-crds (the layer-0 CRD bundle), applied by captain_utils `crds` before argocd and before the platform chart.
   # DELIBERATELY not a release tag. captain_utils only enables the bundle when this matches ^v?[0-9]+\.[0-9]+\.[0-9]+$;
   # anything else keeps the legacy path (ArgoCD's CRDs from the argocd step, the rest already on the cluster). v0.1.4
   # IS release-shaped and would therefore enable the bundle — applying a set that drops the opentelemetry-operator CRDs
