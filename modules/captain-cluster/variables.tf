@@ -46,14 +46,13 @@ variable "tenant_secrets" {
 
 
 variable "cluster_environments" {
-  description = "Full definition of each cluster environment: name, GitHub OAuth/App credentials for dex and the tenant org, ingress/traefik/nginx toggles, storage sizing, vault policy mappings, argocd RBAC, and optional gluekube provider/waggle credentials. Migrated tenants pass a single-element list per module instantiation."
+  description = "Full definition of each cluster environment: name, GitHub OAuth/App credentials for dex and the tenant org, ingress/traefik/nginx toggles, storage sizing, object-storage config for the monitoring stack (loki_storage / thanos_storage / tempo_storage as YAML strings), vault policy mappings, argocd RBAC, and optional gluekube provider/waggle credentials. Migrated tenants pass a single-element list per module instantiation."
   type = list(object({
     environment_name                        = string
     host_network_enabled                    = bool
     traefik_enable_internal_lb              = optional(bool, false)
     traefik_enable_public_lb                = optional(bool, true)
     nginx_enable_public_lb                  = optional(bool, true)
-    prometheus_volume_claim_storage_request = optional(string, "50")
     vault_data_storage                      = optional(string, "10")
     nginx_controller_replica_count          = optional(string, "2")
     traefik_internal_lb_deployment_replicas = optional(string, "2")
@@ -70,6 +69,20 @@ variable "cluster_environments" {
       oidc_groups = list(string)
       policy_name = string
     }))
+    # Object storage for the monitoring stack (GlueOps/k8s-monitoring-helm via the platform chart). Each is a YAML
+    # document at any indentation (the platform chart normalises it); credentials for a bucket you provision outside
+    # this module (e.g. Hetzner Object Storage). Shapes:
+    #   loki_storage:   https://grafana.com/docs/loki/latest/configure/#storage_config
+    #                   bucketNames: {chunks, ruler, admin}, type: s3, s3: {s3, endpoint, region, accessKeyId, secretAccessKey, s3ForcePathStyle, insecure}
+    #   thanos_storage: https://thanos.io/tip/thanos/storage.md/
+    #                   type: s3, config: {bucket, endpoint, access_key, secret_key}
+    #   tempo_storage:  https://grafana.com/docs/tempo/latest/configuration/#storage
+    #                   backend: s3, s3: {bucket, endpoint, access_key, secret_key, insecure}
+    # The strings go through yamldecode (YAML 1.2): quote any scalar that could read as a number or boolean
+    # (a bucket "0123" becomes 123, "1e5" becomes 100000, "no" becomes false).
+    loki_storage         = string
+    thanos_storage       = string
+    tempo_storage        = string
     argocd_rbac_policies = string
     provider_credentials = optional(map(any), null)
     waggle_credentials = optional(object({
@@ -83,6 +96,22 @@ variable "cluster_environments" {
   validation {
     condition     = length(var.cluster_environments) == 1
     error_message = "captain-cluster manages exactly one cluster environment — instantiate the module once per cluster (module \"cluster_<env>\") with a single-element list. Per-cluster version pinning depends on this."
+  }
+
+  # The three storage strings must be non-empty YAML mappings: a list, a bare scalar, an empty string or invalid YAML
+  # would otherwise either fail deep inside the platform chart module with a message that names no field, or be
+  # accepted silently and land as `storage: [...]` in platform.yaml. The messages never echo the value (it holds keys).
+  validation {
+    condition     = alltrue([for e in var.cluster_environments : try(length(keys(yamldecode(e.loki_storage))) > 0, false)])
+    error_message = "cluster_environments[*].loki_storage must be a non-empty YAML mapping (bucketNames / type / s3); it is empty, not valid YAML, or a list/scalar."
+  }
+  validation {
+    condition     = alltrue([for e in var.cluster_environments : try(length(keys(yamldecode(e.thanos_storage))) > 0, false)])
+    error_message = "cluster_environments[*].thanos_storage must be a non-empty YAML mapping (type / config); it is empty, not valid YAML, or a list/scalar."
+  }
+  validation {
+    condition     = alltrue([for e in var.cluster_environments : try(length(keys(yamldecode(e.tempo_storage))) > 0, false)])
+    error_message = "cluster_environments[*].tempo_storage must be a non-empty YAML mapping (backend / s3); it is empty, not valid YAML, or a list/scalar."
   }
 }
 
