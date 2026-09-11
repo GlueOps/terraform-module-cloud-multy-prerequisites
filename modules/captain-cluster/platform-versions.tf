@@ -3,7 +3,7 @@
 # its ?ref= pin moves to the release carrying this file.
 locals {
   argocd_app_version        = "v3.2.12"
-  codespace_version         = "v0.160.0"
+  codespace_version         = "v0.161.1"
   argocd_helm_chart_version = "9.3.7"
   # MUST be a released chart version in https://helm.gpkg.io/platform. captain_utils
   # installs the platform chart ONLY from that repo -- `helm upgrade --install

@@ -102,7 +102,7 @@ module "glueops_platform_helm_values" {
 
 module "argocd_helm_values" {
   for_each             = local.environment_map
-  source               = "git::https://github.com/GlueOps/docs-argocd.git?ref=feature/global-otel-backend" # v0.20.0 + the OTEL UI extension frontend (server.extensions installer, extension.config, RBAC). TODO(before merge): the release cut once feature/global-otel-backend lands on main
+  source               = "git::https://github.com/GlueOps/docs-argocd.git?ref=v0.22.0" # v0.22.0 is the release carrying the OTEL UI extension frontend (server.extensions installer, extension.config, RBAC) that this branch previously pinned as feature/global-otel-backend
   tenant_key           = var.tenant.tenant_key
   cluster_environment  = each.value.environment_name
   client_secret        = random_password.dex_argocd_client_secret[each.value.environment_name].result
