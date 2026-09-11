@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.93.0](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/compare/v0.92.3...v0.93.0) (2026-09-11)
+
+
+### Features
+
+* update glueops/docs-argocd to v0.22.0 #minor ([#738](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/issues/738)) ([1b25c90](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/commit/1b25c906411af6559379dc4a55bb5912eee08c28))
+
 ## [0.92.3](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/compare/v0.92.2...v0.92.3) (2026-09-06)
 
 
