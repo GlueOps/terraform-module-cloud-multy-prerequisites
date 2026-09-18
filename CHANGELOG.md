@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.94.0](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/compare/v0.93.0...v0.94.0) (2026-09-18)
+
+
+### Features
+
+* bump versions for argocd, platform. terraform_module ([#741](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/issues/741)) ([aea77b7](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/commit/aea77b75ca7555d8cc3c7bff1ad24f9a917f1199))
+
 ## [0.93.0](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/compare/v0.92.3...v0.93.0) (2026-09-11)
 
 
