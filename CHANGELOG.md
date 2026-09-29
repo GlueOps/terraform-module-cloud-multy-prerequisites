@@ -1,5 +1,26 @@
 # Changelog
 
+## [0.94.2](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/compare/v0.94.1...v0.94.2) (2026-09-29)
+
+
+### Miscellaneous Chores
+
+* **patch:** update glueops/platform-helm-chart-platform to v0.80.2 #patch ([#755](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/issues/755)) ([fb636ae](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/commit/fb636ae254be151e726a54fe54eb0cbf924b0d93))
+
+## [0.94.1](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/compare/v0.94.0...v0.94.1) (2026-09-22)
+
+
+### Miscellaneous Chores
+
+* **patch:** update glueops/platform-helm-chart-platform to v0.80.1 #patch ([#750](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/issues/750)) ([efa4444](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/commit/efa4444e6accc722d088547b2e82a7efd2ac0e9e))
+
+## [0.94.0](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/compare/v0.93.0...v0.94.0) (2026-09-18)
+
+
+### Features
+
+* bump versions for argocd, platform. terraform_module ([#741](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/issues/741)) ([aea77b7](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/commit/aea77b75ca7555d8cc3c7bff1ad24f9a917f1199))
+
 ## [0.93.0](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/compare/v0.92.3...v0.93.0) (2026-09-11)
 
 
