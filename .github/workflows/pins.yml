@@ -1,0 +1,39 @@
+name: pins
+
+# Guard: modules/captain-cluster ships the fleet's version pins. A branch name or a "TODO(before merge)" left behind
+# from feature testing must not reach main — captain_utils passes glueops_platform_helm_chart_version straight to
+# `helm --version`, a release tag pointing at a deletable branch breaks every tenant's `tofu init`, and renovate's
+# regexes silently stop matching non-semver pins.
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  pins:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
+      - name: No TODO(before merge) markers
+        run: |
+          if grep -rn 'TODO(before merge)' modules/; then
+            echo "::error::TODO(before merge) markers must be resolved before merging"; exit 1
+          fi
+      - name: Platform pins are release tags and agree with each other
+        run: |
+          pv=modules/captain-cluster/platform-versions.tf
+          gh=modules/captain-cluster/generate-helm-values.tf
+          chart=$(sed -nE 's/^ *glueops_platform_version *= *"([^"]*)".*/\1/p' "$pv")
+          crds=$(sed -nE 's/^ *platform_crds_version *= *"([^"]*)".*/\1/p' "$pv")
+          ref=$(sed -nE 's#.*platform-helm-chart-platform\.git\?ref=([^"]*)".*#\1#p' "$gh")
+          echo "glueops_platform_version=$chart platform_crds_version=$crds module ?ref=$ref"
+          ok=1
+          for v in "$chart" "$crds" "$ref"; do
+            [[ "$v" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]] || { echo "::error::'$v' is not a release tag (vX.Y.Z)"; ok=0; }
+          done
+          [ "$chart" = "$ref" ] || { echo "::error::glueops_platform_version ($chart) must equal the module ?ref= ($ref)"; ok=0; }
+          [ "$ok" = 1 ]
