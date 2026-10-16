@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.95.0](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/compare/v0.94.2...v0.95.0) (2026-10-16)
+
+
+### Features
+
+* updating eks addons for 1.35.X support ([#759](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/issues/759)) ([901779c](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/commit/901779cabfccd9f7c80fcee60e851a16a423baff))
+
+
+### Bug Fixes
+
+* point the tenant README's docs link at docs.glueops.dev ([#757](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/issues/757)) ([0ea4d19](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/commit/0ea4d195063d11afe188ccf91139418377f2b64f))
+* renovatebot comments for aws/eks addons ([#760](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/issues/760)) ([67b3eae](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/commit/67b3eae4ec6d92d6f1a0959a50902721584b0bce))
+
 ## [0.94.2](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/compare/v0.94.1...v0.94.2) (2026-09-29)
 
 
