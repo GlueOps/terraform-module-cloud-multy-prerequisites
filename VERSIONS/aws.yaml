@@ -12,7 +12,7 @@ versions:
   - name: kube_proxy_version
     # kubernetesVersion and addonName provided
     # renovate: eksAddonsFilter={"kubernetesVersion":"1.35","addonName":"kube-proxy"}
-    version: v1.35.3-eksbuild.25
+    version: v1.35.3-eksbuild.62
 
   - name: ami_release_version
     version: 1.35.7-20260827
