@@ -5,7 +5,7 @@
   "separateMultipleMinor": false,
   "packageRules": [
     {
-      "description": "docs-argocd ships the Argo CD health check for Gate, which only the gatekeeper controller (>= v2.0.0) can satisfy. Bumping the docs-argocd ref without gatekeeper_tag installs the health check against a binary that never writes Gate.status, and every gated Application hangs at wave -1. Keep both in one PR so they cannot be split.",
+      "description": "Must move together: docs-argocd carries the Gate health check that only gatekeeper >= v2.0.0 satisfies, and bumping the ref alone hangs every gated Application at wave -1.",
       "matchDepNames": ["glueops/docs-argocd", "ghcr.io/glueops/platform-gatekeeper"],
       "groupName": "argocd and gatekeeper"
     }
