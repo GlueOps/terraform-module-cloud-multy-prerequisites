@@ -3,7 +3,25 @@
   "description": "Repo-local managers for the platform version pins. The org preset's managers are anchored on the pre-split root files (variables.tf, generate-helm-values.tf) and no longer match anything here since the v0.88.0 split into modules/. separateMinorPatch/separateMultipleMinor are disabled so each pin gets one PR targeting the highest available version instead of one PR per intermediate minor/patch.",
   "separateMinorPatch": false,
   "separateMultipleMinor": false,
+  "packageRules": [
+    {
+      "description": "docs-argocd ships the Argo CD health check for Gate, which only the gatekeeper controller (>= v2.0.0) can satisfy. Bumping the docs-argocd ref without gatekeeper_tag installs the health check against a binary that never writes Gate.status, and every gated Application hangs at wave -1. Keep both in one PR so they cannot be split.",
+      "matchDepNames": ["glueops/docs-argocd", "ghcr.io/glueops/platform-gatekeeper"],
+      "groupName": "argocd and gatekeeper"
+    }
+  ],
   "customManagers": [
+    {
+      "customType": "regex",
+      "matchStrings": [
+        "gatekeeper_tag\\s*= \"(?<currentValue>v\\d+\\.\\d+\\.\\d+)@(?<currentDigest>sha256:[a-f0-9]+)\""
+      ],
+      "depNameTemplate": "ghcr.io/glueops/platform-gatekeeper",
+      "datasourceTemplate": "docker",
+      "managerFilePatterns": [
+        "/^modules/captain-cluster/platform-versions\\.tf$/"
+      ]
+    },
     {
       "customType": "regex",
       "matchStrings": [

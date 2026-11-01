@@ -13,6 +13,13 @@ locals {
   calico_ctl_version        = "v3.31.4"
   tigera_operator_version   = "v1.40.7"
   terraform_module_version  = "v0.52.0"
-  gatekeeper_tag            = "v0.1.1@sha256:33f96e0ecc628078c00c68722a670fb72693860219219972503df0ee2c6a3ece"
+  # MUST move to >= v2.0.0 in the SAME commit as the docs-argocd ?ref= in
+  # generate-helm-values.tf. From v2.0.0 gatekeeper is a controller that publishes
+  # readiness to Gate.status, and the docs-argocd release that carries the Argo CD
+  # health check only works against it: bump the ref alone and every gated
+  # Application hangs at wave -1, because v0.x/v1.x serve /check and never write
+  # Gate.status. Renovate groups the two so they arrive in one PR — review them
+  # together, never split them.
+  gatekeeper_tag = "v0.1.1@sha256:33f96e0ecc628078c00c68722a670fb72693860219219972503df0ee2c6a3ece"
 
 }
