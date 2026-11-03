@@ -1,5 +1,20 @@
 # Changelog
 
+## [0.98.0](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/compare/v0.97.0...v0.98.0) (2026-11-03)
+
+
+### Features
+
+* **deps:** update dependency aws-ebs-csi-driver to v1.67.2-eksbuild.1 ([#766](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/issues/766)) ([bd6c443](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/commit/bd6c4430689e1f078440acdd5064e93d8a447561))
+* **deps:** update dependency glueops/codespaces to v0.164.0 ([#770](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/issues/770)) ([4da2a06](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/commit/4da2a068561e983f546726f9323923603213deef))
+* update platform to v0.83.0, platform-crds to v0.1.6, Argo CD to v3.4.13 and EKS (module v0.55.0, AMI 1.35.9-20261031) ([#772](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/issues/772)) ([7e26902](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/commit/7e2690218473ded9624c8c98b36f7c84f823f826))
+
+
+### Dependencies
+
+* update dependency coredns to v1.14.7-eksbuild.22 ([#764](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/issues/764)) ([f4b2639](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/commit/f4b2639dbdce8dc215f73958b8dbb607099f3976))
+* update dependency kube-proxy to v1.35.3-eksbuild.62 ([#765](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/issues/765)) ([e9830b2](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/commit/e9830b27b1f40c32b52c5d187e209b19ae5bc223))
+
 ## [0.97.0](https://github.com/GlueOps/terraform-module-cloud-multy-prerequisites/compare/v0.96.0...v0.97.0) (2026-10-27)
 
 
