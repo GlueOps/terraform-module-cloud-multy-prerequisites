@@ -1,7 +1,7 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "description": "Repo-local managers for the platform version pins. The org preset's managers are anchored on the pre-split root files (variables.tf, generate-helm-values.tf) and no longer match anything here since the v0.88.0 split into modules/. separateMinorPatch/separateMultipleMinor are disabled so each pin gets one PR targeting the highest available version instead of one PR per intermediate minor/patch.",
-  "separateMinorPatch": false,
+  "description": "Repo-local managers for the platform version pins. The org preset's managers are anchored on the pre-split root files (variables.tf, generate-helm-values.tf) and no longer match anything here since the v0.88.0 split into modules/. separateMinorPatch is enabled so a pin gets a patch PR for its current minor (e.g. a hotfix release) alongside the PR for the highest available version. separateMultipleMinor stays disabled, so there is no PR per intermediate minor.",
+  "separateMinorPatch": true,
   "separateMultipleMinor": false,
   "customManagers": [
     {
